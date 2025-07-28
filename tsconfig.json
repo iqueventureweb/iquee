@@ -44,7 +44,7 @@
     "next-env.d.ts",
     "next.config.js",
     "next-sitemap.config.cjs"
-  ],
+, "src/components/Navbar/hi.jsx"  ],
   "exclude": [
     "node_modules"
   ],
