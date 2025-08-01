@@ -13,7 +13,7 @@ export function HeroSection() {
       <Animated3d />
 
       {/* Content Overlay - pointer-events-none to allow Spline interaction */}
-      <div className="relative z-20 min-h-screen pointer-events-auto">
+      <div className="relative z-10 min-h-screen pointer-events-auto">
         {/* Hero Section */}
         <main className="container mx-auto px-4 flex flex-col justify-center min-h-screen pt-20">
           <div className="max-w-4xl mx-auto text-center">
@@ -26,11 +26,11 @@ export function HeroSection() {
 
             {/* Description */}
             <p className="text-lg md:text-xl text-blue-800 font-medium max-w-3xl md:max-w-4xl mx-auto mb-12 leading-normal tracking-wider font-['DM_Sans'] capitalize pointer-events-none">
-              "Join Us In Building A Better And More Efficient Startup
+              &quot;Join Us In Building A Better And More Efficient Startup
               Ecosystem! By Fostering Collaboration, Providing Mentorship, And
-              Offering Resources, We're Empowering Startups To Grow And Thrive.
-              Together, We Can Create A Future Where Innovation Knows No
-              Limits."
+              Offering Resources, We&apos;re Empowering Startups To Grow And
+              Thrive. Together, We Can Create A Future Where Innovation Knows No
+              Limits.&quot;
             </p>
 
             {/* Action Buttons - re-enable pointer events for buttons */}

@@ -25,7 +25,7 @@ export function HomeServicesSection() {
   ];
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 lg:pt-32 xl:pt-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24">
@@ -43,7 +43,7 @@ export function HomeServicesSection() {
                 </p>
 
                 {/* Decorative border */}
-                <div className="w-32 sm:w-40 md:w-48 lg:w-64 xl:w-[306px] absolute h-6 sm:h-7 md:h-8 lg:h-10 xl:h-12 rounded-full border border-neutral-900 opacity-70 transform -rotate-3 hidden sm:block left-[120px] sm:left-auto top-8 sm:top-auto" />
+                <div className="w-32 sm:w-40 md:w-48 lg:w-64 xl:w-[306px] absolute h-6 sm:h-7 md:h-8 lg:h-10 xl:h-12 rounded-full border border-neutral-900 opacity-70 transform -rotate-3 hidden sm:block left-[122px] top-8 sm:top-auto" />
 
                 <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed">
                   problems and cultivate
@@ -75,7 +75,7 @@ export function HomeServicesSection() {
                   </span>
 
                   {/* Title */}
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-normal font-['Epilogue'] text-neutral-900 leading-tight sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] whitespace-pre-line flex-1">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-normal font-['Epilogue'] text-neutral-900 leading-tight sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] whitespace-pre-line flex-1">
                     {service.title}
                   </h3>
                 </div>
