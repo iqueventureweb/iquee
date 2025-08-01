@@ -26,11 +26,11 @@ export function HeroSection() {
 
             {/* Description */}
             <p className="text-lg md:text-xl text-blue-800 font-medium max-w-3xl md:max-w-4xl mx-auto mb-12 leading-normal tracking-wider font-['DM_Sans'] capitalize pointer-events-none">
-              "Join Us In Building A Better And More Efficient Startup
+              &quot;Join Us In Building A Better And More Efficient Startup
               Ecosystem! By Fostering Collaboration, Providing Mentorship, And
-              Offering Resources, We're Empowering Startups To Grow And Thrive.
-              Together, We Can Create A Future Where Innovation Knows No
-              Limits."
+              Offering Resources, We&apos;re Empowering Startups To Grow And
+              Thrive. Together, We Can Create A Future Where Innovation Knows No
+              Limits.&quot;
             </p>
 
             {/* Action Buttons - re-enable pointer events for buttons */}
