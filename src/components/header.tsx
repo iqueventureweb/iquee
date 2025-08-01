@@ -3,7 +3,7 @@ import { Logo } from "./Logo/Logo";
 
 export default function Header() {
   return (
-    <header className="absolute top-0 left-0 right-0 z-20 bg-white/30">
+    <header className="sticky top-0 left-0 right-0 z-50 bg- backdrop-blur-sm">
       <nav className="max-w-screen-xl mx-auto h-20 relative">
         {/* Logo */}
         <div className="absolute left-8 top-1/2 transform -translate-y-1/2">

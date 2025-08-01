@@ -13,7 +13,7 @@ export function HeroSection() {
       <Animated3d />
 
       {/* Content Overlay - pointer-events-none to allow Spline interaction */}
-      <div className="relative z-20 min-h-screen pointer-events-auto">
+      <div className="relative z-10 min-h-screen pointer-events-auto">
         {/* Hero Section */}
         <main className="container mx-auto px-4 flex flex-col justify-center min-h-screen pt-20">
           <div className="max-w-4xl mx-auto text-center">
