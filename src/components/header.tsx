@@ -160,7 +160,7 @@ export default function Header() {
                   <Link href="#contact" className="block">
                     <div className="border-2 border-blue-900 rounded-lg p-3 text-center hover:bg-blue-900 hover:text-white transition-colors">
                       <div className="text-blue-900 text-base font-medium font-['DM_Sans'] hover:text-white transition-colors">
-                        Let's work together
+                        Let&apos;s work together
                       </div>
                     </div>
                   </Link>
