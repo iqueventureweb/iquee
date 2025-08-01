@@ -1,15 +1,30 @@
 import type { Metadata } from "next";
 
+import Header from "@/components/header";
+import { getServerSideURL } from "@/utilities/getURL";
+import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import { cn } from "@/utilities/ui";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
+import { DM_Sans, Epilogue, Poppins } from "next/font/google";
 import React from "react";
-
-import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
-
-import Navbar from "@/components/Navbar";
-import { getServerSideURL } from "@/utilities/getURL";
 import "./globals.css";
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dm-sans",
+});
+
+const epilogue = Epilogue({
+  subsets: ["latin"],
+  variable: "--font-epilogue",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export default async function RootLayout({
   children,
@@ -18,7 +33,13 @@ export default async function RootLayout({
 }) {
   return (
     <html
-      className={cn(GeistSans.variable, GeistMono.variable)}
+      className={cn(
+        GeistSans.variable,
+        GeistMono.variable,
+        dmSans.variable,
+        epilogue.variable,
+        poppins.variable
+      )}
       lang="en"
       suppressHydrationWarning
     >
@@ -27,7 +48,8 @@ export default async function RootLayout({
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body>
-        <Navbar />
+        <Header />
+
         {children}
       </body>
     </html>
