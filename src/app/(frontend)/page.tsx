@@ -1,8 +1,12 @@
 import { AchievementsSection } from "@/components/AchievementsSection";
 import { CarouselSection } from "@/components/CarouselSection";
+import { ContactUsSection } from "@/components/ContactUsSection";
 import { HeroSection } from "@/components/HeroSection";
 import { HomeServicesSection } from "@/components/HomeServicesSection";
+import { LatestNewsSection } from "@/components/LatestNewsSection";
+import { NewsletterSection } from "@/components/NewsletterSection";
 import { OurStorySection } from "@/components/OurStorySection";
+import { StaffSection } from "@/components/StaffSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { TrustSection } from "@/components/TrustSection";
 
@@ -16,6 +20,10 @@ export default function HomePage() {
       <OurStorySection />
       <CarouselSection />
       <TestimonialsSection />
+      <StaffSection />
+      <LatestNewsSection />
+      <NewsletterSection />
+      <ContactUsSection />
     </>
   );
 }
