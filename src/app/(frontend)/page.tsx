@@ -1,6 +1,10 @@
 import { AchievementsSection } from "@/components/AchievementsSection";
+import { CarouselSection } from "@/components/CarouselSection";
 import { HeroSection } from "@/components/HeroSection";
 import { HomeServicesSection } from "@/components/HomeServicesSection";
+import { OurStorySection } from "@/components/OurStorySection";
+import { TestimonialsSection } from "@/components/TestimonialsSection";
+import { TrustSection } from "@/components/TrustSection";
 
 export default function HomePage() {
   return (
@@ -8,6 +12,10 @@ export default function HomePage() {
       <HeroSection />
       <HomeServicesSection />
       <AchievementsSection />
+      <TrustSection />
+      <OurStorySection />
+      <CarouselSection />
+      <TestimonialsSection />
     </>
   );
 }
