@@ -37,7 +37,7 @@ export function ContactUsSection() {
               Contact Us
             </div>
             <h2 className="text-3xl lg:text-6xl font-medium font-['DM_Sans'] leading-[1.3] lg:leading-[61.99px] text-black">
-              Let's start the
+              Let&apos;s start the
               <br />
               productive work.
             </h2>
@@ -69,7 +69,7 @@ export function ContactUsSection() {
                 <MapPin className="w-8 h-12 text-black" />
               </div>
               <h3 className="text-lg font-medium font-['DM_Sans'] leading-snug text-black mb-4">
-                Location's
+                Location&apos;s
               </h3>
               <div className="flex items-center gap-2">
                 <span className="text-base font-normal font-['DM_Sans'] leading-relaxed text-neutral-500">
