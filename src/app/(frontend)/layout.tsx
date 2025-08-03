@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 
+import { FooterSection } from "@/components/FooterSection";
 import Header from "@/components/header";
 import { getServerSideURL } from "@/utilities/getURL";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import { cn } from "@/utilities/ui";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
-import { DM_Sans, Epilogue, Poppins } from "next/font/google";
+import { DM_Sans, Epilogue, Inter, Poppins } from "next/font/google";
 import React from "react";
 import "./globals.css";
 
@@ -26,6 +27,11 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
 export default async function RootLayout({
   children,
 }: {
@@ -38,7 +44,8 @@ export default async function RootLayout({
         GeistMono.variable,
         dmSans.variable,
         epilogue.variable,
-        poppins.variable
+        poppins.variable,
+        inter.variable
       )}
       lang="en"
       suppressHydrationWarning
@@ -49,8 +56,8 @@ export default async function RootLayout({
       </head>
       <body>
         <Header />
-
         {children}
+        <FooterSection />
       </body>
     </html>
   );

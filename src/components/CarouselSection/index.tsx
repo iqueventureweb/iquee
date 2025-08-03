@@ -53,7 +53,7 @@ export function CarouselSection() {
 
       <div className="my-12 md:my-24">
         <Image
-          src="https://media.istockphoto.com/id/177339031/photo/space-warp-travel-trough-universe.jpg?s=612x612&w=0&k=20&c=C6U7SHZwUFLxkB-LGPLCdCsaOMmyBodlrBm4lzjT44o="
+          src="/images/staff-section-sub-bg.webp"
           alt="Carousel Background"
           width={1000}
           height={1000}
@@ -62,11 +62,11 @@ export function CarouselSection() {
         <div className="z-[2] relative mx-auto px-4 h-96 my-12 md:h-[545px] flex flex-col justify-center bg-gray-800">
           {/* Desktop Layout - Show 3 items */}
           <Image
-            src="https://static.vecteezy.com/system/resources/previews/005/644/120/non_2x/abstract-background-of-red-and-dark-color-of-modern-design-vector.jpg"
+            src="/images/staff-section-main-bg.webp"
             alt="Carousel Background"
             width={1000}
             height={1000}
-            className="w-full h-full absolute top-0 left-0 z-[3]"
+            className="w-full h-full absolute top-0 left-0 z-[3] object-cover"
           />
           <div className="hidden md:block z-[4]">
             <div className="flex justify-center items-center space-x-8 lg:space-x-16 mb-8">
