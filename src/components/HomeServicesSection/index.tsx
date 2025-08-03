@@ -43,7 +43,7 @@ export function HomeServicesSection() {
                 </p>
 
                 {/* Decorative border */}
-                <div className="w-32 sm:w-40 md:w-48 lg:w-64 xl:w-[306px] absolute h-6 sm:h-7 md:h-8 lg:h-10 xl:h-12 rounded-full border border-neutral-900 opacity-70 transform -rotate-3 hidden sm:block left-[122px] top-8 sm:top-auto" />
+                <div className="w-32 sm:w-48 md:w-60 lg:w-64 xl:w-[306px] absolute h-6 sm:h-7 md:h-8 lg:h-10 xl:h-12 rounded-full border border-neutral-900 opacity-70 transform -rotate-3 hidden sm:block sn:left-[100px] md:left-[100px] lg:left-[122px] top-8 sm:top-auto" />
 
                 <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed">
                   problems and cultivate
