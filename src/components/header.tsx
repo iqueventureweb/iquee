@@ -1,18 +1,18 @@
 "use client";
 
 import { Menu } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { Logo } from "./Logo/Logo";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm">
-      <nav className="max-w-screen-xl mx-auto h-20 relative flex items-center justify-around xl:justify-between">
+    <header className="sticky top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)]">
+      <nav className="max-w-screen-xl mx-auto h-20 relative flex items-center justify-between pl-3 xl:justify-between">
         {/* Logo */}
         <div className="">
-          <Logo className="h-8" />
+          <Image src="/ique-logo.svg" alt="logo" width={100} height={100} />
         </div>
 
         {/* Desktop Navigation Items - Hidden on mobile */}
