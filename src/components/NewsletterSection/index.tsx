@@ -11,7 +11,6 @@ export function NewsletterSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle newsletter subscription
-    console.log("Newsletter subscription:", email);
   };
 
   return (
@@ -33,23 +32,21 @@ export function NewsletterSection() {
 
           {/* Newsletter Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="flex flex-col lg:flex-row gap-4 lg:gap-0">
+            <div className="flex flex-col md:flex-row gap-4 lg:gap-3 ">
               {/* Email Input */}
-              <div className="flex-1">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full h-12 sm:h-14 px-6 rounded border-2 border-white/20 bg-transparent text-white placeholder-white/70 text-base font-normal font-['DM_Sans'] focus:outline-none focus:border-white/40"
-                  required
-                />
-              </div>
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full h-12 sm:h-14 px-6 rounded border-2 border-white/20 bg-transparent text-white placeholder-white/70 text-base font-normal font-['DM_Sans'] focus:outline-none focus:border-white/40"
+                required
+              />
 
               {/* Subscribe Button */}
               <button
                 type="submit"
-                className="w-full lg:w-48 h-12 sm:h-14 bg-white/95 rounded text-black text-xs font-bold font-['DM_Sans'] uppercase leading-tight tracking-wide hover:bg-white transition-colors"
+                className="w-full md:w-48 h-12 sm:h-14 bg-white/95 rounded text-black text-xs font-bold font-['DM_Sans'] uppercase leading-tight tracking-wide hover:bg-white transition-colors"
               >
                 Subscribe Now
               </button>

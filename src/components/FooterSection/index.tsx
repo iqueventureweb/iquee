@@ -18,7 +18,7 @@ export function FooterSection() {
                 alt="iQue Logo"
                 width={205}
                 height={100}
-                className="w-52 h-24 max-h-24"
+                className="w-32 h-16 md:w-52 md:h-24 max-h-24"
               />
               <div className="flex flex-col justify-start items-center lg:items-start gap-6 text-center lg:text-left">
                 <div className="w-full lg:w-96 justify-start text-gray-300 text-lg font-normal font-['Inter'] leading-relaxed">

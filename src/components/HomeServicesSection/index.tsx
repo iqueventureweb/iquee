@@ -38,15 +38,16 @@ export function HomeServicesSection() {
             {/* Subtitle with decorative border */}
             <div className="mr-20">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 md:gap-4 relative">
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed">
-                  To solve complex
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] leading-[1.3] text-neutral-900 ">
+                  To solve complex <span className="sm:hidden">problems</span>
                 </p>
 
                 {/* Decorative border */}
-                <div className="w-32 sm:w-40 md:w-48 lg:w-64 xl:w-[306px] absolute h-6 sm:h-7 md:h-8 lg:h-10 xl:h-12 rounded-full border border-neutral-900 opacity-70 transform -rotate-3 hidden sm:block left-[122px] top-8 sm:top-auto" />
+                <div className="w-[177px] sm:w-[205px] md:w-60 lg:w-64 xl:w-[306px] absolute h-[65px] sm:h-7 md:h-8 lg:h-10 xl:h-12 rounded-full border border-neutral-900 opacity-70 transform -rotate-6 sm:-rotate-3 left-[81px]  md:left-[100px] lg:left-[122px] top-[-9px] sm:top-auto" />
 
                 <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed">
-                  problems and cultivate
+                  <span className="hidden sm:inline">problems</span> and
+                  cultivate
                 </p>
               </div>
 
@@ -62,32 +63,30 @@ export function HomeServicesSection() {
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`w-full max-w-6xl mx-auto ${
-                index % 2 === 1 ? "md:mr-0" : "md:ml-0"
+              className={` w-[90%] sm:w-full max-w-xl lg:max-w-6xl mx-auto ${
+                index % 2 === 1 ? "mr-0" : "ml-0"
               }`}
             >
-              <div className="rounded-[40px] sm:rounded-[60px] md:rounded-[80px] lg:rounded-[120px] xl:rounded-[200px] border border-neutral-900 p-4 sm:p-6 md:p-8 lg:p-12 xl:px-16 lg:py-3 min-h-32 sm:min-h-40 md:min-h-48 lg:min-h-56 flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-8">
+              <div className="rounded-[40px] sm:rounded-[60px] md:rounded-[80px] lg:rounded-[120px] xl:rounded-[200px] border border-neutral-900 p-4 py-1 md:p-8 lg:p-12 xl:px-16 lg:py-3 min-h-16 sm:min-h-40 md:min-h-48 lg:min-h-56 flex  items-center justify-between gap-4 sm:gap-6 md:gap-8 relative tracking-tighter">
                 {/* Content */}
-                <div className="flex-1 flex items-start gap-3 sm:gap-4 md:gap-3 w-full">
+                <div className="flex gap-1 sm:gap-4 md:gap-3 w-full">
                   {/* Number */}
-                  <span className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium font-['Epilogue'] text-neutral-900 mt-2 sm:mt-4 md:mt-6 lg:mt-10 xl:mt-14 flex-shrink-0">
+                  <span className="text-[10.40px] sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium font-['Epilogue'] text-neutral-900 mt-3 sm:mt-4 md:mt-6 lg:mt-10 xl:mt-14 absolute left-4 lg:left-6 xl:left-10 top-[20%]">
                     {service.id}
                   </span>
 
                   {/* Title */}
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-normal font-['Epilogue'] text-neutral-900 leading-tight sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] whitespace-pre-line flex-1">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-normal ml-4 sm:ml-14 font-['Epilogue'] text-neutral-900 leading-[1.1] sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] ">
                     {service.title}
                   </h3>
                 </div>
 
                 {/* Image */}
-                <div className="flex-shrink-0 w-full md:w-auto flex justify-center md:justify-end">
-                  <img
-                    src={service.image}
-                    alt={service.title.replace("\n", " ")}
-                    className="w-32 sm:w-36 md:w-40 lg:w-48 xl:w-56 h-16 sm:h-18 md:h-20 lg:h-24 xl:h-28 rounded-[20px] sm:rounded-[25px] md:rounded-[30px] lg:rounded-[35px] xl:rounded-[70px] object-cover"
-                  />
-                </div>
+                <img
+                  src={service.image}
+                  alt={service.title.replace("\n", " ")}
+                  className="w-16 h-8 sm:w-36 md:w-40 lg:w-48 xl:w-56 sm:h-18 md:h-20 lg:h-24 xl:h-28 rounded-[20px] sm:rounded-[25px] md:rounded-[30px] lg:rounded-[35px] xl:rounded-[70px] object-cover"
+                />
               </div>
             </div>
           ))}
