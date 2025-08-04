@@ -47,7 +47,7 @@ export function OurStorySection() {
 
             {/* Description */}
             <div className="mb-16">
-              <p className="text-xl font-light font-['DM_Sans'] leading-[1.3] text-black max-w-5xl mx-auto">
+              <p className="text-xl font-light font-['DM_Sans'] leading-[1.2] text-black max-w-5xl mx-auto">
                 IQue Ventures is dedicated to building a dynamic and sustainable
                 startup ecosystem that fosters innovation, entrepreneurship, and
                 growth. We focus on empowering entrepreneurs, supporting
@@ -81,30 +81,28 @@ export function OurStorySection() {
                   <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                     Our Mission
                   </h3>
-                  <p className="text-lg font-normal font-['DM_Sans'] leading-[1.6] text-neutral-500">
-                    <span className="text-neutral-500">We</span> to connect the
-                    dots between aspiring founders, innovative startups, and
-                    resourceful investors, while also facilitating collaboration
-                    with key stakeholders like governments and corporations.
-                    Through a holistic approach, we develop tailored programs
-                    and initiatives that support each stage of the
-                    entrepreneurial journey, from idea inception to market
+                  <p className="text-lg font-normal font-['DM_Sans'] leading-[1.2] text-neutral-500">
+                    we to connect the dots between aspiring founders, innovative
+                    startups, and resourceful investors, while also facilitating
+                    collaboration with key stakeholders like governments and
+                    corporations. Through a holistic approach, we develop
+                    tailored programs and initiatives that support each stage of
+                    the entrepreneurial journey, from idea inception to market
                     success.
                   </p>
                 </div>
 
                 {/* Our Vision */}
-                <div className="space-y-4">
+                <div className="space-y-2 md:space-y-4">
                   <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                     Our Vision
                   </h3>
-                  <p className="text-lg font-normal font-['DM_Sans'] leading-[1.6] text-neutral-500">
-                    At <span className="text-neutral-500">IQue Ventures</span>,
-                    we believe in the power of community and collaboration. We
-                    are committed to creating a seamless ecosystem where
-                    entrepreneurs and startups can thrive, investors can
-                    discover opportunities, and organizations can leverage the
-                    potential of innovative solutions.
+                  <p className="text-lg font-normal font-['DM_Sans'] leading-[1.2] text-neutral-500">
+                    At IQue Ventures, we believe in the power of community and
+                    collaboration. We are committed to creating a seamless
+                    ecosystem where entrepreneurs and startups can thrive,
+                    investors can discover opportunities, and organizations can
+                    leverage the potential of innovative solutions.
                   </p>
                 </div>
               </div>

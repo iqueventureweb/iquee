@@ -66,7 +66,7 @@ export function CarouselSection() {
             alt="Carousel Background"
             width={1000}
             height={1000}
-            className="w-full h-full absolute top-0 left-0 z-[3] object-cover"
+            className="w-full h-full absolute top-0 left-0 z-[3] object-none xl:object-cover"
           />
           <div className="hidden md:block z-[4]">
             <div className="flex justify-center items-center space-x-8 lg:space-x-16 mb-8">

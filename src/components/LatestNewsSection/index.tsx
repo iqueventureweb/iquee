@@ -2,8 +2,18 @@
 
 import Image from "next/image";
 
+// Article type definition
+interface NewsArticle {
+  id: number;
+  title: string;
+  author: string;
+  date: string;
+  image: string;
+  isFeatured: boolean;
+}
+
 export function LatestNewsSection() {
-  const newsArticles = [
+  const newsArticles: NewsArticle[] = [
     {
       id: 1,
       title:
@@ -32,11 +42,66 @@ export function LatestNewsSection() {
     },
   ];
 
+  // Tag component for author and date
+  const Tag = ({ children }: { children: React.ReactNode }) => (
+    <div className="px-3 rounded-[20px] border border-neutral-900">
+      <span className="text-xs font-normal font-['Epilogue'] uppercase leading-[1.3] tracking-wide text-neutral-900">
+        {children}
+      </span>
+    </div>
+  );
+
+  // Tags container component
+  const TagsContainer = ({
+    author,
+    date,
+  }: {
+    author: string;
+    date: string;
+  }) => (
+    <div className="flex gap-2 mb-4">
+      <Tag>{author}</Tag>
+      <Tag>{date}</Tag>
+    </div>
+  );
+
+  // Article card component
+  const ArticleCard = ({
+    article,
+    isFeatured = false,
+  }: {
+    article: NewsArticle;
+    isFeatured?: boolean;
+  }) => (
+    <div className="">
+      <div
+        className={`w-full overflow-hidden rounded-lg mb-4 ${
+          isFeatured ? "h-72 lg:h-[502.61px]" : "h-72 lg:h-60"
+        }`}
+      >
+        <Image
+          src={article.image}
+          alt={article.title}
+          width={isFeatured ? 608 : 292}
+          height={isFeatured ? 503 : 241}
+          className={`object-cover ${
+            isFeatured ? "w-[608px] h-[502.61px]" : "w-full h-full"
+          }`}
+        />
+      </div>
+
+      <TagsContainer author={article.author} date={article.date} />
+
+      <h3 className="text-sm lg:text-2xl font-normal font-['Poppins'] leading-[1.3] text-neutral-900">
+        {article.title}
+      </h3>
+    </div>
+  );
+
   return (
     <section className="py-16 lg:py-24 bg-neutral-100">
       <div className="container mx-auto px-4 relative">
         {/* Header */}
-
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 lg:mb-16">
           <h2 className="text-3xl lg:text-5xl font-medium font-['DM_Sans'] uppercase leading-9 lg:leading-[53.89px] text-neutral-900 mb-4 lg:mb-0">
             Latest News
@@ -59,70 +124,12 @@ export function LatestNewsSection() {
 
         {/* News Grid */}
         <div className="flex flex-col md:flex-row gap-8 lg:gap-6">
-          {/* Featured Article - Desktop */}
-          <div className="">
-            <div className="w-full h-72 lg:h-[502.61px] overflow-hidden rounded-lg mb-4">
-              <Image
-                src={newsArticles[0].image}
-                alt={newsArticles[0].title}
-                width={608}
-                height={503}
-                className="w-[608px] h-[502.61px] object-cover"
-              />
-            </div>
-
-            {/* Tags */}
-            <div className="flex gap-2 mb-4">
-              <div className="px-3 py-1 rounded-[20px] border border-neutral-900">
-                <span className="text-xs font-normal font-['Epilogue'] uppercase leading-[1.3] tracking-wide text-neutral-900">
-                  {newsArticles[0].author}
-                </span>
-              </div>
-              <div className="px-3 py-1 rounded-[20px] border border-neutral-900">
-                <span className="text-xs font-normal font-['Epilogue'] uppercase leading-[1.3] tracking-wide text-neutral-900">
-                  {newsArticles[0].date}
-                </span>
-              </div>
-            </div>
-
-            {/* Title */}
-            <h3 className="text-sm lg:text-2xl font-normal font-['Poppins'] leading-[1.3] text-neutral-900">
-              {newsArticles[0].title}
-            </h3>
-          </div>
+          {/* Featured Article */}
+          <ArticleCard article={newsArticles[0]} isFeatured={true} />
 
           {/* Regular Articles */}
           {newsArticles.slice(1).map((article) => (
-            <div key={article.id} className="">
-              <div className="w-full h-72 lg:h-60 overflow-hidden rounded-lg mb-4">
-                <Image
-                  src={article.image}
-                  alt={article.title}
-                  width={292}
-                  height={241}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Tags */}
-              <div className="flex gap-2 mb-4">
-                <div className="px-3 py-1 rounded-[20px] border border-neutral-900">
-                  <p className="text-xs font-normal font-['Epilogue'] uppercase leading-[1.3] tracking-wide text-neutral-900">
-                    {article.author}
-                  </p>
-                </div>
-                <div className="px-3 py-1 rounded-[20px] border border-neutral-900">
-                  <p className="text-xs font-normal font-['Epilogue'] uppercase leading-[1.3] tracking-wide text-neutral-900">
-                    {article.date}
-                  </p>
-                </div>
-              </div>
-
-              {/* Title */}
-              <h3 className="text-sm lg:text-2xl font-normal font-['Poppins'] leading-[1.3] text-neutral-900">
-                {article.title}
-              </h3>
-            </div>
+            <ArticleCard key={article.id} article={article} />
           ))}
         </div>
       </div>

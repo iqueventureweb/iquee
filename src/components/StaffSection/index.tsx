@@ -4,10 +4,19 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
+// Staff member type definition
+interface StaffMember {
+  id: number;
+  name: string;
+  role: string;
+  image: string;
+  quote: string;
+}
+
 export function StaffSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const staffMembers = [
+  const staffMembers: StaffMember[] = [
     {
       id: 1,
       name: "Shafi Shoukath",
@@ -51,6 +60,59 @@ export function StaffSection() {
   };
 
   const currentMember = staffMembers[currentSlide];
+  const nextMember = staffMembers[(currentSlide + 1) % staffMembers.length];
+
+  // Staff member card component
+  const StaffMemberCard = ({
+    member,
+    className = "",
+  }: {
+    member: StaffMember;
+    className?: string;
+  }) => (
+    <div className={`flex-shrink-0 z-[5] ${className}`}>
+      <div className="w-64 sm:w-72 lg:w-64 xl:w-72">
+        <Image
+          src={member.image}
+          alt={member.name}
+          width={300}
+          height={400}
+          className="w-full h-80 sm:h-96 lg:h-80 xl:h-96 object-cover rounded-lg"
+        />
+        <div className="text-center mt-4">
+          <h4 className="text-base lg:text-lg font-normal font-['DM_Sans'] leading-normal text-white">
+            {member.name}
+          </h4>
+          <p className="text-sm lg:text-base font-normal font-['DM_Sans'] leading-tight text-neutral-500">
+            {member.role}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Navigation button component
+  const NavigationButton = ({
+    onClick,
+    direction,
+    className,
+  }: {
+    onClick: () => void;
+    direction: "prev" | "next";
+    className: string;
+  }) => (
+    <button
+      onClick={onClick}
+      className={`absolute z-[10] top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow ${className}`}
+      aria-label={`${direction === "prev" ? "Previous" : "Next"} staff member`}
+    >
+      {direction === "prev" ? (
+        <ArrowLeft className="w-5 h-5 text-neutral-600" />
+      ) : (
+        <ArrowRight className="w-5 h-5 text-neutral-600" />
+      )}
+    </button>
+  );
 
   return (
     <section className="bg-black py-16 lg:py-20">
@@ -61,7 +123,7 @@ export function StaffSection() {
           <div className="w-full lg:max-w-xl">
             <div className="flex gap-4 lg:gap-6 items-start">
               {/* Quote Icon */}
-              <div className="w-14 h-14 sm:h-14 lg:h-16 bg-white rounded-[30px] mb-4 lg:mb-6 flex items-center justify-center mx-auto sm:mx-0 flex-shrink-0">
+              <div className="w-14 h-14 sm:h-14 lg:w-16 lg:h-16 bg-white rounded-[30px] mb-4 lg:mb-6 flex items-center justify-center mx-auto sm:mx-0 flex-shrink-0">
                 <span className="h-[23px] md:h-[33px] text-5xl md:text-6xl xl:text-7xl font-serif text-black leading-none">
                   {"”"}
                 </span>
@@ -92,77 +154,28 @@ export function StaffSection() {
           {/* Team Carousel */}
           <div className="relative w-full lg:w-auto">
             {/* Team Members Display */}
-            <div className="flex justify-center mx-auto relative w-fit space-x-4 lg:space-x-8 overflow-hidden z-[4]">
+            <div className="flex justify-center mx-auto relative w-fit space-x-4 lg:space-x-8 overflow-visible z-[1]">
               {/* First member - always visible */}
-              <div className="flex-shrink-0 z-[5]">
-                <div className="w-64 sm:w-72 lg:w-64 xl:w-72">
-                  <Image
-                    src={staffMembers[currentSlide].image}
-                    alt={staffMembers[currentSlide].name}
-                    width={300}
-                    height={400}
-                    className="w-full h-80 sm:h-96 lg:h-80 xl:h-96 object-cover rounded-lg"
-                  />
-                  <div className="text-center mt-4">
-                    <h4 className="text-base lg:text-lg font-normal font-['DM_Sans'] leading-normal text-white">
-                      {staffMembers[currentSlide].name}
-                    </h4>
-                    <p className="text-sm lg:text-base font-normal font-['DM_Sans'] leading-tight text-neutral-500">
-                      {staffMembers[currentSlide].role}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <StaffMemberCard member={currentMember} />
 
               {/* Second member - hidden on mobile, visible on md+ */}
-              <div className="hidden md:block flex-shrink-0 z-[5]">
-                <div className="w-64 sm:w-72 lg:w-64 xl:w-72">
-                  <Image
-                    src={
-                      staffMembers[(currentSlide + 1) % staffMembers.length]
-                        .image
-                    }
-                    alt={
-                      staffMembers[(currentSlide + 1) % staffMembers.length]
-                        .name
-                    }
-                    width={300}
-                    height={400}
-                    className="w-full h-80 sm:h-96 lg:h-80 xl:h-96 object-cover rounded-lg"
-                  />
-                  <div className="text-center mt-4">
-                    <h4 className="text-base lg:text-lg font-normal font-['DM_Sans'] leading-normal text-white">
-                      {
-                        staffMembers[(currentSlide + 1) % staffMembers.length]
-                          .name
-                      }
-                    </h4>
-                    <p className="text-sm lg:text-base font-normal font-['DM_Sans'] leading-tight text-neutral-500">
-                      {
-                        staffMembers[(currentSlide + 1) % staffMembers.length]
-                          .role
-                      }
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <button
-                onClick={prevSlide}
-                className="absolute left-[-39px] sm:left-[-55px] z-[6] top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
-                aria-label="Previous staff member"
-              >
-                <ArrowLeft className="w-5 h-5 text-neutral-600" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-[-25px] z-[6] top-1/2 transform -translate-y-1/2 w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
-                aria-label="Next staff member"
-              >
-                <ArrowRight className="w-5 h-5 text-neutral-600" />
-              </button>
-            </div>
+              <StaffMemberCard
+                member={nextMember}
+                className="hidden md:block"
+              />
 
-            {/* Navigation Arrows */}
+              {/* Navigation Buttons */}
+              <NavigationButton
+                onClick={prevSlide}
+                direction="prev"
+                className="left-[-39px] sm:left-[-55px]"
+              />
+              <NavigationButton
+                onClick={nextSlide}
+                direction="next"
+                className="right-[-25px]"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -3,37 +3,37 @@ import Image from "next/image";
 export function TrustSection() {
   const logos = [
     {
-      src: "https://placehold.co/75x27",
+      src: "/company/emt.svg",
       alt: "Company 1",
       width: 75,
       height: 27,
     },
     {
-      src: "https://placehold.co/75x27",
+      src: "/company/icg.svg",
       alt: "Company 2",
       width: 75,
       height: 27,
     },
     {
-      src: "https://placehold.co/75x31",
+      src: "/company/sibe.svg",
       alt: "Company 3",
       width: 75,
       height: 31,
     },
     {
-      src: "https://placehold.co/75x34",
+      src: "/company/ader.svg",
       alt: "Company 4",
       width: 75,
       height: 34,
     },
     {
-      src: "https://placehold.co/75x22",
+      src: "/company/ceosquare.svg",
       alt: "Company 5",
       width: 75,
       height: 22,
     },
     {
-      src: "https://placehold.co/75x25",
+      src: "/company/tenclubs.svg",
       alt: "Company 6",
       width: 75,
       height: 25,
@@ -41,7 +41,7 @@ export function TrustSection() {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="pt-16 pb-8 md:py-16 bg-white">
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <div className="text-center mb-12">
