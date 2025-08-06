@@ -58,6 +58,7 @@
     "react-dom": "19.1.0",
     "react-hook-form": "7.45.4",
     "sharp": "0.34.2",
+    "suneditor-react": "^3.6.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.178.0"
