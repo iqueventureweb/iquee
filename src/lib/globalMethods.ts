@@ -88,7 +88,7 @@ export const processEditorContent = (htmlContent: string): string => {
       });
 
       // Get the cleaned HTML content
-      let modifiedHtml = doc.body.innerHTML;
+      const modifiedHtml = doc.body.innerHTML;
 
       // Apply any domain replacements or content modifications if needed
       // Example replacements (uncomment and modify as needed):
