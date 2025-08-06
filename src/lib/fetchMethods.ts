@@ -1,4 +1,4 @@
-import { Blog, HomePage, Service } from "@/payload-types";
+import { Blog, HomePage, Project, Service } from "@/payload-types";
 import { unstable_cache } from "next/cache";
 import { getPayloadClient } from "./payload";
 
@@ -71,4 +71,56 @@ export const getBlogs = unstable_cache(
     tags: ["blogs"],
     revalidate: 3600, // Cache for 1 hour
   }
+);
+
+// Get individual service by slug
+export const getServiceBySlug = unstable_cache(
+  async (slug: string): Promise<Service | null> => {
+    try {
+      const payload = await getPayloadClient();
+
+      const result = await payload.find({
+        collection: "services",
+        where: {
+          slug: {
+            equals: slug,
+          },
+        },
+        limit: 1,
+      });
+
+      return result.docs[0] || null;
+    } catch (error) {
+      console.error("Error fetching service by slug:", error);
+      return null;
+    }
+  },
+  ["service-by-slug"],
+  { tags: ["services"], revalidate: 3600 }
+);
+
+// Get projects by service slug (using the "projects" collection which is Products)
+export const getProjectsByService = unstable_cache(
+  async (serviceId: string): Promise<Project[]> => {
+    try {
+      const payload = await getPayloadClient();
+
+      const result = await payload.find({
+        collection: "projects",
+        where: {
+          services: {
+            in: [serviceId],
+          },
+        },
+        sort: "-createdAt",
+      });
+
+      return result.docs;
+    } catch (error) {
+      console.error("Error fetching projects by service:", error);
+      return [];
+    }
+  },
+  ["projects-by-service"],
+  { tags: ["projects", "services"], revalidate: 3600 }
 );

@@ -21,10 +21,7 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      <HomeServicesSection
-        data={homePageData?.featured_services}
-        services={services}
-      />
+      <HomeServicesSection services={services} />
       <AchievementsSection data={homePageData?.achievement} />
       <TrustSection />
       <OurStorySection data={homePageData?.our_story} />
