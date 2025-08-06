@@ -65,7 +65,10 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Newsletter stats error:", error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 500 }
     );
   }
@@ -84,7 +87,7 @@ export async function POST(request: NextRequest) {
     }
 
     const payload = await getPayloadClient();
-    let results = [];
+    const results = [];
 
     switch (action) {
       case "unsubscribe":
@@ -101,7 +104,11 @@ export async function POST(request: NextRequest) {
             });
             results.push({ email, success: true, updated: result.docs.length });
           } catch (error) {
-            results.push({ email, success: false, error: error.message });
+            results.push({
+              email,
+              success: false,
+              error: error instanceof Error ? error.message : "Unknown error",
+            });
           }
         }
         break;
@@ -120,7 +127,11 @@ export async function POST(request: NextRequest) {
             });
             results.push({ email, success: true, updated: result.docs.length });
           } catch (error) {
-            results.push({ email, success: false, error: error.message });
+            results.push({
+              email,
+              success: false,
+              error: error instanceof Error ? error.message : "Unknown error",
+            });
           }
         }
         break;
@@ -136,7 +147,11 @@ export async function POST(request: NextRequest) {
             });
             results.push({ email, success: true, deleted: result.docs.length });
           } catch (error) {
-            results.push({ email, success: false, error: error.message });
+            results.push({
+              email,
+              success: false,
+              error: error instanceof Error ? error.message : "Unknown error",
+            });
           }
         }
         break;
@@ -161,7 +176,10 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Newsletter bulk operation error:", error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 500 }
     );
   }
