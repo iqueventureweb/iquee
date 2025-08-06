@@ -113,6 +113,9 @@ importers:
       sharp:
         specifier: 0.34.2
         version: 0.34.2
+      suneditor-react:
+        specifier: ^3.6.1
+        version: 3.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(suneditor@2.47.6)
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.6.0
@@ -4759,6 +4762,16 @@ packages:
     resolution: {integrity: sha512-8EbVDiu9iN/nESwxeSxDKe0dunta1GOlHufmSSXxMD2z2/tMZpDMpvXQGsc+ajGo8y2uYUmixaSRUc/QPoQ0GA==}
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
+
+  suneditor-react@3.6.1:
+    resolution: {integrity: sha512-12f9KLnEB6pAdyHJINTzRBg3UOWVZZ+jVYSEtwdBTDYQW4amUZr0xOnpikbBAlxb9rcTYV5RHAsad3gnNhLsuA==}
+    peerDependencies:
+      react: '>= 16.8.0'
+      react-dom: '>= 16.8.0'
+      suneditor: ^2.44.10
+
+  suneditor@2.47.6:
+    resolution: {integrity: sha512-bs3MFSvjdbkN37dSd98YhxvEfnMezwNptwAq/cBUNb1wb/YzqGWyWR1MHEs+CEjK42oHXE3u42fzBtC1LFaT5Q==}
 
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
@@ -10849,6 +10862,14 @@ snapshots:
       mz: 2.7.0
       pirates: 4.0.7
       ts-interface-checker: 0.1.13
+
+  suneditor-react@3.6.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(suneditor@2.47.6):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+      suneditor: 2.47.6
+
+  suneditor@2.47.6: {}
 
   supports-color@7.2.0:
     dependencies:

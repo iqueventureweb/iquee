@@ -7,10 +7,48 @@ import { useState } from "react";
 
 export function NewsletterSection() {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error" | "">("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle newsletter subscription
+
+    if (!email || !email.includes("@")) {
+      setMessage("Please enter a valid email address");
+      setMessageType("error");
+      return;
+    }
+
+    setLoading(true);
+    setMessage("");
+    setMessageType("");
+
+    try {
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setMessage(data.message);
+        setMessageType("success");
+        setEmail(""); // Clear the form
+      } else {
+        setMessage(data.message || "An error occurred");
+        setMessageType("error");
+      }
+    } catch (error) {
+      setMessage("Network error. Please try again.");
+      setMessageType("error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -46,11 +84,23 @@ export function NewsletterSection() {
               {/* Subscribe Button */}
               <button
                 type="submit"
-                className="w-full md:w-48 h-12 sm:h-14 bg-white/95 rounded text-black text-xs font-bold font-['DM_Sans'] uppercase leading-tight tracking-wide hover:bg-white transition-colors"
+                disabled={loading}
+                className="w-full md:w-48 h-12 sm:h-14 bg-white/95 rounded text-black text-xs font-bold font-['DM_Sans'] uppercase leading-tight tracking-wide hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Subscribe Now
+                {loading ? "Subscribing..." : "Subscribe Now"}
               </button>
             </div>
+
+            {/* Status Message */}
+            {message && (
+              <div
+                className={`text-center text-sm font-medium ${
+                  messageType === "success" ? "text-green-400" : "text-red-400"
+                }`}
+              >
+                {message}
+              </div>
+            )}
 
             {/* Terms and Privacy */}
             <div className="flex items-start lg:items-center justify-center gap-1 lg:gap-2 text-sm font-normal font-['DM_Sans'] leading-tight text-white/70">

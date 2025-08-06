@@ -1,28 +1,66 @@
 "use client";
 
-export function HomeServicesSection() {
-  const services = [
+import { Service } from "@/payload-types";
+import { useRouter } from "next/navigation";
+
+interface HomeServicesSectionProps {
+  services?: Service[];
+}
+
+export function HomeServicesSection({ services }: HomeServicesSectionProps) {
+  // Fallback data if CMS data is not available
+  const router = useRouter();
+  const defaultServices = [
     {
       id: "01",
       title: "Creating\nEntrepreneurs",
+      slug: "creating-entrepreneurs",
+      description: "Empowering individuals to become successful entrepreneurs",
+      icon: "📊",
       image: "https://placehold.co/218x108",
     },
     {
       id: "02",
       title: "Supporting\nStartups",
+      slug: "supporting-startups",
+      description: "Providing comprehensive support for startup growth",
+      icon: "🚀",
       image: "https://placehold.co/218x108",
     },
     {
       id: "03",
       title: "Creating and Connecting Investors",
+      slug: "creating-and-connecting-investors",
+      description: "Building bridges between startups and investors",
+      icon: "💼",
       image: "https://placehold.co/218x108",
     },
     {
       id: "04",
       title: "Collaboration with Govt and Other Organisations",
+      slug: "collaboration-with-govt-and-other-organisations",
+      description: "Fostering partnerships for ecosystem development",
+      icon: "🤝",
       image: "https://placehold.co/218x108",
     },
   ];
+
+  const servicesData =
+    // First priority: Services from Services collection
+    services && services.length > 0
+      ? services
+          .map((service, index) => ({
+            id: String(index + 1).padStart(2, "0"),
+            title: service.title || "",
+            slug: service.slug || "",
+            description:
+              service.blocks?.[0]?.content || service.blocks?.[0]?.title || "",
+            icon: "🚀", // Default icon for services from collection
+            image: "https://placehold.co/218x108", // Default image
+          }))
+          .reverse()
+      : // Fallback: Default services
+        defaultServices;
 
   return (
     <section className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 lg:pt-32 xl:pt-32">
@@ -60,12 +98,15 @@ export function HomeServicesSection() {
 
         {/* Services Cards */}
         <div className="space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-12">
-          {services.map((service, index) => (
+          {servicesData.map((service, index) => (
             <div
               key={service.id}
-              className={` w-[90%] sm:w-full max-w-xl lg:max-w-6xl mx-auto ${
+              className={` w-[90%] sm:w-full max-w-xl lg:max-w-6xl cursor-pointer mx-auto ${
                 index % 2 === 1 ? "mr-0" : "ml-0"
               }`}
+              onClick={() => {
+                router.push(`/services/${service.slug}`);
+              }}
             >
               <div className="rounded-[40px] sm:rounded-[60px] md:rounded-[80px] lg:rounded-[120px] xl:rounded-[200px] border border-neutral-900 p-4 py-1 md:p-8 lg:p-12 xl:px-16 lg:py-3 min-h-16 sm:min-h-40 md:min-h-48 lg:min-h-56 flex  items-center justify-between gap-4 sm:gap-6 md:gap-8 relative tracking-tighter">
                 {/* Content */}

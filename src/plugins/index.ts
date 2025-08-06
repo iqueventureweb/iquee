@@ -1,8 +1,6 @@
 import { revalidateRedirects } from "@/hooks/revalidateRedirects";
-import { beforeSyncWithSearch } from "@/search/beforeSync";
 import { searchFields } from "@/search/fieldOverrides";
 import { formBuilderPlugin } from "@payloadcms/plugin-form-builder";
-import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs";
 import { redirectsPlugin } from "@payloadcms/plugin-redirects";
 import { searchPlugin } from "@payloadcms/plugin-search";
 import { seoPlugin } from "@payloadcms/plugin-seo";
@@ -51,10 +49,10 @@ export const plugins: Plugin[] = [
       },
     },
   }),
-  nestedDocsPlugin({
-    collections: ["categories"],
-    generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ""),
-  }),
+  // nestedDocsPlugin({
+  //   collections: ["categories"],
+  //   generateURL: (docs) => docs.reduce((url, doc) => `${url}/${doc.slug}`, ""),
+  // }),
   seoPlugin({
     generateTitle,
     generateURL,
@@ -88,7 +86,7 @@ export const plugins: Plugin[] = [
     },
   }),
   searchPlugin({
-    beforeSync: beforeSyncWithSearch,
+    // beforeSync: beforeSyncWithSearch,
     searchOverrides: {
       fields: ({ defaultFields }) => {
         return [...defaultFields, ...searchFields];

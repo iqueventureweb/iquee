@@ -1,7 +1,12 @@
+import { HomePage } from "@/payload-types";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
-export function OurStorySection() {
+interface OurStorySectionProps {
+  data?: HomePage["our_story"];
+}
+
+export function OurStorySection({ data }: OurStorySectionProps) {
   return (
     <section className="py-9 lg:py-24 bg-white relative">
       <div className="container mx-auto px-4">
@@ -17,7 +22,7 @@ export function OurStorySection() {
                     Our Story
                   </span>
                   <h2 className="text-6xl font-medium font-['DM_Sans'] leading-[61.99px] text-black">
-                    Better way to create
+                    {data?.title || "Better way to create"}
                   </h2>
                 </div>
               </div>
@@ -48,13 +53,8 @@ export function OurStorySection() {
             {/* Description */}
             <div className="mb-16">
               <p className="text-xl font-light font-['DM_Sans'] leading-[1.2] text-black max-w-5xl mx-auto">
-                IQue Ventures is dedicated to building a dynamic and sustainable
-                startup ecosystem that fosters innovation, entrepreneurship, and
-                growth. We focus on empowering entrepreneurs, supporting
-                startups, cultivating investors, and bridging the gap between
-                startups and government or private organizations. By creating
-                impactful projects and programs, we enable startups to drive
-                positive change and create solutions that benefit society.
+                {data?.description ||
+                  "IQue Ventures is dedicated to building a dynamic and sustainable startup ecosystem that fosters innovation, entrepreneurship, and growth. We focus on empowering entrepreneurs, supporting startups, cultivating investors, and bridging the gap between startups and government or private organizations. By creating impactful projects and programs, we enable startups to drive positive change and create solutions that benefit society."}
               </p>
             </div>
 
@@ -79,30 +79,22 @@ export function OurStorySection() {
                 {/* Our Mission */}
                 <div className="space-y-4">
                   <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
-                    Our Mission
+                    {data?.contents?.[0]?.title || "Our Mission"}
                   </h3>
                   <p className="text-lg font-normal font-['DM_Sans'] leading-[1.2] text-neutral-500">
-                    we to connect the dots between aspiring founders, innovative
-                    startups, and resourceful investors, while also facilitating
-                    collaboration with key stakeholders like governments and
-                    corporations. Through a holistic approach, we develop
-                    tailored programs and initiatives that support each stage of
-                    the entrepreneurial journey, from idea inception to market
-                    success.
+                    {data?.contents?.[0]?.description ||
+                      "we to connect the dots between aspiring founders, innovative startups, and resourceful investors, while also facilitating collaboration with key stakeholders like governments and corporations. Through a holistic approach, we develop tailored programs and initiatives that support each stage of the entrepreneurial journey, from idea inception to market success."}
                   </p>
                 </div>
 
                 {/* Our Vision */}
                 <div className="space-y-2 md:space-y-4">
                   <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
-                    Our Vision
+                    {data?.contents?.[1]?.title || "Our Vision"}
                   </h3>
                   <p className="text-lg font-normal font-['DM_Sans'] leading-[1.2] text-neutral-500">
-                    At IQue Ventures, we believe in the power of community and
-                    collaboration. We are committed to creating a seamless
-                    ecosystem where entrepreneurs and startups can thrive,
-                    investors can discover opportunities, and organizations can
-                    leverage the potential of innovative solutions.
+                    {data?.contents?.[1]?.description ||
+                      "At IQue Ventures, we believe in the power of community and collaboration. We are committed to creating a seamless ecosystem where entrepreneurs and startups can thrive, investors can discover opportunities, and organizations can leverage the potential of innovative solutions."}
                   </p>
                 </div>
               </div>
@@ -111,7 +103,7 @@ export function OurStorySection() {
                 alt="Wave Dec"
                 width={100}
                 height={100}
-                className="w-40 h-auto absolute bottom-0 -left-8"
+                className="w-40 h-auto absolute -bottom-6 -left-8"
               />
             </div>
           </div>
@@ -125,19 +117,14 @@ export function OurStorySection() {
               Our Story
             </span>
             <h2 className="text-3xl font-medium font-['DM_Sans'] leading-loose text-black">
-              Better way to create.
+              {data?.title || "Better way to create."}
             </h2>
           </div>
 
           {/* Description */}
           <p className="text-xl font-light font-['DM_Sans'] leading-normal text-black">
-            IQue Ventures is dedicated to building a dynamic and sustainable
-            startup ecosystem that fosters innovation, entrepreneurship, and
-            growth. We focus on empowering entrepreneurs, supporting startups,
-            cultivating investors, and bridging the gap between startups and
-            government or private organizations. By creating impactful projects
-            and programs, we enable startups to drive positive change and create
-            solutions that benefit society.
+            {data?.description ||
+              "IQue Ventures is dedicated to building a dynamic and sustainable startup ecosystem that fosters innovation, entrepreneurship, and growth. We focus on empowering entrepreneurs, supporting startups, cultivating investors, and bridging the gap between startups and government or private organizations. By creating impactful projects and programs, we enable startups to drive positive change and create solutions that benefit society."}
           </p>
 
           {/* Learn more link */}
@@ -164,29 +151,22 @@ export function OurStorySection() {
             {/* Our Mission */}
             <div className="space-y-4 mt-12">
               <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
-                Our Mission
+                {data?.contents?.[0]?.title || "Our Mission"}
               </h3>
               <p className="text-lg font-normal font-['DM_Sans'] leading-loose text-neutral-500">
-                We to connect the dots between aspiring founders, innovative
-                startups, and resourceful investors, while also facilitating
-                collaboration with key stakeholders like governments and
-                corporations. Through a holistic approach, we develop tailored
-                programs and initiatives that support each stage of the
-                entrepreneurial journey, from idea inception to market success.
+                {data?.contents?.[0]?.description ||
+                  "We to connect the dots between aspiring founders, innovative startups, and resourceful investors, while also facilitating collaboration with key stakeholders like governments and corporations. Through a holistic approach, we develop tailored programs and initiatives that support each stage of the entrepreneurial journey, from idea inception to market success."}
               </p>
             </div>
 
             {/* Our Vision */}
             <div className="space-y-4">
               <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
-                Our Vision
+                {data?.contents?.[1]?.title || "Our Vision"}
               </h3>
               <p className="text-lg font-normal font-['DM_Sans'] leading-loose text-neutral-500">
-                At IQue Ventures, we believe in the power of community and
-                collaboration. We are committed to creating a seamless ecosystem
-                where entrepreneurs and startups can thrive, investors can
-                discover opportunities, and organizations can leverage the
-                potential of innovative solutions.
+                {data?.contents?.[1]?.description ||
+                  "At IQue Ventures, we believe in the power of community and collaboration. We are committed to creating a seamless ecosystem where entrepreneurs and startups can thrive, investors can discover opportunities, and organizations can leverage the potential of innovative solutions."}
               </p>
             </div>
           </div>

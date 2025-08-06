@@ -1,5 +1,6 @@
 "use client";
 
+import { HomePage } from "@/payload-types";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -13,10 +14,15 @@ interface StaffMember {
   quote: string;
 }
 
-export function StaffSection() {
+interface StaffSectionProps {
+  data?: HomePage["staff"];
+}
+
+export function StaffSection({ data }: StaffSectionProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const staffMembers: StaffMember[] = [
+  // Fallback data if CMS data is not available
+  const defaultStaffMembers: StaffMember[] = [
     {
       id: 1,
       name: "Shafi Shoukath",
@@ -48,6 +54,17 @@ export function StaffSection() {
         "Technology and vision combine to create transformative experiences for our clients.",
     },
   ];
+
+  const staffMembers =
+    data && data.length > 0
+      ? data.map((staff, index) => ({
+          id: index + 1,
+          name: staff.name || "",
+          role: staff.role || "",
+          image: staff.image_url || "https://placehold.co/300x400",
+          quote: staff.quote || "",
+        }))
+      : defaultStaffMembers;
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % staffMembers.length);

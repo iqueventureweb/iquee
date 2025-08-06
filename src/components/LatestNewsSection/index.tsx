@@ -1,5 +1,6 @@
 "use client";
 
+import { Blog } from "@/payload-types";
 import Image from "next/image";
 
 // Article type definition
@@ -12,8 +13,13 @@ interface NewsArticle {
   isFeatured: boolean;
 }
 
-export function LatestNewsSection() {
-  const newsArticles: NewsArticle[] = [
+interface LatestNewsSectionProps {
+  blogs?: Blog[];
+}
+
+export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
+  // Default fallback articles
+  const defaultNewsArticles: NewsArticle[] = [
     {
       id: 1,
       title:
@@ -41,6 +47,28 @@ export function LatestNewsSection() {
       isFeatured: false,
     },
   ];
+
+  // Convert blogs to NewsArticle format or use defaults
+  const newsArticles: NewsArticle[] =
+    blogs && blogs.length > 0
+      ? blogs
+          .map((blog, index) => {
+            return {
+              id: parseInt(blog.id) || index + 1,
+              title: blog.title || "Untitled",
+              author: blog.author || "Unknown Author",
+              date: blog.createdAt
+                ? new Date(blog.createdAt).toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "long",
+                  })
+                : "No date",
+              image: "https://placehold.co/608x503", // Default image for now
+              isFeatured: index === 0, // First blog is featured
+            };
+          })
+          .reverse()
+      : defaultNewsArticles;
 
   // Tag component for author and date
   const Tag = ({ children }: { children: React.ReactNode }) => (

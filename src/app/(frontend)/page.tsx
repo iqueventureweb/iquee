@@ -9,19 +9,26 @@ import { OurStorySection } from "@/components/OurStorySection";
 import { StaffSection } from "@/components/StaffSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { TrustSection } from "@/components/TrustSection";
+import { getBlogs, getHomePage, getServices } from "@/lib/fetchMethods";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [homePageData, services, blogs] = await Promise.all([
+    getHomePage(),
+    getServices(),
+    getBlogs(3), // Fetch only 3 latest blogs
+  ]);
+
   return (
     <>
       <HeroSection />
-      <HomeServicesSection />
-      <AchievementsSection />
+      <HomeServicesSection services={services} />
+      <AchievementsSection data={homePageData?.achievement} />
       <TrustSection />
-      <OurStorySection />
+      <OurStorySection data={homePageData?.our_story} />
       <CarouselSection />
-      <TestimonialsSection />
-      <StaffSection />
-      <LatestNewsSection />
+      <TestimonialsSection data={homePageData?.testimonials} />
+      <StaffSection data={homePageData?.staff} />
+      <LatestNewsSection blogs={blogs} />
       <NewsletterSection />
       <ContactUsSection />
     </>
