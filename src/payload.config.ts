@@ -8,8 +8,10 @@ import { fileURLToPath } from "url";
 
 import { defaultLexical } from "@/fields/defaultLexical";
 import { Blog } from "./collections/Blogs";
+import { ContactUs } from "./collections/ContactUs";
 import { HomePage } from "./collections/HomePage";
 import { Media } from "./collections/Media";
+import { Newsletter } from "./collections/Newsletter";
 import { Products } from "./collections/Products";
 import { Services } from "./collections/Services";
 import { Users } from "./collections/Users";
@@ -60,7 +62,16 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || "",
   }),
-  collections: [Media, Users, Services, Products, HomePage, Blog],
+  collections: [
+    Media,
+    Users,
+    Services,
+    Products,
+    HomePage,
+    Blog,
+    Newsletter,
+    ContactUs,
+  ],
   cors: [getServerSideURL()].filter(Boolean),
   plugins: [
     // ...plugins,

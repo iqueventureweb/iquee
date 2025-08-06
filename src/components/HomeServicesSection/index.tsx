@@ -1,28 +1,74 @@
 "use client";
 
-export function HomeServicesSection() {
-  const services = [
+import { HomePage, Service } from "@/payload-types";
+
+interface HomeServicesSectionProps {
+  data?: HomePage["featured_services"];
+  services?: Service[];
+}
+
+export function HomeServicesSection({
+  data,
+  services,
+}: HomeServicesSectionProps) {
+  // Fallback data if CMS data is not available
+  const defaultServices = [
     {
       id: "01",
       title: "Creating\nEntrepreneurs",
+      description: "Empowering individuals to become successful entrepreneurs",
+      icon: "📊",
       image: "https://placehold.co/218x108",
     },
     {
       id: "02",
       title: "Supporting\nStartups",
+      description: "Providing comprehensive support for startup growth",
+      icon: "🚀",
       image: "https://placehold.co/218x108",
     },
     {
       id: "03",
       title: "Creating and Connecting Investors",
+      description: "Building bridges between startups and investors",
+      icon: "💼",
       image: "https://placehold.co/218x108",
     },
     {
       id: "04",
       title: "Collaboration with Govt and Other Organisations",
+      description: "Fostering partnerships for ecosystem development",
+      icon: "🤝",
       image: "https://placehold.co/218x108",
     },
   ];
+
+  const servicesData =
+    // First priority: Services from Services collection
+    services && services.length > 0
+      ? services
+          .map((service, index) => ({
+            id: String(index + 1).padStart(2, "0"),
+            title: service.title || "",
+            description:
+              service.blocks?.[0]?.content || service.blocks?.[0]?.title || "",
+            icon: "🚀", // Default icon for services from collection
+            image: "https://placehold.co/218x108", // Default image
+          }))
+          .reverse()
+      : // Second priority: Featured services from HomePage
+        data && data.length > 0
+        ? data
+            .map((service, index) => ({
+              id: String(index + 1).padStart(2, "0"),
+              title: service.title || "",
+              description: service.description || "",
+              icon: service.icon || "📊",
+              image: "https://placehold.co/218x108", // Default image
+            }))
+            .reverse()
+        : // Fallback: Default services
+          defaultServices;
 
   return (
     <section className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 lg:pt-32 xl:pt-32">
@@ -60,7 +106,7 @@ export function HomeServicesSection() {
 
         {/* Services Cards */}
         <div className="space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-12">
-          {services.map((service, index) => (
+          {servicesData.map((service, index) => (
             <div
               key={service.id}
               className={` w-[90%] sm:w-full max-w-xl lg:max-w-6xl mx-auto ${

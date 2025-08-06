@@ -1,9 +1,17 @@
+import { revalidateTag } from "next/cache";
 import type { CollectionConfig } from "payload";
 
 export const Products: CollectionConfig = {
   slug: "projects",
   admin: {
     useAsTitle: "title",
+  },
+  hooks: {
+    beforeValidate: [
+      async () => {
+        revalidateTag("projects");
+      },
+    ],
   },
   fields: [
     {

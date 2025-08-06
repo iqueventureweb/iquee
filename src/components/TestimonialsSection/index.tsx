@@ -1,13 +1,19 @@
 "use client";
 
+import { HomePage } from "@/payload-types";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 
-export function TestimonialsSection() {
+interface TestimonialsSectionProps {
+  data?: HomePage["testimonials"];
+}
+
+export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const testimonials = [
+  // Fallback data if CMS data is not available
+  const defaultTestimonials = [
     {
       id: 1,
       quote:
@@ -41,6 +47,17 @@ export function TestimonialsSection() {
       avatar: "https://placehold.co/44x44",
     },
   ];
+
+  const testimonials =
+    data && data.length > 0
+      ? data.map((testimonial, index) => ({
+          id: index + 1,
+          quote: testimonial.quote || "",
+          author: testimonial.author || "",
+          role: testimonial.role || "",
+          avatar: testimonial.avatar || "https://placehold.co/44x44",
+        }))
+      : defaultTestimonials;
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % testimonials.length);

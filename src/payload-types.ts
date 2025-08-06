@@ -73,6 +73,8 @@ export interface Config {
     projects: Project;
     'home-page': HomePage;
     blogs: Blog;
+    newsletter: Newsletter;
+    'contact-us': ContactUs;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,6 +91,8 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     blogs: BlogsSelect<false> | BlogsSelect<true>;
+    newsletter: NewsletterSelect<false> | NewsletterSelect<true>;
+    'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -321,6 +325,48 @@ export interface Blog {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter".
+ */
+export interface Newsletter {
+  id: string;
+  email: string;
+  status?: ('subscribed' | 'unsubscribed' | 'pending') | null;
+  /**
+   * Where the subscription came from
+   */
+  source?: string | null;
+  ipAddress?: string | null;
+  userAgent?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us".
+ */
+export interface ContactUs {
+  id: string;
+  name: string;
+  email: string;
+  message: string;
+  status?: ('new' | 'in_progress' | 'responded' | 'closed') | null;
+  priority?: ('low' | 'normal' | 'high' | 'urgent') | null;
+  /**
+   * Auto-generated or manually added subject
+   */
+  subject?: string | null;
+  ipAddress?: string | null;
+  userAgent?: string | null;
+  responded?: boolean | null;
+  /**
+   * Internal notes about the response or follow-up
+   */
+  responseNotes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -349,6 +395,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blogs';
         value: string | Blog;
+      } | null)
+    | ({
+        relationTo: 'newsletter';
+        value: string | Newsletter;
+      } | null)
+    | ({
+        relationTo: 'contact-us';
+        value: string | ContactUs;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -582,6 +636,37 @@ export interface BlogsSelect<T extends boolean = true> {
   slugLock?: T;
   author?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter_select".
+ */
+export interface NewsletterSelect<T extends boolean = true> {
+  email?: T;
+  status?: T;
+  source?: T;
+  ipAddress?: T;
+  userAgent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-us_select".
+ */
+export interface ContactUsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  message?: T;
+  status?: T;
+  priority?: T;
+  subject?: T;
+  ipAddress?: T;
+  userAgent?: T;
+  responded?: T;
+  responseNotes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

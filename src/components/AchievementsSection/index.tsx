@@ -1,25 +1,37 @@
 "use client";
 
-export function AchievementsSection() {
-  const achievements = [
+import { HomePage } from "@/payload-types";
+
+interface AchievementsSectionProps {
+  data?: HomePage["achievement"];
+}
+
+export function AchievementsSection({ data }: AchievementsSectionProps) {
+  // Fallback data if CMS data is not available
+  const defaultAchievements = [
     {
-      number: "25+",
+      count: "25+",
       description: "Startup support programmes",
     },
     {
-      number: "12+",
+      count: "12+",
       description: "Projects to create and connect investors",
     },
     {
-      number: "20+",
+      count: "20+",
       description:
         "Projects with state and central governments to create a better infrastructure",
     },
     {
-      number: "10+",
+      count: "10+",
       description: "Entrepreneur's Projects",
     },
   ];
+
+  const achievements =
+    data?.contents && data.contents.length > 0
+      ? data.contents
+      : defaultAchievements;
 
   return (
     <section className="relative bg-black min-h-[400px] md:min-h-[500px] lg:min-h-[590px] overflow-hidden">
@@ -31,14 +43,12 @@ export function AchievementsSection() {
           {/* Left Content */}
           <div className="space-y-6 lg:space-y-8">
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-medium font-['DM_Sans'] text-white leading-tight">
-              Check recent
-              <br />
-              achievements.
+              {data?.title || "Check recent achievements."}
             </h2>
 
             <p className="text-xl sm:text-2xl font-normal font-['DM_Sans'] text-white leading-9 max-w-md">
-              We provide the effective ideas that grow businesses of our
-              clients.
+              {data?.description ||
+                "We provide the effective ideas that grow businesses of our clients."}
             </p>
 
             <button className="bg-white/95 hover:bg-white transition-colors duration-200 rounded px-8 py-4 group">
@@ -53,7 +63,7 @@ export function AchievementsSection() {
             {achievements.map((achievement, index) => (
               <div key={index} className="space-y-4">
                 <div className="text-5xl sm:text-6xl lg:text-7xl font-medium font-['DM_Sans'] text-white leading-tight">
-                  {achievement.number}
+                  {achievement.count}
                 </div>
                 <p className="text-lg font-normal font-['DM_Sans'] text-white/70 leading-loose max-w-72">
                   {achievement.description}

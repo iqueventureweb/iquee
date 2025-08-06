@@ -1,7 +1,15 @@
+import { revalidateTag } from "next/cache";
 import { CollectionConfig } from "payload";
 
 export const HomePage: CollectionConfig = {
   slug: "home-page",
+  hooks: {
+    beforeValidate: [
+      async () => {
+        revalidateTag("homepage");
+      },
+    ],
+  },
   fields: [
     {
       name: "achievement",

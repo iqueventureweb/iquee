@@ -1,4 +1,5 @@
 import { slugField } from "@/fields/slug";
+import { revalidateTag } from "next/cache";
 import type { CollectionConfig, Field } from "payload";
 
 const articleData = {
@@ -24,7 +25,13 @@ export const Blog: CollectionConfig = {
     useAsTitle: "title",
   },
   defaultSort: "-updatedAt",
-
+  hooks: {
+    beforeValidate: [
+      async () => {
+        revalidateTag("blogs");
+      },
+    ],
+  },
   fields: [
     {
       type: "row",
