@@ -48,9 +48,15 @@ export async function generateStaticParams() {
   try {
     const services = await getServices();
 
-    return services.map((service) => ({
+    if (!services || services.length === 0) {
+      return [];
+    }
+
+    const params = services.map((service) => ({
       slug: service.slug,
     }));
+
+    return params;
   } catch (error) {
     console.error("Error generating static params for services:", error);
     return [];

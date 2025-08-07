@@ -49,16 +49,24 @@ export async function generateStaticParams() {
     const services = await getServices();
     const staticParams = [];
 
+    if (!services || services.length === 0) {
+      return [];
+    }
+
     // For each service, get its projects and generate params
     for (const service of services) {
       try {
         const projects = await getProjectsByService(service.id);
 
-        for (const project of projects) {
-          staticParams.push({
-            slug: service.slug,
-            projectSlug: project.slug,
-          });
+        if (projects && projects.length > 0) {
+          for (const project of projects) {
+            if (project.slug) {
+              staticParams.push({
+                slug: service.slug,
+                projectSlug: project.slug,
+              });
+            }
+          }
         }
       } catch (error) {
         console.error(

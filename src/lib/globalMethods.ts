@@ -28,23 +28,46 @@ export const generateSlug = (title: string): string => {
 };
 
 export function encodeArticleContent(rawHtml: string) {
-  const textEncoder = new TextEncoder();
-  const textData = textEncoder.encode(rawHtml);
-  let batch = "";
-  const len = textData.length;
-  for (let i = 0; i < len; i++) {
-    batch += String.fromCharCode(textData[i] || 0);
+  // Check if we're in browser environment
+  if (typeof window === "undefined") {
+    // Server-side rendering - return the content as is
+    return rawHtml;
   }
-  return window.btoa(batch);
+
+  try {
+    const textEncoder = new TextEncoder();
+    const textData = textEncoder.encode(rawHtml);
+    let batch = "";
+    const len = textData.length;
+    for (let i = 0; i < len; i++) {
+      batch += String.fromCharCode(textData[i] || 0);
+    }
+    return window.btoa(batch);
+  } catch (error) {
+    console.warn("Failed to encode article content:", error);
+    return rawHtml;
+  }
 }
 
 //Decode article content using text decoder and base64 decoding
 export function decodeArticleContent(base64Content: string) {
-  if (!base64Content) return;
-  const textDecoder = new TextDecoder();
-  return textDecoder.decode(
-    Uint8Array.from(window.atob(base64Content), (c) => c.charCodeAt(0))
-  );
+  if (!base64Content) return "";
+
+  // Check if we're in browser environment
+  if (typeof window === "undefined") {
+    // Server-side rendering - return the content as is
+    return base64Content;
+  }
+
+  try {
+    const textDecoder = new TextDecoder();
+    return textDecoder.decode(
+      Uint8Array.from(window.atob(base64Content), (c) => c.charCodeAt(0))
+    );
+  } catch (error) {
+    console.warn("Failed to decode article content:", error);
+    return base64Content;
+  }
 }
 
 // Strip HTML tags from a string
@@ -89,14 +112,6 @@ export const processEditorContent = (htmlContent: string): string => {
 
       // Get the cleaned HTML content
       const modifiedHtml = doc.body.innerHTML;
-
-      // Apply any domain replacements or content modifications if needed
-      // Example replacements (uncomment and modify as needed):
-      // modifiedHtml = modifiedHtml.replaceAll('old-domain.com', 'new-domain.com');
-      // modifiedHtml = modifiedHtml.replaceAll(
-      //   'https://exams.old-domain.com',
-      //   `${process.env.NEXT_PUBLIC_SITE_URL}/mock-exams`
-      // );
 
       return modifiedHtml;
     } catch (error) {
