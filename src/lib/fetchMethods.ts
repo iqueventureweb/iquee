@@ -99,7 +99,7 @@ export const getServiceBySlug = unstable_cache(
   { tags: ["services"], revalidate: 3600 }
 );
 
-// Get projects by service slug (using the "projects" collection which is Products)
+// Get projects by service ID (using the "projects" collection which is Products)
 export const getProjectsByService = unstable_cache(
   async (serviceId: string): Promise<Project[]> => {
     try {
