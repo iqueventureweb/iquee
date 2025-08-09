@@ -11,9 +11,9 @@ export default function Header() {
     <header className="sticky top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)]">
       <nav className="max-w-screen-xl mx-auto h-20 relative flex items-center justify-between pl-3 xl:justify-between">
         {/* Logo */}
-        <div className="">
+        <Link href="/">
           <Image src="/ique-logo.svg" alt="logo" width={100} height={100} />
-        </div>
+        </Link>
 
         {/* Desktop Navigation Items - Hidden on mobile */}
         <div className="hidden md:flex items-center h-20 gap-8">
@@ -107,49 +107,49 @@ export default function Header() {
               <nav className="flex flex-col gap-6 mt-8">
                 {/* Mobile Navigation Links */}
                 <Link
-                  href="#home"
+                  href="/"
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
                 >
                   Home
                 </Link>
 
                 <Link
-                  href="#services"
+                  href="/#services"
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
                 >
                   Services
                 </Link>
 
                 <Link
-                  href="#about"
+                  href="/#about"
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
                 >
                   About
                 </Link>
 
                 <Link
-                  href="#contact"
+                  href="/#contact"
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
                 >
                   Contact
                 </Link>
 
                 <Link
-                  href="#blog"
+                  href="/#blog"
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
                 >
                   Blog
                 </Link>
 
                 <Link
-                  href="#career"
+                  href="/#career"
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
                 >
                   Career
                 </Link>
 
                 <Link
-                  href="#team"
+                  href="/#team"
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
                 >
                   Team
@@ -157,7 +157,7 @@ export default function Header() {
 
                 {/* Mobile "Let's work together" button */}
                 <div className="mt-6 pt-6 border-t border-gray-200">
-                  <Link href="#contact" className="block">
+                  <Link href="/#contact" className="block">
                     <div className="border-2 border-blue-900 rounded-lg p-3 text-center hover:bg-blue-900 hover:text-white transition-colors">
                       <div className="text-blue-900 text-base font-medium font-['DM_Sans'] hover:text-white transition-colors">
                         Let&apos;s work together

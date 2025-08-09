@@ -72,7 +72,7 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   const currentTestimonial = testimonials[currentSlide];
 
   return (
-    <section className="py-[70px] lg:py-28">
+    <section id="testimonials" className="py-[70px] lg:py-28">
       <div className="mx-[29px] py-12 md:py-20 md:mx-[75px] px-4 bg-zinc-100">
         {/* Desktop Layout */}
         <div className="hidden lg:block max-w-7xl mx-auto">

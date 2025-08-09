@@ -78,7 +78,7 @@ export function ContactUsSection() {
   };
 
   return (
-    <section className="py-4 pb-8 md:py-16 lg:py-24">
+    <section id="contact" className="py-4 pb-8 md:py-16 lg:py-24">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between w-full">

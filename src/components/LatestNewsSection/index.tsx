@@ -2,6 +2,7 @@
 
 import { Blog } from "@/payload-types";
 import Image from "next/image";
+import Link from "next/link";
 
 // Article type definition
 interface NewsArticle {
@@ -11,6 +12,7 @@ interface NewsArticle {
   date: string;
   image: string;
   isFeatured: boolean;
+  slug: string;
 }
 
 interface LatestNewsSectionProps {
@@ -28,6 +30,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       date: "6 June",
       image: "https://placehold.co/608x503",
       isFeatured: true,
+      slug: "a-vision-for-a-better-startup-ecosystem-insights-from-shafi-shoukath-founder-and-ceo-of-ique-ventures",
     },
     {
       id: 2,
@@ -36,6 +39,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       date: "6 June",
       image: "https://placehold.co/292x241",
       isFeatured: false,
+      slug: "ique-ventures-pioneering-a-better-ecosystem-for-entrepreneurs",
     },
     {
       id: 3,
@@ -45,6 +49,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       date: "6 June",
       image: "https://placehold.co/292x241",
       isFeatured: false,
+      slug: "the-startup-ecosystem-in-2024-trends-challenges-and-opportunities",
     },
   ];
 
@@ -65,6 +70,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
                 : "No date",
               image: "https://placehold.co/608x503", // Default image for now
               isFeatured: index === 0, // First blog is featured
+              slug: blog.slug || "",
             };
           })
           .reverse()
@@ -101,7 +107,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
     article: NewsArticle;
     isFeatured?: boolean;
   }) => (
-    <div className="">
+    <Link href={`/blogs/${article.slug}`} className="">
       <div
         className={`w-full overflow-hidden rounded-lg mb-4 ${
           isFeatured ? "h-72 lg:h-[502.61px]" : "h-72 lg:h-60"
@@ -123,7 +129,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       <h3 className="text-sm lg:text-2xl font-normal font-['Poppins'] leading-[1.3] text-neutral-900">
         {article.title}
       </h3>
-    </div>
+    </Link>
   );
 
   return (

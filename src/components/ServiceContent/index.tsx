@@ -1,23 +1,18 @@
 "use client";
 
-import { processContentBlocks } from "@/lib/globalMethods";
 import { Service } from "@/payload-types";
-import { useMemo } from "react";
 
 interface ServiceContentProps {
   service: Service;
 }
 
 export function ServiceContent({ service }: ServiceContentProps) {
-  const processedBlocks = useMemo(() => {
-    return processContentBlocks(service?.blocks);
-  }, [service]);
+  const blocks = service?.blocks ?? [];
 
   return (
     <section className="py-16 lg:py-24 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-5xl font-medium font-['Epilogue'] text-neutral-900 mb-6">
               Service Details
@@ -25,26 +20,23 @@ export function ServiceContent({ service }: ServiceContentProps) {
             <div className="w-24 h-1 bg-neutral-900 mx-auto" />
           </div>
 
-          {/* Service Blocks */}
-          {processedBlocks.length > 0 && (
+          {blocks.length > 0 && (
             <div className="space-y-12">
-              {processedBlocks.map((block, index) => (
+              {blocks.map((block, index) => (
                 <div
-                  key={index}
+                  key={block?.id || index}
                   className="bg-neutral-50 rounded-3xl p-8 lg:p-12"
                 >
-                  {/* Block Title */}
-                  {block.title && (
+                  {block?.title && (
                     <h3 className="text-2xl lg:text-3xl font-medium font-['Epilogue'] text-neutral-900 mb-6">
                       {block.title}
                     </h3>
                   )}
 
-                  {/* Block Content - Render as processed HTML */}
-                  {block.content && (
+                  {block?.content && (
                     <div
                       className="prose prose-lg prose-neutral max-w-none font-['DM_Sans']"
-                      dangerouslySetInnerHTML={{ __html: block.content }}
+                      dangerouslySetInnerHTML={{ __html: block.content || "" }}
                     />
                   )}
                 </div>
@@ -52,9 +44,7 @@ export function ServiceContent({ service }: ServiceContentProps) {
             </div>
           )}
 
-          {/* Additional Information */}
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Features */}
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
               <h4 className="text-xl font-semibold font-['Epilogue'] text-neutral-900 mb-4">
                 Key Features
@@ -79,7 +69,6 @@ export function ServiceContent({ service }: ServiceContentProps) {
               </ul>
             </div>
 
-            {/* Process */}
             <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-8">
               <h4 className="text-xl font-semibold font-['Epilogue'] text-neutral-900 mb-4">
                 Our Process

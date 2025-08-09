@@ -48,7 +48,7 @@ export function CarouselSection() {
   };
 
   return (
-    <section className="relative py-3 md:py-0 overflow-hidden ">
+    <section id="about" className="relative py-3 md:py-0 overflow-hidden ">
       {/* Background Decorations */}
 
       <div className="my-12 md:my-24">

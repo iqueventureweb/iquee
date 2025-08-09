@@ -8,7 +8,7 @@ interface OurStorySectionProps {
 
 export function OurStorySection({ data }: OurStorySectionProps) {
   return (
-    <section className="py-9 lg:py-24 bg-white relative">
+    <section id="about" className="py-9 lg:py-24 bg-white relative">
       <div className="container mx-auto px-4">
         {/* Desktop Layout */}
         <div className="hidden lg:block">

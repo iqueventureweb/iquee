@@ -34,7 +34,10 @@ export function AchievementsSection({ data }: AchievementsSectionProps) {
       : defaultAchievements;
 
   return (
-    <section className="relative bg-black min-h-[400px] md:min-h-[500px] lg:min-h-[590px] overflow-hidden">
+    <section
+      id="achievements"
+      className="relative bg-black min-h-[400px] md:min-h-[500px] lg:min-h-[590px] overflow-hidden"
+    >
       {/* Background overlay */}
       <div className="absolute inset-0 bg-neutral-900 opacity-90" />
 

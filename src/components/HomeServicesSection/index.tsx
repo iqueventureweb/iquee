@@ -63,7 +63,10 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
         defaultServices;
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 lg:pt-32 xl:pt-32">
+    <section
+      id="services"
+      className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 lg:pt-32 xl:pt-32"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24">

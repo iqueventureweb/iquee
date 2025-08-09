@@ -132,7 +132,7 @@ export function StaffSection({ data }: StaffSectionProps) {
   );
 
   return (
-    <section className="bg-black py-16 lg:py-20">
+    <section id="team" className="bg-black py-16 lg:py-20">
       <div className="container mx-auto px-4">
         {/* Single Responsive Layout */}
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center lg:justify-between">
