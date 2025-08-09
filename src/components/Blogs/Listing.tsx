@@ -13,41 +13,53 @@ function getWordsCount(content: string) {
   return content.split(/\s+/).filter((w) => w.length > 0).length;
 }
 
-export default function BlogsListing({ blogs }: { blogs: Blog[] }) {
+export default function BlogsListing({
+  blogs,
+  internal = false,
+}: {
+  blogs: Blog[];
+  internal?: boolean;
+}) {
   const items = (blogs || []).filter((b) => b?.slug);
   const [featured, ...rest] = items;
 
   return (
     <section className="py-16 lg:py-24 bg-neutral-100">
       <div className="container mx-auto px-4">
-        <div className="relative overflow-hidden rounded-2xl bg-neutral-900 text-white p-8 md:p-12 mb-12">
-          <div className="absolute -top-24 -right-16 h-72 w-72 rounded-full bg-gradient-to-tr from-emerald-400/30 to-cyan-400/30 blur-3xl" />
-          <div className="relative z-10">
-            <div className="flex items-center gap-3 mb-5">
-              <span className="px-3 py-1 rounded-full border border-white/20 text-xs uppercase tracking-wide">
-                Our Blog
-              </span>
-              <span className="text-xs uppercase tracking-wide text-white/70">
-                {(items?.length || 0).toString()} posts
-              </span>
+        {!internal ? (
+          <div className="relative overflow-hidden rounded-2xl bg-neutral-900 text-white p-8 md:p-12 mb-12">
+            <div className="absolute -top-24 -right-16 h-72 w-72 rounded-full bg-gradient-to-tr from-emerald-400/30 to-cyan-400/30 blur-3xl" />
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-5">
+                <span className="px-3 py-1 rounded-full border border-white/20 text-xs uppercase tracking-wide">
+                  Our Blog
+                </span>
+                <span className="text-xs uppercase tracking-wide text-white/70">
+                  {(items?.length || 0).toString()} posts
+                </span>
+              </div>
+              <h1 className="text-3xl md:text-5xl font-medium font-['DM_Sans'] leading-tight">
+                Insights & Stories from iQue
+              </h1>
+              <p className="mt-4 text-white/80 max-w-2xl">
+                Explore product thinking, venture insights, and stories from our
+                team.
+              </p>
             </div>
-            <h1 className="text-3xl md:text-5xl font-medium font-['DM_Sans'] leading-tight">
-              Insights & Stories from iQue
-            </h1>
-            <p className="mt-4 text-white/80 max-w-2xl">
-              Explore product thinking, venture insights, and stories from our
-              team.
-            </p>
+            <div className="absolute bottom-4 right-4 opacity-70">
+              <Image
+                src="/images/big-arrow.svg"
+                alt="Arrow"
+                width={56}
+                height={56}
+              />
+            </div>
           </div>
-          <div className="absolute bottom-4 right-4 opacity-70">
-            <Image
-              src="/images/big-arrow.svg"
-              alt="Arrow"
-              width={56}
-              height={56}
-            />
-          </div>
-        </div>
+        ) : (
+          <h2 className="text-5xl mb-4 font-medium font-['DM_Sans'] leading-tight text-neutral-900">
+            You might also like
+          </h2>
+        )}
 
         {featured ? (
           <Link href={`/blogs/${featured.slug}`} className="group block mb-12">

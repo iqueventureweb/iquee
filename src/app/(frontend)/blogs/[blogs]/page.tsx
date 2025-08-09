@@ -1,4 +1,6 @@
+import BlogsListing from "@/components/Blogs/Listing";
 import { EditorContent } from "@/components/EditorContent";
+import { getBlogs } from "@/lib/fetchMethods";
 import { processEditorContent } from "@/lib/globalMethods";
 import { getPayloadClient } from "@/lib/payload";
 import Link from "next/link";
@@ -57,7 +59,7 @@ export default async function BlogDetailPage({
 }) {
   const { blogs } = await params;
   const blog = await getBlogBySlug(blogs);
-
+  const similarBlogs = await getBlogs(3);
   if (!blog) {
     notFound();
   }
@@ -111,6 +113,9 @@ export default async function BlogDetailPage({
         </header>
 
         <EditorContent content={blog.content || ""} />
+      </div>
+      <div className="mt-4">
+        <BlogsListing blogs={similarBlogs} internal={true} />
       </div>
     </article>
   );
