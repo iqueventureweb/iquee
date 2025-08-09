@@ -1,10 +1,6 @@
 import { ProjectContent } from "@/components/ProjectContent";
 import { ProjectHero } from "@/components/ProjectHero";
-import {
-  getProjectsByService,
-  getServiceBySlug,
-  getServices,
-} from "@/lib/fetchMethods";
+import { getProjectsByService, getServiceBySlug } from "@/lib/fetchMethods";
 import { notFound } from "next/navigation";
 
 interface ProjectPageProps {
@@ -64,47 +60,47 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 }
 
 // Generate static params for all project routes
-export async function generateStaticParams() {
-  try {
-    const services = await getServices();
-    const staticParams = [];
+// export async function generateStaticParams() {
+//   try {
+//     const services = await getServices();
+//     const staticParams = [];
 
-    if (!services || services.length === 0) {
-      console.warn("[Project generateStaticParams] no services found");
-      return [];
-    }
+//     if (!services || services.length === 0) {
+//       console.warn("[Project generateStaticParams] no services found");
+//       return [];
+//     }
 
-    // For each service, get its projects and generate params
-    for (const service of services) {
-      try {
-        const projects = await getProjectsByService(service.id);
+//     // For each service, get its projects and generate params
+//     for (const service of services) {
+//       try {
+//         const projects = await getProjectsByService(service.id);
 
-        if (projects && projects.length > 0) {
-          for (const project of projects) {
-            if (project.slug) {
-              staticParams.push({
-                slug: service.slug,
-                projectSlug: project.slug,
-              });
-            }
-          }
-        }
-      } catch (error) {
-        console.error(
-          `Error fetching projects for service ${service.slug}:`,
-          error
-        );
-      }
-    }
+//         if (projects && projects.length > 0) {
+//           for (const project of projects) {
+//             if (project.slug) {
+//               staticParams.push({
+//                 slug: service.slug,
+//                 projectSlug: project.slug,
+//               });
+//             }
+//           }
+//         }
+//       } catch (error) {
+//         console.error(
+//           `Error fetching projects for service ${service.slug}:`,
+//           error
+//         );
+//       }
+//     }
 
-    console.log(
-      `[Project generateStaticParams] generated ${staticParams.length} params:`,
-      staticParams.map((p) => `${p.slug}/project/${p.projectSlug}`)
-    );
+//     console.log(
+//       `[Project generateStaticParams] generated ${staticParams.length} params:`,
+//       staticParams.map((p) => `${p.slug}/project/${p.projectSlug}`)
+//     );
 
-    return staticParams;
-  } catch (error) {
-    console.error("Error generating static params for project pages:", error);
-    return [];
-  }
-}
+//     return staticParams;
+//   } catch (error) {
+//     console.error("Error generating static params for project pages:", error);
+//     return [];
+//   }
+// }
