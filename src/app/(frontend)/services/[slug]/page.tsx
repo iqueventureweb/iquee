@@ -71,28 +71,28 @@ export default async function ServicePage({ params }: ServicePageProps) {
 }
 
 // Generate static params for all services
-// export async function generateStaticParams() {
-//   try {
-//     const services = await getServices();
-//     console.log("[Service generateStaticParams] all services:", services);
+export async function generateStaticParams() {
+  try {
+    const services = await getServices();
+    console.log("[Service generateStaticParams] all services:", services);
 
-//     if (!services || services.length === 0) {
-//       console.warn("[Service generateStaticParams] no services found");
-//       return [];
-//     }
+    if (!services || services.length === 0) {
+      console.warn("[Service generateStaticParams] no services found");
+      return [];
+    }
 
-//     const params = services.map((service) => ({
-//       slug: service.slug,
-//     }));
+    const params = services.map((service) => ({
+      slug: service.slug,
+    }));
 
-//     console.log(
-//       `[Service generateStaticParams] generated ${params.length} params:`,
-//       params.map((p) => p.slug)
-//     );
+    console.log(
+      `[Service generateStaticParams] generated ${params.length} params:`,
+      params.map((p) => p.slug)
+    );
 
-//     return params;
-//   } catch (error) {
-//     console.error("Error generating static params for services:", error);
-//     return [];
-//   }
-// }
+    return params;
+  } catch (error) {
+    console.error("Error generating static params for services:", error);
+    return [];
+  }
+}
