@@ -26,28 +26,29 @@ export const getHomePage = unstable_cache(
   }
 );
 
-export const getServices = unstable_cache(
-  async (): Promise<Service[]> => {
-    try {
-      const payload = await getPayloadClient();
+export const getServices = async (): Promise<Service[]> => {
+  try {
+    const payload = await getPayloadClient();
 
-      const services = await payload.find({
-        collection: "services",
-        sort: "-createdAt",
-      });
+    const services = await payload.find({
+      collection: "services",
+      sort: "-createdAt",
+    });
 
-      return services.docs;
-    } catch (error) {
-      console.error("Error fetching services data:", error);
-      return [];
-    }
-  },
-  ["services"],
-  {
-    tags: ["services"],
-    revalidate: 3600, // Cache for 1 hour
+    console.log("[getServices] result:", {
+      count: services.docs.length,
+      services: services.docs.map((s) => ({
+        id: s.id,
+        slug: s.slug,
+        title: s.title,
+      })),
+    });
+    return services.docs;
+  } catch (error) {
+    console.error("Error fetching services data:", error);
+    return [];
   }
-);
+};
 
 export const getBlogs = unstable_cache(
   async (limit: number = 3): Promise<Blog[]> => {
@@ -73,31 +74,39 @@ export const getBlogs = unstable_cache(
   }
 );
 
-// Get individual service by slug
-export const getServiceBySlug = unstable_cache(
-  async (slug: string): Promise<Service | null> => {
-    try {
-      const payload = await getPayloadClient();
+// Get individual service by slug (non-cached version for testing)
+export const getServiceBySlug = async (
+  slug: string
+): Promise<Service | null> => {
+  try {
+    console.log("[getServiceBySlug] starting with slug:", slug);
 
-      const result = await payload.find({
-        collection: "services",
-        where: {
-          slug: {
-            equals: slug,
-          },
-        },
-        limit: 1,
-      });
-
-      return result.docs[0] || null;
-    } catch (error) {
-      console.error("Error fetching service by slug:", error);
+    // Check for required environment variables
+    if (!process.env.DATABASE_URI) {
+      console.error("[getServiceBySlug] DATABASE_URI not set");
       return null;
     }
-  },
-  ["service-by-slug"],
-  { tags: ["services"], revalidate: 3600 }
-);
+
+    const payload = await getPayloadClient();
+    console.log("[getServiceBySlug] payload client obtained");
+
+    const result = await payload.find({
+      collection: "services",
+      where: {
+        slug: {
+          equals: slug,
+        },
+      },
+      limit: 1,
+    });
+
+    console.log("[getServiceBySlug] result:", { slug, docs: result.docs });
+    return result.docs[0] || null;
+  } catch (error) {
+    console.error("[getServiceBySlug] Error:", error);
+    return null;
+  }
+};
 
 // Get projects by service ID (using the "projects" collection which is Products)
 export const getProjectsByService = unstable_cache(
