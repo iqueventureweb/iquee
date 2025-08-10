@@ -2,6 +2,7 @@
 
 import { Service } from "@/payload-types";
 import { useRouter } from "next/navigation";
+import { AnimationWrapper } from "../AnimationWrapper";
 
 interface HomeServicesSectionProps {
   services?: Service[];
@@ -72,30 +73,34 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
         <div className="mb-8 sm:mb-12 md:mb-16 lg:mb-20 xl:mb-24">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 md:gap-8">
             {/* Services Title */}
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium font-['Epilogue'] uppercase text-neutral-900 leading-none">
-              Services
-            </h2>
+            <AnimationWrapper delay={0.2} duration={0.8}>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium font-['Epilogue'] uppercase text-neutral-900 leading-none">
+                Services
+              </h2>
+            </AnimationWrapper>
 
             {/* Subtitle with decorative border */}
-            <div className="mr-20">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 md:gap-4 relative">
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] leading-[1.3] text-neutral-900 ">
-                  To solve complex <span className="sm:hidden">problems</span>
-                </p>
+            <AnimationWrapper delay={0.4} duration={0.8}>
+              <div className="mr-20">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 md:gap-4 relative">
+                  <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] leading-[1.3] text-neutral-900 ">
+                    To solve complex <span className="sm:hidden">problems</span>
+                  </p>
 
-                {/* Decorative border */}
-                <div className="w-[177px] sm:w-[205px] md:w-60 lg:w-64 xl:w-[306px] absolute h-[65px] sm:h-7 md:h-8 lg:h-10 xl:h-12 rounded-full border border-neutral-900 opacity-70 transform -rotate-6 sm:-rotate-3 left-[81px]  md:left-[100px] lg:left-[122px] top-[-9px] sm:top-auto" />
+                  {/* Decorative border */}
+                  <div className="w-[177px] sm:w-[205px] md:w-60 lg:w-64 xl:w-[306px] absolute h-[65px] sm:h-7 md:h-8 lg:h-10 xl:h-12 rounded-full border border-neutral-900 opacity-70 transform -rotate-6 sm:-rotate-3 left-[81px]  md:left-[100px] lg:left-[122px] top-[-9px] sm:top-auto" />
 
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed">
-                  <span className="hidden sm:inline">problems</span> and
-                  cultivate
+                  <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed">
+                    <span className="hidden sm:inline">problems</span> and
+                    cultivate
+                  </p>
+                </div>
+
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed mt-1 sm:mt-2">
+                  business solutions.
                 </p>
               </div>
-
-              <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed mt-1 sm:mt-2">
-                business solutions.
-              </p>
-            </div>
+            </AnimationWrapper>
           </div>
         </div>
 
@@ -111,27 +116,29 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
                 router.push(`/services/${service.slug}`);
               }}
             >
-              <div className="rounded-[40px] sm:rounded-[60px] md:rounded-[80px] lg:rounded-[120px] xl:rounded-[200px] border border-neutral-900 p-4 py-1 md:p-8 lg:p-12 xl:px-16 lg:py-3 min-h-16 sm:min-h-40 md:min-h-48 lg:min-h-56 flex  items-center justify-between gap-4 sm:gap-6 md:gap-8 relative tracking-tighter">
-                {/* Content */}
-                <div className="flex gap-1 sm:gap-4 md:gap-3 w-full">
-                  {/* Number */}
-                  <span className="text-[10.40px] sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium font-['Epilogue'] text-neutral-900 mt-3 sm:mt-4 md:mt-6 lg:mt-10 xl:mt-14 absolute left-4 lg:left-6 xl:left-10 top-[20%]">
-                    {service.id}
-                  </span>
+              <AnimationWrapper>
+                <div className="rounded-[40px] sm:rounded-[60px] md:rounded-[80px] lg:rounded-[120px] xl:rounded-[200px] border border-neutral-900 p-4 py-1 md:p-8 lg:p-12 xl:px-16 lg:py-3 min-h-16 sm:min-h-40 md:min-h-48 lg:min-h-56 flex  items-center justify-between gap-4 sm:gap-6 md:gap-8 relative tracking-tighter">
+                  {/* Content */}
+                  <div className="flex gap-1 sm:gap-4 md:gap-3 w-full">
+                    {/* Number */}
+                    <span className="text-[10.40px] sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium font-['Epilogue'] text-neutral-900 mt-3 sm:mt-4 md:mt-6 lg:mt-10 xl:mt-14 absolute left-4 lg:left-6 xl:left-10 top-[20%]">
+                      {service.id}
+                    </span>
 
-                  {/* Title */}
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-normal ml-4 sm:ml-14 font-['Epilogue'] text-neutral-900 leading-[1.1] sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] ">
-                    {service.title}
-                  </h3>
+                    {/* Title */}
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-normal ml-4 sm:ml-14 font-['Epilogue'] text-neutral-900 leading-[1.1] sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] ">
+                      {service.title}
+                    </h3>
+                  </div>
+
+                  {/* Image */}
+                  <img
+                    src={service.image}
+                    alt={service.title.replace("\n", " ")}
+                    className="w-16 h-8 sm:w-36 md:w-40 lg:w-48 xl:w-56 sm:h-18 md:h-20 lg:h-24 xl:h-28 rounded-[20px] sm:rounded-[25px] md:rounded-[30px] lg:rounded-[35px] xl:rounded-[70px] object-cover"
+                  />
                 </div>
-
-                {/* Image */}
-                <img
-                  src={service.image}
-                  alt={service.title.replace("\n", " ")}
-                  className="w-16 h-8 sm:w-36 md:w-40 lg:w-48 xl:w-56 sm:h-18 md:h-20 lg:h-24 xl:h-28 rounded-[20px] sm:rounded-[25px] md:rounded-[30px] lg:rounded-[35px] xl:rounded-[70px] object-cover"
-                />
-              </div>
+              </AnimationWrapper>
             </div>
           ))}
         </div>

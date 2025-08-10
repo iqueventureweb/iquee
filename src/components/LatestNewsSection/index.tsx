@@ -3,6 +3,7 @@
 import { Blog } from "@/payload-types";
 import Image from "next/image";
 import Link from "next/link";
+import { AnimationWrapper } from "../AnimationWrapper";
 
 // Article type definition
 interface NewsArticle {
@@ -137,36 +138,44 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       <div className="container mx-auto px-4 relative">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 lg:mb-16">
-          <h2 className="text-3xl lg:text-5xl font-medium font-['DM_Sans'] uppercase leading-9 lg:leading-[53.89px] text-neutral-900 mb-4 lg:mb-0">
-            Latest News
-          </h2>
+          <AnimationWrapper delay={0.2}>
+            <h2 className="text-3xl lg:text-5xl font-medium font-['DM_Sans'] uppercase leading-9 lg:leading-[53.89px] text-neutral-900 mb-4 lg:mb-0">
+              Latest News
+            </h2>
+          </AnimationWrapper>
 
           {/* Blog Link */}
-          <Link
-            href="/blogs"
-            className="flex items-start md:items-center mt-4 md:mt-0 justify-start md:justify-center"
-          >
-            <p className="text-base font-normal font-['Epilogue'] uppercase leading-none tracking-tight text-neutral-900">
-              Our blog
-            </p>
-            <Image
-              src="/images/big-arrow.svg"
-              alt="Arrow Right"
-              width={14}
-              height={14}
-              className="ml-1 w-14"
-            />
-          </Link>
+          <AnimationWrapper delay={0.3}>
+            <Link
+              href="/blogs"
+              className="flex items-start md:items-center mt-4 md:mt-0 justify-start md:justify-center"
+            >
+              <p className="text-base font-normal font-['Epilogue'] uppercase leading-none tracking-tight text-neutral-900">
+                Our blog
+              </p>
+              <Image
+                src="/images/big-arrow.svg"
+                alt="Arrow Right"
+                width={14}
+                height={14}
+                className="ml-1 w-14"
+              />
+            </Link>
+          </AnimationWrapper>
         </div>
 
         {/* News Grid */}
         <div className="flex flex-col md:flex-row gap-8 lg:gap-6">
           {/* Featured Article */}
-          <ArticleCard article={newsArticles[0]} isFeatured={true} />
+          <AnimationWrapper delay={0.4}>
+            <ArticleCard article={newsArticles[0]} isFeatured={true} />
+          </AnimationWrapper>
 
           {/* Regular Articles */}
-          {newsArticles.slice(1).map((article) => (
-            <ArticleCard key={article.id} article={article} />
+          {newsArticles.slice(1).map((article, index) => (
+            <AnimationWrapper key={article.id} delay={0.5 + index * 0.1}>
+              <ArticleCard article={article} />
+            </AnimationWrapper>
           ))}
         </div>
       </div>
