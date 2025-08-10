@@ -1,38 +1,52 @@
-import config from '@/payload.config'
-import { getPayload, Payload, Plugin } from 'payload'
+import config from "@/payload.config";
+import { getPayload, Payload, Plugin } from "payload";
 
 interface CachedPayload {
-  client: Payload | null
-  promise: Promise<Payload> | null
+  client: Payload | null;
+  promise: Promise<Payload> | null;
 }
 
 interface GlobalWithPayload {
-  payload: CachedPayload
+  payload: CachedPayload;
 }
 
-let cachedPayload: CachedPayload = (global as unknown as GlobalWithPayload).payload
+let cachedPayload: CachedPayload = (global as unknown as GlobalWithPayload)
+  .payload;
 
 if (!cachedPayload) {
-  cachedPayload = (global as unknown as GlobalWithPayload).payload = { client: null, promise: null }
+  cachedPayload = (global as unknown as GlobalWithPayload).payload = {
+    client: null,
+    promise: null,
+  };
 }
 
 export async function getPayloadClient(): Promise<Payload> {
   if (cachedPayload.client) {
-    return cachedPayload.client
+    return cachedPayload.client;
   }
 
   if (!cachedPayload.promise) {
-    cachedPayload.promise = getPayload({ config })
+    // Check for required environment variables
+    if (!process.env.DATABASE_URI) {
+      throw new Error("DATABASE_URI environment variable is not set");
+    }
+
+    if (!process.env.PAYLOAD_SECRET) {
+      throw new Error("PAYLOAD_SECRET environment variable is not set");
+    }
+
+    cachedPayload.promise = getPayload({ config });
   }
 
   try {
-    cachedPayload.client = await cachedPayload.promise
+    cachedPayload.client = await cachedPayload.promise;
   } catch (e) {
-    cachedPayload.promise = null
-    throw e
+    console.error("[getPayloadClient] Error creating payload client:", e);
+    cachedPayload.promise = null;
+    throw e;
   }
 
-  return cachedPayload.client as Payload
+  return cachedPayload.client as Payload;
 }
 
 export function hideDefaultCollections(slugsToHide: string[]): Plugin {
@@ -45,11 +59,11 @@ export function hideDefaultCollections(slugsToHide: string[]): Plugin {
             ...collection.admin,
             hidden: true,
           },
-        }
+        };
       }
-      return collection
-    })
+      return collection;
+    });
 
-    return config
-  }
+    return config;
+  };
 }

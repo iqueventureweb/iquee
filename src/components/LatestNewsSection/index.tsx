@@ -2,6 +2,8 @@
 
 import { Blog } from "@/payload-types";
 import Image from "next/image";
+import Link from "next/link";
+import { AnimationWrapper } from "../AnimationWrapper";
 
 // Article type definition
 interface NewsArticle {
@@ -11,6 +13,7 @@ interface NewsArticle {
   date: string;
   image: string;
   isFeatured: boolean;
+  slug: string;
 }
 
 interface LatestNewsSectionProps {
@@ -28,6 +31,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       date: "6 June",
       image: "https://placehold.co/608x503",
       isFeatured: true,
+      slug: "a-vision-for-a-better-startup-ecosystem-insights-from-shafi-shoukath-founder-and-ceo-of-ique-ventures",
     },
     {
       id: 2,
@@ -36,6 +40,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       date: "6 June",
       image: "https://placehold.co/292x241",
       isFeatured: false,
+      slug: "ique-ventures-pioneering-a-better-ecosystem-for-entrepreneurs",
     },
     {
       id: 3,
@@ -45,6 +50,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       date: "6 June",
       image: "https://placehold.co/292x241",
       isFeatured: false,
+      slug: "the-startup-ecosystem-in-2024-trends-challenges-and-opportunities",
     },
   ];
 
@@ -65,6 +71,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
                 : "No date",
               image: "https://placehold.co/608x503", // Default image for now
               isFeatured: index === 0, // First blog is featured
+              slug: blog.slug || "",
             };
           })
           .reverse()
@@ -101,7 +108,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
     article: NewsArticle;
     isFeatured?: boolean;
   }) => (
-    <div className="">
+    <Link href={`/blogs/${article.slug}`} className="">
       <div
         className={`w-full overflow-hidden rounded-lg mb-4 ${
           isFeatured ? "h-72 lg:h-[502.61px]" : "h-72 lg:h-60"
@@ -123,7 +130,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       <h3 className="text-sm lg:text-2xl font-normal font-['Poppins'] leading-[1.3] text-neutral-900">
         {article.title}
       </h3>
-    </div>
+    </Link>
   );
 
   return (
@@ -131,33 +138,44 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       <div className="container mx-auto px-4 relative">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 lg:mb-16">
-          <h2 className="text-3xl lg:text-5xl font-medium font-['DM_Sans'] uppercase leading-9 lg:leading-[53.89px] text-neutral-900 mb-4 lg:mb-0">
-            Latest News
-          </h2>
+          <AnimationWrapper delay={0.2}>
+            <h2 className="text-3xl lg:text-5xl font-medium font-['DM_Sans'] uppercase leading-9 lg:leading-[53.89px] text-neutral-900 mb-4 lg:mb-0">
+              Latest News
+            </h2>
+          </AnimationWrapper>
 
           {/* Blog Link */}
-          <div className="flex items-start md:items-center mt-4 md:mt-0 justify-start md:justify-center">
-            <p className="text-base font-normal font-['Epilogue'] uppercase leading-none tracking-tight text-neutral-900">
-              Our blog
-            </p>
-            <Image
-              src="/images/big-arrow.svg"
-              alt="Arrow Right"
-              width={14}
-              height={14}
-              className="ml-1 w-14"
-            />
-          </div>
+          <AnimationWrapper delay={0.3}>
+            <Link
+              href="/blogs"
+              className="flex items-start md:items-center mt-4 md:mt-0 justify-start md:justify-center"
+            >
+              <p className="text-base font-normal font-['Epilogue'] uppercase leading-none tracking-tight text-neutral-900">
+                Our blog
+              </p>
+              <Image
+                src="/images/big-arrow.svg"
+                alt="Arrow Right"
+                width={14}
+                height={14}
+                className="ml-1 w-14"
+              />
+            </Link>
+          </AnimationWrapper>
         </div>
 
         {/* News Grid */}
         <div className="flex flex-col md:flex-row gap-8 lg:gap-6">
           {/* Featured Article */}
-          <ArticleCard article={newsArticles[0]} isFeatured={true} />
+          <AnimationWrapper delay={0.4}>
+            <ArticleCard article={newsArticles[0]} isFeatured={true} />
+          </AnimationWrapper>
 
           {/* Regular Articles */}
-          {newsArticles.slice(1).map((article) => (
-            <ArticleCard key={article.id} article={article} />
+          {newsArticles.slice(1).map((article, index) => (
+            <AnimationWrapper key={article.id} delay={0.5 + index * 0.1}>
+              <ArticleCard article={article} />
+            </AnimationWrapper>
           ))}
         </div>
       </div>

@@ -3,6 +3,7 @@
 import { Project, Service } from "@/payload-types";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { AnimationWrapper } from "../AnimationWrapper";
 
 interface ProjectHeroProps {
   project: Project;
@@ -13,67 +14,56 @@ export function ProjectHero({ project, service }: ProjectHeroProps) {
   const router = useRouter();
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 25px 25px, white 2px, transparent 0)`,
-            backgroundSize: "50px 50px",
-          }}
-        />
-      </div>
-
-      {/* Background decorative elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-full blur-3xl" />
-      </div>
-
+    <section
+      className="relative min-h-[80vh] bg-cover bg-center bg-no-repeat overflow-hidden "
+      style={{ backgroundImage: "url(/images/resourse-bg.png)" }}
+    >
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
         {/* Navigation */}
-        <div className="mb-12">
-          <button
-            onClick={() => router.back()}
-            className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="text-sm font-medium">Back to {service.title}</span>
-          </button>
-        </div>
-
-        <div className="">
-          {/* Left Content */}
-          <div>
-            {/* Service Tag */}
-            <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-6">
-              <span className="text-sm font-medium text-white/90">
-                {service.title}
+        <AnimationWrapper delay={0.2} duration={0.6}>
+          <div className="mb-12">
+            <button
+              onClick={() => router.back()}
+              className="inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors group"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              <span className="text-sm font-medium font-['DM_Sans']">
+                Back to {service.title}
               </span>
-            </div>
+            </button>
+          </div>
+        </AnimationWrapper>
 
-            {/* Project Title */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-['Epilogue'] text-white leading-tight mb-6">
+        {/* Main Content */}
+        <div className="max-w-5xl">
+          {/* Project Title */}
+          <AnimationWrapper delay={0.4} duration={0.8}>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium font-['Epilogue'] text-white leading-none mb-12 tracking-tighter">
               {project.title}
             </h1>
+          </AnimationWrapper>
 
-            {/* Project Description */}
-            {project.description && (
-              <p className="text-lg lg:text-xl text-white/80 leading-relaxed font-light font-['DM_Sans'] mb-8">
+          {/* Project Description */}
+          {project.description && (
+            <AnimationWrapper delay={0.6} duration={0.8}>
+              <p className="text-xl lg:text-2xl text-white/90 leading-relaxed font-['DM_Sans'] mb-12 max-w-4xl">
                 {project.description}
               </p>
-            )}
+            </AnimationWrapper>
+          )}
 
-            {/* Project Meta */}
-            <div className="flex flex-wrap gap-6 mb-8">
-              <div className="flex items-center gap-2 text-white/70">
-                <Calendar className="w-4 h-4" />
-                <span className="text-sm">Completed Project</span>
+          {/* Project Meta */}
+          <AnimationWrapper delay={0.8} duration={0.6}>
+            <div className="flex items-center gap-6 text-white/80">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-5 h-5" />
+                <span className="text-sm font-['DM_Sans']">
+                  Completed Project
+                </span>
               </div>
             </div>
-          </div>
+          </AnimationWrapper>
         </div>
       </div>
     </section>

@@ -4,6 +4,7 @@ import { HomePage } from "@/payload-types";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { AnimationWrapper } from "../AnimationWrapper";
 
 // Staff member type definition
 interface StaffMember {
@@ -132,67 +133,71 @@ export function StaffSection({ data }: StaffSectionProps) {
   );
 
   return (
-    <section className="bg-black py-16 lg:py-20">
+    <section id="team" className="bg-black py-16 lg:py-20">
       <div className="container mx-auto px-4">
         {/* Single Responsive Layout */}
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center lg:justify-between">
           {/* Quote Section */}
           <div className="w-full lg:max-w-xl">
-            <div className="flex gap-4 lg:gap-6 items-start">
-              {/* Quote Icon */}
-              <div className="w-14 h-14 sm:h-14 lg:w-16 lg:h-16 bg-white rounded-[30px] mb-4 lg:mb-6 flex items-center justify-center mx-auto sm:mx-0 flex-shrink-0">
-                <span className="h-[23px] md:h-[33px] text-5xl md:text-6xl xl:text-7xl font-serif text-black leading-none">
-                  {"”"}
-                </span>
-              </div>
+            <AnimationWrapper delay={0.2}>
+              <div className="flex gap-4 lg:gap-6 items-start">
+                {/* Quote Icon */}
+                <div className="w-14 h-14 sm:h-14 lg:w-16 lg:h-16 bg-white rounded-[30px] mb-4 lg:mb-6 flex items-center justify-center mx-auto sm:mx-0 flex-shrink-0">
+                  <span className="h-[23px] md:h-[33px] text-5xl md:text-6xl xl:text-7xl font-serif text-black leading-none">
+                    {"”"}
+                  </span>
+                </div>
 
-              <div className="items-start md:items-center">
-                {/* Quote Text */}
-                <h3 className="text-2xl text-start sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-medium font-['DM_Sans'] leading-[1.1] xl:leading-[55.98px] text-white mb-6 lg:mb-8">
-                  {currentMember.quote}
-                </h3>
-
-                {/* Divider */}
-                <div className="w-20 h-px bg-white mb-3 sm:mx-0"></div>
-
-                {/* Author Info */}
-                <div>
-                  <h3 className="text-lg font-medium font-['DM_Sans'] leading-relaxed text-white">
-                    {currentMember.name}
+                <div className="items-start md:items-center">
+                  {/* Quote Text */}
+                  <h3 className="text-2xl text-start sm:text-3xl md:text-4xl lg:text-4xl xl:text-5xl font-medium font-['DM_Sans'] leading-[1.1] xl:leading-[55.98px] text-white mb-6 lg:mb-8">
+                    {currentMember.quote}
                   </h3>
-                  <p className="text-base font-normal font-['DM_Sans'] leading-snug text-neutral-500">
-                    {currentMember.role}
-                  </p>
+
+                  {/* Divider */}
+                  <div className="w-20 h-px bg-white mb-3 sm:mx-0"></div>
+
+                  {/* Author Info */}
+                  <div>
+                    <h3 className="text-lg font-medium font-['DM_Sans'] leading-relaxed text-white">
+                      {currentMember.name}
+                    </h3>
+                    <p className="text-base font-normal font-['DM_Sans'] leading-snug text-neutral-500">
+                      {currentMember.role}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </AnimationWrapper>
           </div>
 
           {/* Team Carousel */}
           <div className="relative w-full lg:w-auto">
-            {/* Team Members Display */}
-            <div className="flex justify-center mx-auto relative w-fit space-x-4 lg:space-x-8 overflow-visible z-[1]">
-              {/* First member - always visible */}
-              <StaffMemberCard member={currentMember} />
+            <AnimationWrapper delay={0.4}>
+              {/* Team Members Display */}
+              <div className="flex justify-center mx-auto relative w-fit space-x-4 lg:space-x-8 overflow-visible z-[1]">
+                {/* First member - always visible */}
+                <StaffMemberCard member={currentMember} />
 
-              {/* Second member - hidden on mobile, visible on md+ */}
-              <StaffMemberCard
-                member={nextMember}
-                className="hidden md:block"
-              />
+                {/* Second member - hidden on mobile, visible on md+ */}
+                <StaffMemberCard
+                  member={nextMember}
+                  className="hidden md:block"
+                />
 
-              {/* Navigation Buttons */}
-              <NavigationButton
-                onClick={prevSlide}
-                direction="prev"
-                className="left-[-39px] sm:left-[-55px]"
-              />
-              <NavigationButton
-                onClick={nextSlide}
-                direction="next"
-                className="right-[-25px]"
-              />
-            </div>
+                {/* Navigation Buttons */}
+                <NavigationButton
+                  onClick={prevSlide}
+                  direction="prev"
+                  className="left-[-39px] sm:left-[-55px]"
+                />
+                <NavigationButton
+                  onClick={nextSlide}
+                  direction="next"
+                  className="right-[-25px]"
+                />
+              </div>
+            </AnimationWrapper>
           </div>
         </div>
       </div>

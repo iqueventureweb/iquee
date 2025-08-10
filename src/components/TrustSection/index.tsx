@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { AnimationWrapper } from "../AnimationWrapper";
 
 export function TrustSection() {
   const logos = [
@@ -45,50 +48,66 @@ export function TrustSection() {
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <div className="text-center mb-12">
-          <h2 className="text-lg font-medium font-['DM_Sans'] leading-snug text-black">
-            Trusted by Leading Companies
-          </h2>
+          <AnimationWrapper delay={0.2} duration={0.4}>
+            <h2 className="text-lg font-medium font-['DM_Sans'] leading-snug text-black">
+              Trusted by Leading Companies
+            </h2>
+          </AnimationWrapper>
         </div>
 
         {/* Desktop Layout - Hidden on mobile */}
         <div className="hidden md:flex justify-center items-center gap-8 lg:gap-12 xl:gap-16">
           {logos.map((logo, index) => (
-            <div key={index} className="flex-shrink-0">
-              <Image
-                src={logo.src}
-                alt={logo.alt}
-                width={logo.width}
-                height={logo.height}
-                className="opacity-70 hover:opacity-100 transition-opacity duration-300"
-              />
-            </div>
+            <AnimationWrapper
+              key={index}
+              delay={0.4 + index * 0.1}
+              duration={0.4}
+            >
+              <div className="flex-shrink-0">
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={logo.width}
+                  height={logo.height}
+                  className="opacity-70 hover:opacity-100 transition-opacity duration-300"
+                />
+              </div>
+            </AnimationWrapper>
           ))}
         </div>
 
         {/* Mobile Layout - Grid layout for smaller screens */}
         <div className="md:hidden grid grid-cols-2 gap-8 max-w-sm mx-auto">
           {logos.slice(0, 4).map((logo, index) => (
-            <div key={index} className="flex justify-center">
-              <Image
-                src={logo.src}
-                alt={logo.alt}
-                width={logo.width}
-                height={logo.height}
-                className="opacity-70"
-              />
-            </div>
+            <AnimationWrapper
+              key={index}
+              delay={0.4 + index * 0.1}
+              duration={0.4}
+            >
+              <div className="flex justify-center">
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={logo.width}
+                  height={logo.height}
+                  className="opacity-70"
+                />
+              </div>
+            </AnimationWrapper>
           ))}
           {/* Center the last logo if it's a 5th item */}
           {logos.length > 4 && (
-            <div className="col-span-2 flex justify-center">
-              <Image
-                src={logos[4].src}
-                alt={logos[4].alt}
-                width={logos[4].width}
-                height={logos[4].height}
-                className="opacity-70"
-              />
-            </div>
+            <AnimationWrapper delay={0.8} duration={0.4}>
+              <div className="col-span-2 flex justify-center">
+                <Image
+                  src={logos[4].src}
+                  alt={logos[4].alt}
+                  width={logos[4].width}
+                  height={logos[4].height}
+                  className="opacity-70"
+                />
+              </div>
+            </AnimationWrapper>
           )}
         </div>
       </div>

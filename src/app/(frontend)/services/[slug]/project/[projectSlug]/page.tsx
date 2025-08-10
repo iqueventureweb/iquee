@@ -17,30 +17,42 @@ interface ProjectPageProps {
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug, projectSlug } = await params;
 
-  // Fetch service data
-  const service = await getServiceBySlug(slug);
-  if (!service) {
+  try {
+    // Fetch service data by slug
+    const service = await getServiceBySlug(slug);
+
+    if (!service) {
+      console.error("[ProjectPage] service not found for slug:", slug);
+      notFound();
+    }
+
+    // Fetch projects for this service
+    const projects = await getProjectsByService(service.id);
+
+    // Find the specific project by slug
+    const project = projects.find((p) => p.slug === projectSlug);
+    if (!project) {
+      console.error(
+        "[ProjectPage] project not found for slug within service:",
+        projectSlug,
+        service.slug
+      );
+      notFound();
+    }
+
+    return (
+      <div className="min-h-screen">
+        {/* Project Hero */}
+        <ProjectHero project={project} service={service} />
+
+        {/* Project Content */}
+        <ProjectContent project={project} />
+      </div>
+    );
+  } catch (error) {
+    console.error("[ProjectPage] Error:", error);
     notFound();
   }
-
-  // Fetch projects for this service
-  const projects = await getProjectsByService(service.id);
-
-  // Find the specific project
-  const project = projects.find((p) => p.slug === projectSlug);
-  if (!project) {
-    notFound();
-  }
-
-  return (
-    <div className="min-h-screen">
-      {/* Project Hero */}
-      <ProjectHero project={project} service={service} />
-
-      {/* Project Content */}
-      <ProjectContent project={project} />
-    </div>
-  );
 }
 
 // Generate static params for all project routes
@@ -50,6 +62,7 @@ export async function generateStaticParams() {
     const staticParams = [];
 
     if (!services || services.length === 0) {
+      console.warn("[Project generateStaticParams] no services found");
       return [];
     }
 

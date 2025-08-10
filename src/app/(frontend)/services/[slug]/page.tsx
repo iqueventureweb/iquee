@@ -17,30 +17,35 @@ interface ServicePageProps {
 export default async function ServicePage({ params }: ServicePageProps) {
   const { slug } = await params;
 
-  // Fetch service data
-  const service = await getServiceBySlug(slug);
+  try {
+    // Fetch service data by slug
+    const service = await getServiceBySlug(slug);
 
-  if (!service) {
+    if (!service) {
+      notFound();
+    }
+
+    // Fetch projects for this service
+    const projects = await getProjectsByService(service.id);
+
+    return (
+      <div className="min-h-screen">
+        {/* Hero Section with Header */}
+        <ServiceHero service={service} />
+
+        {/* Service Content */}
+        <ServiceContent service={service} />
+
+        {/* Projects Grid */}
+        {projects.length > 0 && (
+          <ProjectsGrid projects={projects} serviceSlug={service.slug} />
+        )}
+      </div>
+    );
+  } catch (error) {
+    console.error("[ServicePage] Error:", error);
     notFound();
   }
-
-  // Fetch projects for this service
-  const projects = await getProjectsByService(service.id);
-
-  return (
-    <div className="min-h-screen">
-      {/* Hero Section with Header */}
-      <ServiceHero service={service} />
-
-      {/* Service Content */}
-      <ServiceContent service={service} />
-
-      {/* Projects Grid */}
-      {projects.length > 0 && (
-        <ProjectsGrid projects={projects} serviceSlug={service.slug} />
-      )}
-    </div>
-  );
 }
 
 // Generate static params for all services
@@ -49,6 +54,7 @@ export async function generateStaticParams() {
     const services = await getServices();
 
     if (!services || services.length === 0) {
+      console.warn("[Service generateStaticParams] no services found");
       return [];
     }
 
