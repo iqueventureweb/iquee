@@ -61,7 +61,8 @@ export default function BlogsListing({
           </h2>
         )}
 
-        {featured ? (
+        {/* Show featured blog when not internal, otherwise show all blogs */}
+        {!internal && featured && (
           <Link href={`/blogs/${featured.slug}`} className="group block mb-12">
             <div className="relative overflow-hidden rounded-2xl border bg-white shadow-sm ring-1 ring-black/5 hover:shadow-md transition-shadow">
               <div className="grid md:grid-cols-5 gap-0">
@@ -128,14 +129,11 @@ export default function BlogsListing({
               </div>
             </div>
           </Link>
-        ) : null}
+        )}
 
-        {(!rest || rest.length === 0) && !featured ? (
-          <p className="text-neutral-600">No blogs found.</p>
-        ) : null}
-
+        {/* Show rest of blogs or all blogs if internal */}
         <div className="grid gap-6 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {rest.map((b) => {
+          {(internal ? items : rest).map((b) => {
             const decoded = toPlainText(b.content || "");
             const words = getWordsCount(decoded);
             const minutes = Math.max(1, Math.ceil(words / wpm));

@@ -142,7 +142,10 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
           </h2>
 
           {/* Blog Link */}
-          <div className="flex items-start md:items-center mt-4 md:mt-0 justify-start md:justify-center">
+          <Link
+            href="/blogs"
+            className="flex items-start md:items-center mt-4 md:mt-0 justify-start md:justify-center"
+          >
             <p className="text-base font-normal font-['Epilogue'] uppercase leading-none tracking-tight text-neutral-900">
               Our blog
             </p>
@@ -153,7 +156,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
               height={14}
               className="ml-1 w-14"
             />
-          </div>
+          </Link>
         </div>
 
         {/* News Grid */}

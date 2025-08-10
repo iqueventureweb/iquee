@@ -8,7 +8,7 @@ const Animated3d = dynamic(() => import("./Animated3d"), {
 
 export function HeroSection() {
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative pt-20">
       {/* Spline Background */}
       <Animated3d />
 
