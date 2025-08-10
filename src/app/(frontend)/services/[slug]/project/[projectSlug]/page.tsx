@@ -16,12 +16,10 @@ interface ProjectPageProps {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug, projectSlug } = await params;
-  console.log("[ProjectPage] incoming params:", { slug, projectSlug });
 
   try {
     // Fetch service data by slug
     const service = await getServiceBySlug(slug);
-    console.log("[ProjectPage] getServiceBySlug result:", service);
 
     if (!service) {
       console.error("[ProjectPage] service not found for slug:", slug);
@@ -30,7 +28,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
     // Fetch projects for this service
     const projects = await getProjectsByService(service.id);
-    console.log("[ProjectPage] projects for service:", projects);
 
     // Find the specific project by slug
     const project = projects.find((p) => p.slug === projectSlug);
@@ -42,11 +39,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       );
       notFound();
     }
-
-    console.log("[ProjectPage] fetched:", {
-      service: { id: service.id, title: service.title, slug: service.slug },
-      project: { id: project.id, title: project.title, slug: project.slug },
-    });
 
     return (
       <div className="min-h-screen">
@@ -96,11 +88,6 @@ export async function generateStaticParams() {
         );
       }
     }
-
-    console.log(
-      `[Project generateStaticParams] generated ${staticParams.length} params:`,
-      staticParams.map((p) => `${p.slug}/project/${p.projectSlug}`)
-    );
 
     return staticParams;
   } catch (error) {

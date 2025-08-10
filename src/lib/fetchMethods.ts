@@ -35,14 +35,6 @@ export const getServices = async (): Promise<Service[]> => {
       sort: "-createdAt",
     });
 
-    console.log("[getServices] result:", {
-      count: services.docs.length,
-      services: services.docs.map((s) => ({
-        id: s.id,
-        slug: s.slug,
-        title: s.title,
-      })),
-    });
     return services.docs;
   } catch (error) {
     console.error("Error fetching services data:", error);
@@ -79,8 +71,6 @@ export const getServiceBySlug = async (
   slug: string
 ): Promise<Service | null> => {
   try {
-    console.log("[getServiceBySlug] starting with slug:", slug);
-
     // Check for required environment variables
     if (!process.env.DATABASE_URI) {
       console.error("[getServiceBySlug] DATABASE_URI not set");
@@ -88,7 +78,6 @@ export const getServiceBySlug = async (
     }
 
     const payload = await getPayloadClient();
-    console.log("[getServiceBySlug] payload client obtained");
 
     const result = await payload.find({
       collection: "services",
@@ -100,7 +89,6 @@ export const getServiceBySlug = async (
       limit: 1,
     });
 
-    console.log("[getServiceBySlug] result:", { slug, docs: result.docs });
     return result.docs[0] || null;
   } catch (error) {
     console.error("[getServiceBySlug] Error:", error);

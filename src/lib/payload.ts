@@ -26,8 +26,6 @@ export async function getPayloadClient(): Promise<Payload> {
   }
 
   if (!cachedPayload.promise) {
-    console.log("[getPayloadClient] creating new payload instance");
-
     // Check for required environment variables
     if (!process.env.DATABASE_URI) {
       throw new Error("DATABASE_URI environment variable is not set");
@@ -42,7 +40,6 @@ export async function getPayloadClient(): Promise<Payload> {
 
   try {
     cachedPayload.client = await cachedPayload.promise;
-    console.log("[getPayloadClient] payload client created successfully");
   } catch (e) {
     console.error("[getPayloadClient] Error creating payload client:", e);
     cachedPayload.promise = null;
