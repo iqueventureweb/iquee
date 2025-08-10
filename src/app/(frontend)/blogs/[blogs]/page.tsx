@@ -75,8 +75,8 @@ export default async function BlogDetailPage({
     : "";
 
   return (
-    <article className="py-12 lg:py-20 bg-white">
-      <div className="container mx-auto px-4 max-w-3xl">
+    <article className="py-12 lg:py-20 lg:pt-40 bg-white">
+      <div className="container  px-4 max-w-6xl">
         <div className="mb-6">
           <Link
             href="/blogs"
