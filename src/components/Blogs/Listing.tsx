@@ -160,10 +160,11 @@ export default function BlogsListing({
             return (
               <Link
                 href={`/blogs/${b.slug}`}
+                key={b.id + index}
                 className="group overflow-hidden rounded-xl border bg-white shadow-sm hover:shadow-md transition-shadow"
               >
                 <AnimationWrapper
-                  key={b.id}
+                  key={b.id + index}
                   delay={0.6 + index * 0.1}
                   duration={0.5}
                 >

@@ -40,10 +40,11 @@ export function ProjectsGrid({ projects, serviceSlug }: ProjectsGridProps) {
           {projects.map((project, index) => (
             <div
               onClick={() => handleProjectClick(project.slug)}
+              key={project.id + index}
               className="group cursor-pointer overflow-hidden rounded-xl border bg-white shadow-sm hover:shadow-md transition-shadow"
             >
               <AnimationWrapper
-                key={project.id}
+                key={project.id + index}
                 delay={0.4 + index * 0.1}
                 duration={0.5}
                 className="h-full"
