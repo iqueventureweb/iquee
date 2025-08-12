@@ -127,13 +127,13 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
                 <div className="flex items-center justify-between">
                   {/* Author Info */}
                   <div className="ml-[50px] flex items-center">
-                    <Image
+                    {/* <Image
                       src={currentTestimonial.avatar}
                       alt={currentTestimonial.author}
                       width={44}
                       height={44}
                       className="rounded-3xl mr-4"
-                    />
+                    /> */}
                     <div>
                       <h4 className="text-lg font-normal font-['DM_Sans'] leading-relaxed text-black">
                         {currentTestimonial.author}
@@ -206,13 +206,13 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
 
               {/* Author Info */}
               <div className="ml-5 flex items-center">
-                <Image
+                {/* <Image
                   src={currentTestimonial.avatar}
                   alt={currentTestimonial.author}
                   width={44}
                   height={44}
                   className="rounded-3xl mr-4"
-                />
+                /> */}
                 <div>
                   <h4 className="text-lg font-medium truncate max-w-32 font-['DM_Sans'] leading-relaxed text-black">
                     {currentTestimonial.author}

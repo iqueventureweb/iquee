@@ -77,14 +77,15 @@ export function TrustSection() {
         </div>
 
         {/* Mobile Layout - Grid layout for smaller screens */}
-        <div className="md:hidden grid grid-cols-2 gap-8 max-w-sm mx-auto">
-          {logos.slice(0, 4).map((logo, index) => (
-            <AnimationWrapper
-              key={index}
-              delay={0.4 + index * 0.1}
-              duration={0.4}
-            >
-              <div className="flex justify-center">
+        <div className="md:hidden max-w-sm mx-auto">
+          {/* First row: 2 logos */}
+          <div className="flex justify-center gap-8 mb-8">
+            {logos.slice(0, 2).map((logo, index) => (
+              <AnimationWrapper
+                key={index}
+                delay={0.4 + index * 0.1}
+                duration={0.4}
+              >
                 <Image
                   src={logo.src}
                   alt={logo.alt}
@@ -92,13 +93,33 @@ export function TrustSection() {
                   height={logo.height}
                   className="opacity-70"
                 />
-              </div>
-            </AnimationWrapper>
-          ))}
-          {/* Center the last logo if it's a 5th item */}
+              </AnimationWrapper>
+            ))}
+          </div>
+
+          {/* Second row: 2 logos */}
+          <div className="flex justify-center gap-8 mb-8">
+            {logos.slice(2, 4).map((logo, index) => (
+              <AnimationWrapper
+                key={index + 2}
+                delay={0.6 + index * 0.1}
+                duration={0.4}
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={logo.width}
+                  height={logo.height}
+                  className="opacity-70"
+                />
+              </AnimationWrapper>
+            ))}
+          </div>
+
+          {/* Third row: 1 centered logo (if exists) */}
           {logos.length > 4 && (
-            <AnimationWrapper delay={0.8} duration={0.4}>
-              <div className="col-span-2 flex justify-center">
+            <div className="flex justify-center">
+              <AnimationWrapper delay={0.8} duration={0.4}>
                 <Image
                   src={logos[4].src}
                   alt={logos[4].alt}
@@ -106,8 +127,8 @@ export function TrustSection() {
                   height={logos[4].height}
                   className="opacity-70"
                 />
-              </div>
-            </AnimationWrapper>
+              </AnimationWrapper>
+            </div>
           )}
         </div>
       </div>

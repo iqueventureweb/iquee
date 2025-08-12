@@ -1,22 +1,22 @@
 "use client";
-import dynamic from "next/dynamic";
 import { AnimationWrapper } from "../AnimationWrapper";
 import { Button } from "../ui/button";
+import Animated3d from "./Animated3d";
 
-const Animated3d = dynamic(() => import("./Animated3d"), {
-  loading: () => <div>Loading...</div>,
-});
+// const Animated3d = dynamic(() => import("./Animated3d"), {
+//   loading: () => <div>Loading...</div>,
+// });
 
 export function HeroSection() {
   return (
-    <div className="min-h-screen relative pt-20">
+    <div className="min-h-[70vh] md:min-h-screen relative pt-20">
       {/* Spline Background */}
       <Animated3d />
 
       {/* Content Overlay - pointer-events-none to allow Spline interaction */}
-      <div className="relative z-10 min-h-screen pointer-events-auto">
+      <div className="relative z-10 min-h-[70vh] md:min-h-screen pointer-events-auto">
         {/* Hero Section */}
-        <main className="container mx-auto px-4 flex flex-col justify-center min-h-screen pt-0 md:pt-20">
+        <main className="container mx-auto px-4 flex flex-col justify-center min-h-[70vh] md:min-h-screen pt-0 md:pt-20">
           <div className="max-w-4xl mx-auto text-center">
             {/* Main Heading */}
             <AnimationWrapper delay={0.2} duration={0.8}>
@@ -55,16 +55,14 @@ export function HeroSection() {
           </div>
 
           {/* Location Indicator */}
-          <AnimationWrapper delay={0.8} duration={0.8}>
-            <div className="absolute bottom-8 left-4 flex items-center gap-3 pointer-events-auto">
-              <div className="w-0.5 h-11 bg-blue-900"></div>
-              <div className="text-blue-900 text-base font-normal font-['DM_Sans'] leading-snug">
-                Based in Bangalore,
-                <br />
-                India
-              </div>
+          <div className="absolute bottom-8 left-4 flex items-center gap-3 pointer-events-auto">
+            <div className="w-0.5 h-11 bg-blue-900"></div>
+            <div className="text-blue-900 text-base font-normal font-['DM_Sans'] leading-snug">
+              Based in Bangalore,
+              <br />
+              India
             </div>
-          </AnimationWrapper>
+          </div>
 
           <div className="w-40 h-20 absolute bottom-0 right-4 bg-white pointer-events-auto"></div>
         </main>

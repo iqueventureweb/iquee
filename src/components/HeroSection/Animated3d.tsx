@@ -8,6 +8,7 @@ export default function Animated3d() {
 
   const onLoad = (spline: Application) => {
     splineRef.current = spline;
+    // Force the background to be white once the Spline component is loaded
     spline.setBackgroundColor("#ffffff");
 
     // Enable global events to allow scroll events to bubble up
@@ -18,7 +19,6 @@ export default function Animated3d() {
 
   const handleSplineScroll = (e: any) => {
     // Allow the scroll event to propagate to the parent
-    // This ensures page scrolling works while maintaining Spline interactivity
     if (typeof window !== "undefined") {
       const scrollEvent = new WheelEvent("wheel", {
         deltaY: e.deltaY || 1,
@@ -30,13 +30,15 @@ export default function Animated3d() {
   };
 
   return (
-    <div className="absolute inset-0 z-0">
-      <Suspense fallback={<div>Loading...</div>}>
+    <div className="absolute inset-0 z-0 bg-white">
+      <Suspense
+        fallback={<div className="w-full h-full bg-white">Loading...</div>}
+      >
         <Spline
           scene="https://prod.spline.design/Sn6ItUQx68RnZ6Jt/scene.splinecode"
           onLoad={onLoad}
-          renderOnDemand={onDemand}
           onSplineScroll={handleSplineScroll}
+          style={{ backgroundColor: "white" }} // Add this to enforce white background
         />
       </Suspense>
     </div>

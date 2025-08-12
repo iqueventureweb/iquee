@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimationWrapper } from "../AnimationWrapper";
 
 export function CarouselSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const carouselData = [
     {
@@ -34,18 +35,48 @@ export function CarouselSection() {
     },
   ];
 
+  // Start auto-advance carousel
+  const startAutoAdvance = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselData.length);
+    }, 3000);
+  };
+
+  // Stop auto-advance carousel
+  const stopAutoAdvance = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  // Auto-advance carousel every 3 seconds
+  useEffect(() => {
+    startAutoAdvance();
+    return () => stopAutoAdvance();
+  }, []);
+
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % carouselData.length);
+    stopAutoAdvance();
+    startAutoAdvance();
   };
 
   const prevSlide = () => {
     setCurrentSlide(
       (prev) => (prev - 1 + carouselData.length) % carouselData.length
     );
+    stopAutoAdvance();
+    startAutoAdvance();
   };
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
+    stopAutoAdvance();
+    startAutoAdvance();
   };
 
   return (
@@ -72,21 +103,19 @@ export function CarouselSection() {
           <div className="hidden md:block z-[4]">
             <div className="flex justify-center items-center space-x-8 lg:space-x-16 mb-8">
               {/* Navigation Arrow Left */}
-              <AnimationWrapper delay={0.2} duration={0.4}>
-                <button
-                  onClick={prevSlide}
-                  className="text-white w-7 h-14 hover:text-gray-300 transition-colors"
-                  aria-label="Previous slide"
-                >
-                  <Image
-                    src="/images/left-arrow.svg"
-                    alt="Chevron Left"
-                    width={28}
-                    height={28}
-                    className="w-7 h-14"
-                  />
-                </button>
-              </AnimationWrapper>
+              <button
+                onClick={prevSlide}
+                className="text-white w-7 h-14 hover:text-gray-300 transition-colors"
+                aria-label="Previous slide"
+              >
+                <Image
+                  src="/images/left-arrow.svg"
+                  alt="Chevron Left"
+                  width={28}
+                  height={28}
+                  className="w-7 h-14"
+                />
+              </button>
 
               {/* Carousel Items */}
               <div className="flex space-x-8 lg:space-x-16">
@@ -120,65 +149,59 @@ export function CarouselSection() {
               </div>
 
               {/* Navigation Arrow Right */}
-              <AnimationWrapper delay={0.6} duration={0.4}>
-                <button
-                  onClick={nextSlide}
-                  className="text-white hover:text-gray-300 w-7 h-14 transition-colors"
-                  aria-label="Next slide"
-                >
-                  <Image
-                    src="/images/right-arrow.svg"
-                    alt="Chevron Right"
-                    width={28}
-                    height={28}
-                    className="w-7 h-14"
-                  />
-                </button>
-              </AnimationWrapper>
+              <button
+                onClick={nextSlide}
+                className="text-white hover:text-gray-300 w-7 h-14 transition-colors"
+                aria-label="Next slide"
+              >
+                <Image
+                  src="/images/right-arrow.svg"
+                  alt="Chevron Right"
+                  width={28}
+                  height={28}
+                  className="w-7 h-14"
+                />
+              </button>
             </div>
 
             {/* Dots Navigation */}
-            <AnimationWrapper delay={0.8} duration={0.4}>
-              <div className="flex justify-center space-x-3">
-                {carouselData.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToSlide(index)}
-                    className={`w-2 h-2 rounded-full border border-white transition-colors ${
-                      index === currentSlide
-                        ? "bg-white shadow-[1px_1px_0px_0px_rgba(0,0,0,0.10)]"
-                        : "bg-white/0"
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </AnimationWrapper>
+            <div className="flex justify-center space-x-3">
+              {carouselData.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-2 h-2 rounded-full border border-white transition-colors ${
+                    index === currentSlide
+                      ? "bg-white shadow-[1px_1px_0px_0px_rgba(0,0,0,0.10)]"
+                      : "bg-white/0"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Mobile Layout - Show 1 item */}
-          <div className="md:hidden z-[4]">
-            <div className="flex justify-center items-center mb-8">
+          <div className="md:hidden z-[4] relative">
+            <div className="flex justify-center items-center mb-8 relative">
               {/* Navigation Arrow Left */}
-              <AnimationWrapper delay={0.2} duration={0.4}>
-                <button
-                  onClick={prevSlide}
-                  className=" text-white hover:text-gray-300 transition-colors absolute left-4 top-1/2 transform -translate-y-1/2 z-20"
-                  aria-label="Previous slide"
-                >
-                  <Image
-                    src="/images/left-arrow.svg"
-                    alt="Chevron Left"
-                    width={28}
-                    height={28}
-                    className="w-7 h-9"
-                  />
-                </button>
-              </AnimationWrapper>
+              <button
+                onClick={prevSlide}
+                className="text-white hover:text-gray-300 transition-colors absolute left-4 top-1/2 transform -translate-y-1/2 z-50"
+                aria-label="Previous slide"
+              >
+                <Image
+                  src="/images/left-arrow.svg"
+                  alt="Chevron Left"
+                  width={28}
+                  height={28}
+                  className="w-7 h-9"
+                />
+              </button>
 
               {/* Single Carousel Item */}
               <AnimationWrapper delay={0.4} duration={0.4}>
-                <div className="flex flex-col items-center text-center mx-auto">
+                <div className="flex flex-col items-center text-center mx-auto px-16">
                   {/* Icon */}
                   <div className="w-16 h-16 bg-white rounded mb-8 flex items-center justify-center text-2xl">
                     {carouselData[currentSlide].icon}
@@ -197,40 +220,36 @@ export function CarouselSection() {
               </AnimationWrapper>
 
               {/* Navigation Arrow Right */}
-              <AnimationWrapper delay={0.6} duration={0.4}>
-                <button
-                  onClick={nextSlide}
-                  className=" text-white hover:text-gray-300 transition-colors absolute right-4 top-1/2 transform -translate-y-1/2 z-20"
-                  aria-label="Next slide"
-                >
-                  <Image
-                    src="/images/right-arrow.svg"
-                    alt="Chevron Right"
-                    width={28}
-                    height={28}
-                    className="w-7 h-9"
-                  />
-                </button>
-              </AnimationWrapper>
+              <button
+                onClick={nextSlide}
+                className="text-white hover:text-gray-300 transition-colors absolute right-4 top-1/2 transform -translate-y-1/2 z-50"
+                aria-label="Next slide"
+              >
+                <Image
+                  src="/images/right-arrow.svg"
+                  alt="Chevron Right"
+                  width={28}
+                  height={28}
+                  className="w-7 h-9"
+                />
+              </button>
             </div>
 
             {/* Dots Navigation */}
-            <AnimationWrapper delay={0.8} duration={0.4}>
-              <div className="flex justify-center space-x-3">
-                {carouselData.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToSlide(index)}
-                    className={`w-2 h-2 rounded-full border border-white transition-colors ${
-                      index === currentSlide
-                        ? "bg-white shadow-[1px_1px_0px_0px_rgba(0,0,0,0.10)]"
-                        : "bg-white/0"
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </AnimationWrapper>
+            <div className="flex justify-center space-x-3 relative z-50">
+              {carouselData.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full border border-white transition-colors cursor-pointer ${
+                    index === currentSlide
+                      ? "bg-white shadow-[1px_1px_0px_0px_rgba(0,0,0,0.10)]"
+                      : "bg-white/0 hover:bg-white/20"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

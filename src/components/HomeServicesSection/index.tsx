@@ -57,7 +57,7 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
             description:
               service.blocks?.[0]?.content || service.blocks?.[0]?.title || "",
             icon: "🚀", // Default icon for services from collection
-            image: "https://placehold.co/218x108", // Default image
+            image: `${process.env.NEXT_PUBLIC_SERVER_URL}/services/${service.slug}.svg`, // Default image
           }))
           .reverse()
       : // Fallback: Default services
@@ -82,7 +82,7 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
             {/* Subtitle with decorative border */}
             <AnimationWrapper delay={0.4} duration={0.8}>
               <div className="mr-20">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 md:gap-4 relative">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3 md:gap-4 relative">
                   <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] leading-[1.3] text-neutral-900 ">
                     To solve complex <span className="sm:hidden">problems</span>
                   </p>
@@ -96,7 +96,7 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
                   </p>
                 </div>
 
-                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed mt-1 sm:mt-2">
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-normal font-['Poppins'] text-neutral-900 leading-relaxed sm:mt-2">
                   business solutions.
                 </p>
               </div>
@@ -122,7 +122,7 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
                   <div className="flex gap-1 sm:gap-4 md:gap-3 w-full">
                     {/* Number */}
                     <span className="text-[10.40px] sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium font-['Epilogue'] text-neutral-900 mt-3 sm:mt-4 md:mt-6 lg:mt-10 xl:mt-14 absolute left-4 lg:left-6 xl:left-10 top-[20%]">
-                      {service.id}
+                      0{index + 1}
                     </span>
 
                     {/* Title */}
