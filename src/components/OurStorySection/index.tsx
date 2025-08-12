@@ -11,7 +11,7 @@ interface OurStorySectionProps {
 
 export function OurStorySection({ data }: OurStorySectionProps) {
   return (
-    <section id="about" className="py-9 lg:py-24 bg-white relative">
+    <section id="about" className="py-9 lg:py-24 bg-white relative" aria-labelledby="our-story-title">
       <div className="container mx-auto px-4">
         {/* Desktop Layout */}
         <div className="hidden lg:block">
@@ -27,7 +27,10 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                     </span>
                   </AnimationWrapper>
                   <AnimationWrapper delay={0.2} duration={0.5}>
-                    <h2 className="text-6xl font-medium font-['DM_Sans'] leading-[61.99px] text-black">
+                    <h2 
+                      id="our-story-title"
+                      className="text-6xl font-medium font-['DM_Sans'] leading-[61.99px] text-black"
+                    >
                       {data?.title || "Better way to create"}
                     </h2>
                   </AnimationWrapper>
@@ -41,10 +44,11 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                     {/* Decorative element */}
                     <Image
                       src="/images/dot-vertical-grid.svg"
-                      alt="Dot Vertical Grid"
+                      alt="Decorative dot pattern"
                       width={100}
                       height={100}
                       className="w-24 h-56 absolute top-0 right-32 md:right-64"
+                      aria-hidden="true"
                     />
 
                     {/* Learn more link */}
@@ -52,7 +56,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                       <span className="text-black text-base font-medium font-['DM_Sans'] leading-none">
                         Learn more about us
                       </span>
-                      <ArrowRight className="w-4 h-4 text-black" />
+                      <ArrowRight className="w-4 h-4 text-black" aria-hidden="true" />
                     </div>
                   </div>
                 </AnimationWrapper>
@@ -77,12 +81,12 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                   <div className="relative">
                     <Image
                       src="/our-story.png"
-                      alt="Our Story"
+                      alt="iQue Ventures team and office representing our story and mission"
                       width={630}
                       height={354}
                       className="w-auto h-auto rounded-lg"
+                      loading="lazy"
                     />
-                    {/* Decorative element */}
                   </div>
                 </AnimationWrapper>
               </div>
@@ -91,20 +95,20 @@ export function OurStorySection({ data }: OurStorySectionProps) {
               <div className="col-span-6 space-y-7 max-w-[400px] md:max-w-[35%]">
                 {/* Our Mission */}
                 <AnimationWrapper delay={0.6} duration={0.5}>
-                  <div className="space-y-4">
+                  <article className="space-y-4">
                     <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                       {data?.contents?.[0]?.title || "Our Mission"}
                     </h3>
                     <p className="text-lg font-normal font-['DM_Sans'] leading-[1.2] text-neutral-500">
                       {data?.contents?.[0]?.description ||
-                        "we to connect the dots between aspiring founders, innovative startups, and resourceful investors, while also facilitating collaboration with key stakeholders like governments and corporations. Through a holistic approach, we develop tailored programs and initiatives that support each stage of the entrepreneurial journey, from idea inception to market success."}
+                        "We to connect the dots between aspiring founders, innovative startups, and resourceful investors, while also facilitating collaboration with key stakeholders like governments and corporations. Through a holistic approach, we develop tailored programs and initiatives that support each stage of the entrepreneurial journey, from idea inception to market success."}
                     </p>
-                  </div>
+                  </article>
                 </AnimationWrapper>
 
                 {/* Our Vision */}
                 <AnimationWrapper delay={0.7} duration={0.5}>
-                  <div className="space-y-2 md:space-y-4">
+                  <article className="space-y-2 md:space-y-4">
                     <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                       {data?.contents?.[1]?.title || "Our Vision"}
                     </h3>
@@ -112,16 +116,17 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                       {data?.contents?.[1]?.description ||
                         "At IQue Ventures, we believe in the power of community and collaboration. We are committed to creating a seamless ecosystem where entrepreneurs and startups can thrive, investors can discover opportunities, and organizations can leverage the potential of innovative solutions."}
                     </p>
-                  </div>
+                  </article>
                 </AnimationWrapper>
               </div>
               <AnimationWrapper delay={0.8} duration={0.5}>
                 <Image
                   src="/images/wave-decoration.svg"
-                  alt="Wave Dec"
+                  alt="Decorative wave pattern"
                   width={100}
                   height={100}
                   className="w-40 h-auto absolute -bottom-6 -left-8"
+                  aria-hidden="true"
                 />
               </AnimationWrapper>
             </div>
@@ -131,7 +136,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
         {/* Mobile Layout */}
         <div className="lg:hidden space-y-6 md:space-y-12">
           {/* Header */}
-          <div className="space-y-6">
+          <header className="space-y-6">
             <AnimationWrapper delay={0.1} duration={0.5}>
               <span className="text-neutral-500 text-sm font-medium font-['DM_Sans'] uppercase leading-none tracking-wide">
                 Our Story
@@ -142,7 +147,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                 {data?.title || "Better way to create."}
               </h2>
             </AnimationWrapper>
-          </div>
+          </header>
 
           {/* Description */}
           <AnimationWrapper delay={0.3} duration={0.5}>
@@ -158,7 +163,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
               <span className="text-black text-base font-medium font-['DM_Sans'] leading-none">
                 Learn more about us
               </span>
-              <ArrowRight className="w-4 h-4 text-black" />
+              <ArrowRight className="w-4 h-4 text-black" aria-hidden="true" />
             </div>
           </AnimationWrapper>
 
@@ -167,10 +172,11 @@ export function OurStorySection({ data }: OurStorySectionProps) {
             <div className="!mt-8">
               <Image
                 src="/our-story.png"
-                alt="Our Story"
+                alt="iQue Ventures team and office representing our story and mission"
                 width={350}
                 height={196}
                 className="w-80 h-48 rounded-lg"
+                loading="lazy"
               />
             </div>
           </AnimationWrapper>
@@ -179,7 +185,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
           <div className="space-y-12">
             {/* Our Mission */}
             <AnimationWrapper delay={0.6} duration={0.5}>
-              <div className="space-y-4 mt-12">
+              <article className="space-y-4 mt-12">
                 <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                   {data?.contents?.[0]?.title || "Our Mission"}
                 </h3>
@@ -187,12 +193,12 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                   {data?.contents?.[0]?.description ||
                     "We to connect the dots between aspiring founders, innovative startups, and resourceful investors, while also facilitating collaboration with key stakeholders like governments and corporations. Through a holistic approach, we develop tailored programs and initiatives that support each stage of the entrepreneurial journey, from idea inception to market success."}
                 </p>
-              </div>
+              </article>
             </AnimationWrapper>
 
             {/* Our Vision */}
             <AnimationWrapper delay={0.7} duration={0.5}>
-              <div className="space-y-4">
+              <article className="space-y-4">
                 <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                   {data?.contents?.[1]?.title || "Our Vision"}
                 </h3>
@@ -200,7 +206,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                   {data?.contents?.[1]?.description ||
                     "At IQue Ventures, we believe in the power of community and collaboration. We are committed to creating a seamless ecosystem where entrepreneurs and startups can thrive, investors can discover opportunities, and organizations can leverage the potential of innovative solutions."}
                 </p>
-              </div>
+              </article>
             </AnimationWrapper>
           </div>
         </div>

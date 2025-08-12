@@ -303,6 +303,12 @@ export interface HomePage {
         role?: string | null;
         quote?: string | null;
         image_url?: string | null;
+        social_links?: {
+          twitter?: string | null;
+          facebook?: string | null;
+          linkedin?: string | null;
+          instagram?: string | null;
+        };
         id?: string | null;
       }[]
     | null;
@@ -621,6 +627,14 @@ export interface HomePageSelect<T extends boolean = true> {
         role?: T;
         quote?: T;
         image_url?: T;
+        social_links?:
+          | T
+          | {
+              twitter?: T;
+              facebook?: T;
+              linkedin?: T;
+              instagram?: T;
+            };
         id?: T;
       };
   updatedAt?: T;

@@ -41,16 +41,23 @@ export function AchievementsSection({ data }: AchievementsSectionProps) {
     <section
       id="achievements"
       className="relative bg-black min-h-[400px] md:min-h-[500px] lg:min-h-[590px] overflow-hidden"
+      aria-labelledby="achievements-title"
     >
       {/* Background overlay */}
-      <div className="absolute inset-0 bg-neutral-900 opacity-90" />
+      <div
+        className="absolute inset-0 bg-neutral-900 opacity-90"
+        aria-hidden="true"
+      />
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-32 items-start">
           {/* Left Content */}
           <div className="space-y-6 lg:space-y-8">
             <AnimationWrapper delay={0.2} duration={0.4}>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-medium font-['DM_Sans'] text-white leading-tight">
+              <h2
+                id="achievements-title"
+                className="text-4xl sm:text-5xl md:text-6xl font-medium font-['DM_Sans'] text-white leading-tight"
+              >
                 {data?.title || "Check recent achievements."}
               </h2>
             </AnimationWrapper>
@@ -63,7 +70,10 @@ export function AchievementsSection({ data }: AchievementsSectionProps) {
             </AnimationWrapper>
 
             <AnimationWrapper delay={0.6} duration={0.4}>
-              <button className="bg-white/95 hover:bg-white transition-colors duration-200 rounded px-8 py-4 group">
+              <button
+                className="bg-white/95 hover:bg-white transition-colors duration-200 rounded px-8 py-4 group"
+                aria-label="Request pricing information for our services"
+              >
                 <span className="text-black text-xs font-bold font-['DM_Sans'] uppercase tracking-wide">
                   Request Price
                 </span>
@@ -77,9 +87,10 @@ export function AchievementsSection({ data }: AchievementsSectionProps) {
             delay={0.4}
             duration={0.4}
             className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 lg:gap-y-12 gap-x-16 lg:gap-x-24 xl:gap-x-40"
+            aria-label="Achievement statistics"
           >
             {achievements.map((achievement, index) => (
-              <div key={index} className="space-y-4">
+              <div key={index} className="space-y-4" role="listitem">
                 <div className="text-5xl sm:text-6xl lg:text-7xl font-medium font-['DM_Sans'] text-white leading-tight">
                   {achievement.count}
                 </div>

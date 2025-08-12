@@ -53,46 +53,67 @@ export function NewsletterSection() {
   };
 
   return (
-    <section className="h-96 relative overflow-hidden my-16 lg:my-28">
+    <section className="h-96 relative overflow-hidden my-16 lg:my-28" aria-labelledby="newsletter-title">
       <Image
         src="https://static.vecteezy.com/system/resources/previews/005/644/120/non_2x/abstract-background-of-red-and-dark-color-of-modern-design-vector.jpg"
-        alt="Newsletter Background"
+        alt="Newsletter subscription background with modern abstract design"
         width={1440}
         height={384}
         className="w-full h-full absolute top-0 left-0 object-cover"
+        priority={false}
       />
-      <div className="absolute inset-0 bg-neutral-900 bg-opacity-90"></div>
+      <div className="absolute inset-0 bg-neutral-900 bg-opacity-90" aria-hidden="true"></div>
       <div className="container mx-auto px-4 h-full flex items-center justify-center relative z-10">
         <div className="w-full max-w-[660px] text-center">
           {/* Title */}
           <AnimationWrapper delay={0.2}>
-            <h2 className="text-2xl lg:text-4xl font-medium font-['DM_Sans'] leading-[1.3] lg:leading-[48px] text-white mb-8 lg:mb-12">
+            <h2 
+              id="newsletter-title"
+              className="text-2xl lg:text-4xl font-medium font-['DM_Sans'] leading-[1.3] lg:leading-[48px] text-white mb-8 lg:mb-12"
+            >
               Stay informed with our newsletter.
             </h2>
           </AnimationWrapper>
 
           {/* Newsletter Form */}
           <AnimationWrapper delay={0.4}>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" aria-label="Newsletter subscription form">
               <div className="flex flex-col md:flex-row gap-4 lg:gap-3 ">
                 {/* Email Input */}
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full h-12 sm:h-14 px-6 rounded border-2 border-white/20 bg-transparent text-white placeholder-white/70 text-base font-normal font-['DM_Sans'] focus:outline-none focus:border-white/40"
-                  required
-                />
+                <div className="flex-1">
+                  <label htmlFor="newsletter-email" className="sr-only">
+                    Email address for newsletter subscription
+                  </label>
+                  <input
+                    id="newsletter-email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full h-12 sm:h-14 px-6 rounded border-2 border-white/20 bg-transparent text-white placeholder-white/70 text-base font-normal font-['DM_Sans'] focus:outline-none focus:border-white/40"
+                    required
+                    aria-required="true"
+                    aria-describedby={messageType === "error" && (!email || !email.includes("@")) ? "email-error" : undefined}
+                  />
+                  {messageType === "error" && (!email || !email.includes("@")) && (
+                    <div id="email-error" className="text-red-400 text-sm mt-1 text-left" role="alert">
+                      Please enter a valid email address
+                    </div>
+                  )}
+                </div>
 
                 {/* Subscribe Button */}
                 <button
                   type="submit"
                   disabled={loading}
                   className="w-full md:w-48 h-12 sm:h-14 bg-white/95 rounded text-black text-xs font-bold font-['DM_Sans'] uppercase leading-tight tracking-wide hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-describedby="submit-status"
                 >
                   {loading ? "Subscribing..." : "Subscribe Now"}
                 </button>
+                <div id="submit-status" className="sr-only">
+                  {loading ? "Form is being submitted" : "Form is ready to submit"}
+                </div>
               </div>
 
               {/* Status Message */}
@@ -103,6 +124,8 @@ export function NewsletterSection() {
                       ? "text-green-400"
                       : "text-red-400"
                   }`}
+                  role="alert"
+                  aria-live="polite"
                 >
                   {message}
                 </div>
@@ -111,18 +134,20 @@ export function NewsletterSection() {
               {/* Terms and Privacy */}
               <div className="flex items-start lg:items-center justify-center gap-1 lg:gap-2 text-sm font-normal font-['DM_Sans'] leading-tight text-white/70">
                 <div className="flex text-sm items-center gap-1 flex-wrap justify-start md:justify-center">
-                  <Info className="w-4 h-4 flex-shrink-0" />
+                  <Info className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                   <span>By sending the form you agree to the</span>
                   <Link
-                    href="#"
+                    href="/terms"
                     className="underline hover:text-white transition-colors"
+                    aria-label="Read our terms and conditions"
                   >
                     Terms & Conditions
                   </Link>
                   <span>and</span>
                   <Link
-                    href="#"
+                    href="/privacy"
                     className="underline hover:text-white transition-colors"
+                    aria-label="Read our privacy policy"
                   >
                     Privacy Policy
                   </Link>

@@ -13,9 +13,10 @@ export function ServiceHero({ service }: ServiceHeroProps) {
     <section
       className="relative min-h-[80vh] bg-cover bg-center bg-no-repeat overflow-hidden pt-20"
       style={{ backgroundImage: "url(/images/resourse-bg.png)" }}
+      aria-labelledby="service-title"
     >
       {/* Enhanced Background Elements */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0" aria-hidden="true">
         <AnimationWrapper delay={0.2} duration={0.6}>
           <div className="absolute top-32 right-32 w-96 h-96 bg-gradient-to-r from-blue-100/40 to-cyan-100/40 rounded-full blur-3xl" />
         </AnimationWrapper>
@@ -32,7 +33,10 @@ export function ServiceHero({ service }: ServiceHeroProps) {
         {/* Main Content */}
         <div className="max-w-5xl mx-auto text-center">
           <AnimationWrapper delay={0.3} duration={0.6}>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium font-['Epilogue'] text-white leading-none mb-12 tracking-tighter">
+            <h1
+              id="service-title"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium font-['Epilogue'] text-white leading-none mb-12 tracking-tighter"
+            >
               {service.title}
             </h1>
           </AnimationWrapper>
@@ -43,6 +47,7 @@ export function ServiceHero({ service }: ServiceHeroProps) {
               <Link
                 href="#service-details"
                 className="px-12 py-6 border-2 border-white text-white rounded-full font-bold font-['DM_Sans'] text-lg hover:bg-white hover:text-black transition-all duration-300 hover:shadow-lg"
+                aria-label={`Learn more about ${service.title} services`}
               >
                 Learn More
               </Link>

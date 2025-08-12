@@ -153,6 +153,33 @@ export const HomePage: CollectionConfig = {
           label: "Image URL",
           type: "text",
         },
+        {
+          name: "social_links",
+          label: "Social Links",
+          type: "group",
+          fields: [
+            {
+              name: "twitter",
+              label: "Twitter/X URL",
+              type: "text",
+            },
+            {
+              name: "facebook",
+              label: "Facebook URL",
+              type: "text",
+            },
+            {
+              name: "linkedin",
+              label: "LinkedIn URL",
+              type: "text",
+            },
+            {
+              name: "instagram",
+              label: "Instagram URL",
+              type: "text",
+            },
+          ],
+        },
       ],
     },
   ],

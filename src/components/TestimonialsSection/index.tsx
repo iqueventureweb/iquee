@@ -73,15 +73,22 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   const currentTestimonial = testimonials[currentSlide];
 
   return (
-    <section id="testimonials" className="py-[70px] lg:py-28">
+    <section
+      id="testimonials"
+      className="py-[70px] lg:py-28"
+      aria-labelledby="testimonials-title"
+    >
       <div className="mx-[29px] py-12 md:py-20 md:mx-[75px] px-4 bg-zinc-100">
         {/* Desktop Layout */}
         <div className="hidden lg:block max-w-7xl mx-auto">
-          <div className="text-center mb-12">
+          <header className="text-center mb-12">
             {/* Title */}
             <div className="space-y-2">
               <AnimationWrapper delay={0.2} duration={0.4}>
-                <h2 className="text-6xl font-medium font-['DM_Sans'] leading-[61.99px] text-black tracking-tight">
+                <h2
+                  id="testimonials-title"
+                  className="text-6xl font-medium font-['DM_Sans'] leading-[61.99px] text-black tracking-tight"
+                >
                   iQue is trusted by
                 </h2>
               </AnimationWrapper>
@@ -93,22 +100,26 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
                   {/* Decorative underline */}
                   <Image
                     src="/images/curly-icon.svg"
-                    alt="Underline"
+                    alt="Decorative underline decoration"
                     width={100}
                     height={100}
                     className="absolute -bottom-8 -left-3 w-56"
+                    aria-hidden="true"
                   />
                 </div>
               </AnimationWrapper>
             </div>
-          </div>
+          </header>
 
           {/* Testimonial Card */}
           <div className="max-w-4xl mx-auto">
             <AnimationWrapper delay={0.6} duration={0.4}>
-              <div className="bg-transparent p-8 relative">
+              <blockquote className="bg-transparent p-8 relative">
                 {/* Quote Icon */}
-                <div className="w-16 h-16 bg-white rounded-[30px] absolute -left-4 top-4 flex items-center justify-center">
+                <div
+                  className="w-16 h-16 bg-white rounded-[30px] absolute -left-4 top-4 flex items-center justify-center"
+                  aria-hidden="true"
+                >
                   <span className="text-7xl font-serif text-black leading-none h-[33px]">
                     {"”"}
                   </span>
@@ -122,73 +133,77 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
                 </div>
 
                 {/* Divider */}
-                <div className="ml-[50px] w-20 h-px bg-black mb-4"></div>
+                <div
+                  className="ml-[50px] w-20 h-px bg-black mb-4"
+                  aria-hidden="true"
+                ></div>
 
                 <div className="flex items-center justify-between">
                   {/* Author Info */}
-                  <div className="ml-[50px] flex items-center">
-                    <Image
-                      src={currentTestimonial.avatar}
-                      alt={currentTestimonial.author}
-                      width={44}
-                      height={44}
-                      className="rounded-3xl mr-4"
-                    />
+                  <footer className="ml-[50px] flex items-center">
                     <div>
-                      <h4 className="text-lg font-normal font-['DM_Sans'] leading-relaxed text-black">
+                      <cite className="text-lg font-normal font-['DM_Sans'] leading-relaxed text-black not-italic">
                         {currentTestimonial.author}
-                      </h4>
+                      </cite>
                       <p className="text-base font-normal font-['DM_Sans'] leading-snug text-neutral-500">
                         {currentTestimonial.role}
                       </p>
                     </div>
-                  </div>
+                  </footer>
                   {/* Navigation Arrows */}
-                  <div className="flex justify-center space-x-4 items-center h-full">
+                  <div
+                    className="flex justify-center space-x-4 items-center h-full"
+                    role="navigation"
+                    aria-label="Testimonial navigation"
+                  >
                     <button
                       onClick={prevSlide}
                       className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
                       aria-label="Previous testimonial"
+                      aria-controls="testimonials-carousel"
                     >
-                      <ArrowLeft className="w-4 h-4 text-black" />
+                      <ArrowLeft
+                        className="w-4 h-4 text-black"
+                        aria-hidden="true"
+                      />
                     </button>
                     <button
                       onClick={nextSlide}
                       className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
                       aria-label="Next testimonial"
+                      aria-controls="testimonials-carousel"
                     >
-                      <ArrowRight className="w-4 h-4 text-black" />
+                      <ArrowRight
+                        className="w-4 h-4 text-black"
+                        aria-hidden="true"
+                      />
                     </button>
                   </div>
                 </div>
-              </div>
+              </blockquote>
             </AnimationWrapper>
           </div>
         </div>
 
         {/* Mobile Layout */}
         <div className="lg:hidden max-w-sm sm:max-w-xl mx-auto">
-          <div className="text-center mb-8 relative">
+          <header className="text-center mb-8 relative">
             {/* Title */}
             <AnimationWrapper delay={0.2} duration={0.4}>
               <h2 className="text-3xl font-medium font-['DM_Sans'] text-black leading-[1.3] tracking-tight">
                 iQue is trusted <br /> by 10,000+customers.
               </h2>
             </AnimationWrapper>
-            {/* <Image
-              src="/images/curly-icon.svg"
-              alt="Underline"
-              width={100}
-              height={100}
-              className="absolute bottom-0 left-[78px] w-[105px]"
-            /> */}
-          </div>
+          </header>
 
           {/* Testimonial Card */}
           <AnimationWrapper delay={0.4} duration={0.4}>
-            <div className="bg-transparent p-4 sm:p-6 relative min-h-[300px] md:min-h-[400px]">
+            <blockquote className="bg-transparent p-4 sm:p-6 relative min-h-[300px] md:min-h-[400px]">
               {/* Quote Icon */}
-              <div className="w-8 h-8 bg-white rounded-2xl absolute -left-2 top-4 flex items-center justify-center">
+              <div
+                className="w-8 h-8 bg-white rounded-2xl absolute -left-2 top-4 flex items-center justify-center"
+                aria-hidden="true"
+              >
                 <span className="text-4xl h-[15px] font-serif text-black leading-none">
                   {"”"}
                 </span>
@@ -202,45 +217,47 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
               </div>
 
               {/* Divider */}
-              <div className="ml-5 w-20 h-px bg-black mb-6"></div>
+              <div
+                className="ml-5 w-20 h-px bg-black mb-6"
+                aria-hidden="true"
+              ></div>
 
               {/* Author Info */}
-              <div className="ml-5 flex items-center">
-                <Image
-                  src={currentTestimonial.avatar}
-                  alt={currentTestimonial.author}
-                  width={44}
-                  height={44}
-                  className="rounded-3xl mr-4"
-                />
+              <footer className="ml-5 flex items-center">
                 <div>
-                  <h4 className="text-lg font-medium truncate max-w-32 font-['DM_Sans'] leading-relaxed text-black">
+                  <cite className="text-lg font-medium truncate max-w-32 font-['DM_Sans'] leading-relaxed text-black not-italic">
                     {currentTestimonial.author}
-                  </h4>
+                  </cite>
                   <p className="text-base font-normal font-['DM_Sans'] leading-snug text-neutral-500">
                     {currentTestimonial.role}
                   </p>
                 </div>
-              </div>
-            </div>
+              </footer>
+            </blockquote>
           </AnimationWrapper>
 
           {/* Navigation Arrows */}
           <AnimationWrapper delay={0.6} duration={0.4}>
-            <div className="flex justify-end ml-auto space-x-4 mt-8">
+            <div
+              className="flex justify-end ml-auto space-x-4 mt-8"
+              role="navigation"
+              aria-label="Testimonial navigation"
+            >
               <button
                 onClick={prevSlide}
                 className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
                 aria-label="Previous testimonial"
+                aria-controls="testimonials-carousel"
               >
-                <ArrowLeft className="w-6 h-6 text-black" />
+                <ArrowLeft className="w-6 h-6 text-black" aria-hidden="true" />
               </button>
               <button
                 onClick={nextSlide}
                 className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
                 aria-label="Next testimonial"
+                aria-controls="testimonials-carousel"
               >
-                <ArrowRight className="w-6 h-6 text-black" />
+                <ArrowRight className="w-6 h-6 text-black" aria-hidden="true" />
               </button>
             </div>
           </AnimationWrapper>
