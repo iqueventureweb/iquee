@@ -3,6 +3,8 @@ import { EditorContent } from "@/components/EditorContent";
 import { getBlogs } from "@/lib/fetchMethods";
 import { processEditorContent } from "@/lib/globalMethods";
 import { getPayloadClient } from "@/lib/payload";
+import { generateBreadcrumbs, generateEnhancedMeta, generateStructuredData } from "@/utilities/seoUtils";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -36,20 +38,35 @@ export async function generateStaticParams() {
   });
   return (result.docs || [])
     .filter((d) => d.slug)
-    .map((d) => ({ blog_slug: d.slug }));
+    .map((d) => ({ blogs: d.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ blogs: string }>;
-}) {
+}): Promise<Metadata> {
   const { blogs } = await params;
   const blog = await getBlogBySlug(blogs);
-  return {
-    title: blog?.title || "Blog",
-    description: blog?.title ? `Read: ${blog.title}` : "Blog post",
-  };
+  
+  if (!blog) {
+    return {
+      title: "Blog Not Found",
+      description: "The requested blog post could not be found.",
+    };
+  }
+
+  return generateEnhancedMeta({
+    title: blog.title,
+    description: blog.content ? blog.content.substring(0, 160) + "..." : `Read: ${blog.title}`,
+    url: `/blogs/${blog.slug}`,
+    type: "article",
+    publishedTime: blog.createdAt,
+    modifiedTime: blog.updatedAt,
+    author: blog.author || "iQue Team",
+    section: "Blog",
+    tags: ["startup ecosystem", "entrepreneurship", "innovation", "blog"],
+  });
 }
 
 export default async function BlogDetailPage({
@@ -60,6 +77,7 @@ export default async function BlogDetailPage({
   const { blogs } = await params;
   const blog = await getBlogBySlug(blogs);
   const similarBlogs = await getBlogs(3);
+  
   if (!blog) {
     notFound();
   }
@@ -74,34 +92,67 @@ export default async function BlogDetailPage({
       })
     : "";
 
+  // Generate structured data
+  const articleData = generateStructuredData({
+    type: "article",
+    data: {
+      title: blog.title,
+      description: blog.content ? blog.content.substring(0, 160) + "..." : `Read: ${blog.title}`,
+      author: blog.author || "iQue Team",
+      publishedTime: blog.createdAt,
+      modifiedTime: blog.updatedAt,
+      slug: blog.slug,
+    },
+  });
+
+  const breadcrumbData = generateBreadcrumbs([
+    { name: "Home", url: "/" },
+    { name: "Blog", url: "/#blog" },
+    { name: blog.title, url: `/blogs/${blog.slug}` },
+  ]);
+
   return (
-    <article className="py-12 lg:py-20 lg:pt-40 bg-white">
-      <div className="container  px-4 max-w-6xl">
-        <div className="mb-6">
+    <article className="py-12 lg:py-20 lg:pt-40 bg-white" itemScope itemType="https://schema.org/Article">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleData),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbData),
+        }}
+      />
+      
+      <div className="container px-4 max-w-6xl">
+        <nav aria-label="Breadcrumb" className="mb-6">
           <Link
             href="/blogs"
             className="text-sm text-neutral-700 hover:underline"
           >
             ← Back to blogs
           </Link>
-        </div>
+        </nav>
 
         <header className="mb-8">
-          <h1 className="text-3xl lg:text-5xl font-medium font-['DM_Sans'] leading-tight text-neutral-900">
+          <h1 className="text-3xl lg:text-5xl font-medium font-['DM_Sans'] leading-tight text-neutral-900" itemProp="headline">
             {blog.title}
           </h1>
 
           <div className="mt-4 flex gap-2">
             <div className="px-3 rounded-[20px] border border-neutral-900">
-              <span className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900">
+              <span className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900" itemProp="author">
                 {blog.author || "Unknown"}
               </span>
             </div>
             {date ? (
               <div className="px-3 rounded-[20px] border border-neutral-900">
-                <span className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900">
+                <time className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900" dateTime={blog.createdAt} itemProp="datePublished">
                   {date}
-                </span>
+                </time>
               </div>
             ) : null}
             <div className="px-3 rounded-[20px] border border-neutral-900">
@@ -112,8 +163,11 @@ export default async function BlogDetailPage({
           </div>
         </header>
 
-        <EditorContent content={blog.content || ""} />
+        <div itemProp="articleBody">
+          <EditorContent content={blog.content || ""} />
+        </div>
       </div>
+      
       <div className="mt-4">
         <BlogsListing blogs={similarBlogs} internal={true} />
       </div>

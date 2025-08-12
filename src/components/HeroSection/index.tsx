@@ -3,13 +3,9 @@ import { AnimationWrapper } from "../AnimationWrapper";
 import { Button } from "../ui/button";
 import Animated3d from "./Animated3d";
 
-// const Animated3d = dynamic(() => import("./Animated3d"), {
-//   loading: () => <div>Loading...</div>,
-// });
-
 export function HeroSection() {
   return (
-    <div className="min-h-[70vh] md:min-h-screen relative pt-20">
+    <section className="min-h-[70vh] md:min-h-screen relative pt-20" aria-labelledby="hero-heading">
       {/* Spline Background */}
       <Animated3d />
 
@@ -20,7 +16,10 @@ export function HeroSection() {
           <div className="max-w-4xl mx-auto text-center">
             {/* Main Heading */}
             <AnimationWrapper delay={0.2} duration={0.8}>
-              <h1 className="text-4xl md:text-8xl font-medium text-blue-900 mb-8 leading-tight tracking-tighter font-['DM_Sans'] pointer-events-none">
+              <h1 
+                id="hero-heading"
+                className="text-4xl md:text-8xl font-medium text-blue-900 mb-8 leading-tight tracking-tighter font-['DM_Sans'] pointer-events-none"
+              >
                 Lets create, a better
                 <br />
                 startup Ecosystem.
@@ -44,10 +43,14 @@ export function HeroSection() {
                 <Button
                   variant="outline"
                   className="border-blue-900 text-xs w-40 h-14 text-blue-900 hover:bg-blue-900/10 font-bold uppercase tracking-wide font-['DM_Sans']"
+                  aria-label="Learn more about iQue services"
                 >
                   Learn More
                 </Button>
-                <Button className="bg-blue-900 text-xs w-40 h-14 text-white hover:bg-blue-800 font-bold uppercase tracking-wide font-['DM_Sans']">
+                <Button 
+                  className="bg-blue-900 text-xs w-40 h-14 text-white hover:bg-blue-800 font-bold uppercase tracking-wide font-['DM_Sans']"
+                  aria-label="Get in touch with iQue team"
+                >
                   Get In Touch
                 </Button>
               </div>
@@ -56,17 +59,17 @@ export function HeroSection() {
 
           {/* Location Indicator */}
           <div className="absolute bottom-8 left-4 flex items-center gap-3 pointer-events-auto">
-            <div className="w-0.5 h-11 bg-blue-900"></div>
-            <div className="text-blue-900 text-base font-normal font-['DM_Sans'] leading-snug">
+            <div className="w-0.5 h-11 bg-blue-900" aria-hidden="true"></div>
+            <address className="text-blue-900 text-base font-normal font-['DM_Sans'] leading-snug not-italic">
               Based in Bangalore,
               <br />
               India
-            </div>
+            </address>
           </div>
 
-          <div className="w-40 h-20 absolute bottom-0 right-4 bg-white pointer-events-auto"></div>
+          <div className="w-40 h-20 absolute bottom-0 right-4 bg-white pointer-events-auto" aria-hidden="true"></div>
         </main>
       </div>
-    </div>
+    </section>
   );
 }

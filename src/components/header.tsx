@@ -15,17 +15,17 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)]">
-      <nav className="max-w-screen-xl mx-auto h-20 relative flex items-center justify-between pl-3 xl:justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-2xl border-b border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.1)]" role="banner">
+      <nav className="max-w-screen-xl mx-auto h-20 relative flex items-center justify-between pl-3 xl:justify-between" role="navigation" aria-label="Main navigation">
         {/* Logo */}
-        <Link href="/">
-          <Image src="/ique-logo.svg" alt="logo" width={100} height={100} />
+        <Link href="/" aria-label="iQue Homepage">
+          <Image src="/ique-logo.svg" alt="iQue Logo" width={100} height={100} priority />
         </Link>
 
         {/* Desktop Navigation Items - Hidden on mobile */}
-        <div className="hidden md:flex items-center h-20 gap-8">
+        <div className="hidden md:flex items-center h-20 gap-8" role="menubar">
           {/* Home - Active */}
-          <Link href="/#home" className="flex items-center justify-center px-2">
+          <Link href="/#home" className="flex items-center justify-center px-2" role="menuitem" aria-current="page">
             <div className="text-center text-blue-900 text-base font-medium font-['DM_Sans'] leading-snug">
               Home
             </div>
@@ -35,6 +35,7 @@ export default function Header() {
           <Link
             href="/#services"
             className="flex items-center justify-center px-2 opacity-80 hover:opacity-100 transition-opacity"
+            role="menuitem"
           >
             <div className="text-center text-blue-900 text-base font-medium font-['DM_Sans'] leading-snug">
               Services
@@ -45,6 +46,7 @@ export default function Header() {
           <Link
             href="/#about"
             className="flex items-center justify-center px-2 opacity-80 hover:opacity-100 transition-opacity"
+            role="menuitem"
           >
             <div className="text-center text-blue-900 text-base font-medium font-['DM_Sans'] leading-snug">
               About
@@ -55,6 +57,7 @@ export default function Header() {
           <Link
             href="/#contact"
             className="flex items-center justify-center px-2 opacity-80 hover:opacity-100 transition-opacity"
+            role="menuitem"
           >
             <div className="text-center text-blue-900 text-base font-medium font-['DM_Sans'] leading-snug">
               Contact
@@ -65,6 +68,7 @@ export default function Header() {
           <Link
             href="/#blog"
             className="flex items-center justify-center px-2 opacity-80 hover:opacity-100 transition-opacity"
+            role="menuitem"
           >
             <div className="text-center text-blue-900 text-base font-medium font-['DM_Sans'] leading-snug">
               Blog
@@ -75,6 +79,7 @@ export default function Header() {
           <Link
             href="/#career"
             className="flex items-center justify-center px-2 opacity-80 hover:opacity-100 transition-opacity"
+            role="menuitem"
           >
             <div className="text-center text-blue-900 text-base font-medium font-['DM_Sans'] leading-snug">
               Career
@@ -85,6 +90,7 @@ export default function Header() {
           <Link
             href="/#team"
             className="flex items-center justify-center px-2 opacity-80 hover:opacity-100 transition-opacity"
+            role="menuitem"
           >
             <div className="text-center text-blue-900 text-base font-medium font-['DM_Sans'] leading-snug">
               Team
@@ -105,18 +111,26 @@ export default function Header() {
         <div className="md:hidden absolute right-4 top-1/2 transform -translate-y-1/2">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-blue-900">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-blue-900"
+                aria-label="Open mobile menu"
+                aria-expanded={isOpen}
+                aria-controls="mobile-menu"
+              >
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col gap-6 mt-8">
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+              <nav className="flex flex-col gap-6 mt-8" role="navigation" aria-label="Mobile navigation">
                 {/* Mobile Navigation Links */}
                 <Link
                   href="/"
                   onClick={handleLinkClick}
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
+                  role="menuitem"
                 >
                   Home
                 </Link>
@@ -125,6 +139,7 @@ export default function Header() {
                   href="/#services"
                   onClick={handleLinkClick}
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
+                  role="menuitem"
                 >
                   Services
                 </Link>
@@ -133,6 +148,7 @@ export default function Header() {
                   href="/#about"
                   onClick={handleLinkClick}
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
+                  role="menuitem"
                 >
                   About
                 </Link>
@@ -141,6 +157,7 @@ export default function Header() {
                   href="/#contact"
                   onClick={handleLinkClick}
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
+                  role="menuitem"
                 >
                   Contact
                 </Link>
@@ -149,6 +166,7 @@ export default function Header() {
                   href="/#blog"
                   onClick={handleLinkClick}
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
+                  role="menuitem"
                 >
                   Blog
                 </Link>
@@ -157,6 +175,7 @@ export default function Header() {
                   href="/#career"
                   onClick={handleLinkClick}
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
+                  role="menuitem"
                 >
                   Career
                 </Link>
@@ -165,6 +184,7 @@ export default function Header() {
                   href="/#team"
                   onClick={handleLinkClick}
                   className="text-blue-900 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
+                  role="menuitem"
                 >
                   Team
                 </Link>

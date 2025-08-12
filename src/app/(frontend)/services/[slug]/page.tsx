@@ -6,6 +6,12 @@ import {
   getServiceBySlug,
   getServices,
 } from "@/lib/fetchMethods";
+import {
+  generateBreadcrumbs,
+  generateEnhancedMeta,
+  generateStructuredData,
+} from "@/utilities/seoUtils";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface ServicePageProps {
@@ -28,8 +34,38 @@ export default async function ServicePage({ params }: ServicePageProps) {
     // Fetch projects for this service
     const projects = await getProjectsByService(service.id);
 
+    // Generate structured data
+    const serviceData = generateStructuredData({
+      type: "service",
+      data: {
+        title: service.title,
+        description: service.blocks?.[0]?.content || service.title,
+        category: "Business Service",
+      },
+    });
+
+    const breadcrumbData = generateBreadcrumbs([
+      { name: "Home", url: "/" },
+      { name: "Services", url: "/#services" },
+      { name: service.title, url: `/services/${service.slug}` },
+    ]);
+
     return (
       <div className="min-h-screen">
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(serviceData),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(breadcrumbData),
+          }}
+        />
+
         {/* Hero Section with Header */}
         <ServiceHero service={service} />
 
@@ -66,5 +102,43 @@ export async function generateStaticParams() {
   } catch (error) {
     console.error("Error generating static params for services:", error);
     return [];
+  }
+}
+
+// Generate metadata for each service
+export async function generateMetadata({
+  params,
+}: ServicePageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  try {
+    const service = await getServiceBySlug(slug);
+
+    if (!service) {
+      return {
+        title: "Service Not Found",
+        description: "The requested service could not be found.",
+      };
+    }
+
+    return generateEnhancedMeta({
+      title: service.title,
+      description:
+        service.blocks?.[0]?.content ||
+        `Learn more about ${service.title} services at iQue.`,
+      url: `/services/${service.slug}`,
+      type: "service",
+      section: "Services",
+      tags: [
+        "startup services",
+        "business services",
+        service.title.toLowerCase(),
+      ],
+    });
+  } catch (error) {
+    return {
+      title: "Service",
+      description: "Service information",
+    };
   }
 }
