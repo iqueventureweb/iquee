@@ -1,6 +1,7 @@
 "use client";
 
 import { HomePage } from "@/payload-types";
+import { useEffect, useRef, useState } from "react";
 import {
   AnimationWrapper,
   StaggeredAnimationWrapper,
@@ -8,6 +9,79 @@ import {
 
 interface AchievementsSectionProps {
   data?: HomePage["achievement"];
+}
+
+// Simple counting component
+function CountUpNumber({ end, delay = 0 }: { end: string; delay?: number }) {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isVisible) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const numericValue = parseInt(end.replace(/\D/g, ""));
+    const suffix = end.replace(/\d/g, "");
+
+    let startTime: number;
+    let animationFrame: number;
+
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / 2000, 1);
+
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentCount = Math.floor(easeOutQuart * numericValue);
+
+      setCount(currentCount);
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+    // Delay the animation start
+    const timer = setTimeout(() => {
+      animationFrame = requestAnimationFrame(animate);
+    }, delay);
+
+    return () => {
+      clearTimeout(timer);
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [isVisible, end, delay]);
+
+  const suffix = end.replace(/\d/g, "");
+
+  return (
+    <div
+      ref={ref}
+      className="text-5xl sm:text-6xl lg:text-7xl font-medium font-['DM_Sans'] text-white leading-tight"
+    >
+      {count}
+      {suffix}
+    </div>
+  );
 }
 
 export function AchievementsSection({ data }: AchievementsSectionProps) {
@@ -91,9 +165,10 @@ export function AchievementsSection({ data }: AchievementsSectionProps) {
           >
             {achievements.map((achievement, index) => (
               <div key={index} className="space-y-4" role="listitem">
-                <div className="text-5xl sm:text-6xl lg:text-7xl font-medium font-['DM_Sans'] text-white leading-tight">
-                  {achievement.count}
-                </div>
+                <CountUpNumber
+                  end={achievement.count || "0"}
+                  delay={index * 200}
+                />
                 <p className="text-lg font-normal font-['DM_Sans'] text-white/70 leading-loose max-w-72">
                   {achievement.description}
                 </p>
