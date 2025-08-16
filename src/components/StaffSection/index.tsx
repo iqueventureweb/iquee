@@ -34,7 +34,7 @@ export function StaffSection({ data }: StaffSectionProps) {
       id: 1,
       name: "Shafi Shoukath",
       role: "CEO",
-      image: "https://placehold.co/300x400",
+      image: "/staff/shaffi.webp",
       quote: "We are strong team who brings innovative ideas into production.",
       social_links: {
         twitter: "https://twitter.com/shafishoukath",
@@ -47,7 +47,7 @@ export function StaffSection({ data }: StaffSectionProps) {
       id: 2,
       name: "Varsha Sivanarayanan",
       role: "CFO",
-      image: "https://placehold.co/300x400",
+      image: "/staff/varsha.webp",
       quote:
         "Innovation and teamwork drive our success in building exceptional solutions.",
       social_links: {
@@ -59,9 +59,9 @@ export function StaffSection({ data }: StaffSectionProps) {
     },
     {
       id: 3,
-      name: "Thomas Johnson",
+      name: "Indu",
       role: "Developer, Co-founder",
-      image: "https://placehold.co/350x467",
+      image: "/staff/indu.webp",
       quote: "We are strong team who brings innovative ideas into production.",
       social_links: {
         twitter: "https://twitter.com/thomasjohnson",
@@ -72,9 +72,9 @@ export function StaffSection({ data }: StaffSectionProps) {
     },
     {
       id: 4,
-      name: "Sarah Mitchell",
+      name: "Arun",
       role: "CTO",
-      image: "https://placehold.co/300x400",
+      image: "/staff/arun-new.webp",
       quote:
         "Technology and vision combine to create transformative experiences for our clients.",
       social_links: {
@@ -220,8 +220,10 @@ export function StaffSection({ data }: StaffSectionProps) {
         <Image
           src={member.image}
           alt={member.name}
-          width={300}
-          height={400}
+          width={400}
+          height={600}
+          quality={95}
+          priority
           className="w-full h-80 sm:h-96 lg:h-80 xl:h-96 object-cover rounded-lg"
         />
         <div className="text-center mt-4">

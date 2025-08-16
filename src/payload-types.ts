@@ -325,6 +325,7 @@ export interface Blog {
   slug?: string | null;
   slugLock?: boolean | null;
   author: string;
+  blog_image?: string | null;
   content?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -649,6 +650,7 @@ export interface BlogsSelect<T extends boolean = true> {
   slug?: T;
   slugLock?: T;
   author?: T;
+  blog_image?: T;
   content?: T;
   updatedAt?: T;
   createdAt?: T;

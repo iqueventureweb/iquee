@@ -1,7 +1,6 @@
 "use client";
 
 import { Service } from "@/payload-types";
-import Link from "next/link";
 import { AnimationWrapper } from "../AnimationWrapper";
 
 interface ServiceHeroProps {
@@ -11,7 +10,7 @@ interface ServiceHeroProps {
 export function ServiceHero({ service }: ServiceHeroProps) {
   return (
     <section
-      className="relative min-h-[80vh] bg-cover bg-center bg-no-repeat overflow-hidden pt-20"
+      className="relative min-h-[50vh] sm:min-h-[80vh] bg-cover bg-center bg-no-repeat overflow-hidden flex items-end"
       style={{ backgroundImage: "url(/images/resourse-bg.png)" }}
       aria-labelledby="service-title"
     >
@@ -29,20 +28,20 @@ export function ServiceHero({ service }: ServiceHeroProps) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
+      <div className="relative z-10 px-4 sm:px-6 lg:px-[100px] pb-8">
         {/* Main Content */}
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="max-w-3xl">
           <AnimationWrapper delay={0.3} duration={0.6}>
             <h1
               id="service-title"
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium font-['Epilogue'] text-white leading-none mb-12 tracking-tighter"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal font-['Epilogue'] leading-none mb-12 tracking-tighter bg-gradient-to-r from-[#46ecd5] to-[#2EFFB5] bg-clip-text text-transparent uppercase"
             >
               {service.title}
             </h1>
           </AnimationWrapper>
 
           {/* CTA Section */}
-          <AnimationWrapper delay={0.5} duration={0.6}>
+          {/* <AnimationWrapper delay={0.5} duration={0.6}>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link
                 href="#service-details"
@@ -52,7 +51,7 @@ export function ServiceHero({ service }: ServiceHeroProps) {
                 Learn More
               </Link>
             </div>
-          </AnimationWrapper>
+          </AnimationWrapper> */}
         </div>
       </div>
     </section>

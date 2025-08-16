@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { AnimationWrapper } from "../AnimationWrapper";
 
 export function CarouselSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -10,25 +9,25 @@ export function CarouselSection() {
 
   const carouselData = [
     {
-      icon: "📊", // You can replace with proper icons
+      icon: "/carousal/simplicity.svg",
       title: "Simplicity",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque congue rhoncus enim, in pharetra lacus.",
     },
     {
-      icon: "🎓",
+      icon: "/carousal/accountability.svg",
       title: "Accountability",
       description:
         "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
     },
     {
-      icon: "⭐",
+      icon: "/carousal/high-loyalty.svg",
       title: "High Loyalty",
       description:
         "Mauris a libero et diam sodales semper. Aenean elit leo, hendrerit nec dolor id, rutrum finibus velit.",
     },
     {
-      icon: "🚀",
+      icon: "/carousal/accountability.svg",
       title: "Innovation",
       description:
         "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
@@ -80,7 +79,11 @@ export function CarouselSection() {
   };
 
   return (
-    <section id="about" className="relative py-3 md:py-0 overflow-hidden" aria-labelledby="carousel-title">
+    <section
+      id="about"
+      className="relative py-3 md:py-0 overflow-hidden"
+      aria-labelledby="carousel-title"
+    >
       {/* Background Decorations */}
       <div className="my-12 md:my-24">
         <Image
@@ -121,7 +124,7 @@ export function CarouselSection() {
               </button>
 
               {/* Carousel Items */}
-              <div 
+              <div
                 className="flex space-x-8 lg:space-x-16"
                 role="list"
                 aria-label="Carousel content"
@@ -131,16 +134,26 @@ export function CarouselSection() {
                   const index = (currentSlide + offset) % carouselData.length;
                   const item = carouselData[index];
                   return (
-                    <AnimationWrapper
+                    <div
                       key={`${currentSlide}-${offset}`}
-                      delay={0.4 + offset * 0.1}
-                      duration={0.4}
                       className="flex flex-col items-center text-center max-w-xs"
                     >
-                      <article className="flex flex-col items-center text-center max-w-xs" role="listitem">
+                      <article
+                        className="flex flex-col items-center text-center max-w-xs"
+                        role="listitem"
+                      >
                         {/* Icon */}
-                        <div className="w-16 h-16 bg-white rounded mb-8 flex items-center justify-center text-2xl" aria-hidden="true">
-                          {item.icon}
+                        <div
+                          className="w-16 h-16 rounded mb-8 flex items-center justify-center"
+                          aria-hidden="true"
+                        >
+                          <Image
+                            src={item.icon}
+                            alt={`${item.title} icon`}
+                            width={64}
+                            height={64}
+                            className="w-16 h-16"
+                          />
                         </div>
 
                         {/* Title */}
@@ -153,7 +166,7 @@ export function CarouselSection() {
                           {item.description}
                         </p>
                       </article>
-                    </AnimationWrapper>
+                    </div>
                   );
                 })}
               </div>
@@ -177,7 +190,11 @@ export function CarouselSection() {
             </div>
 
             {/* Dots Navigation */}
-            <div className="flex justify-center space-x-3" role="tablist" aria-label="Carousel navigation dots">
+            <div
+              className="flex justify-center space-x-3"
+              role="tablist"
+              aria-label="Carousel navigation dots"
+            >
               {carouselData.map((_, index) => (
                 <button
                   key={index}
@@ -216,11 +233,24 @@ export function CarouselSection() {
               </button>
 
               {/* Single Carousel Item */}
-              <AnimationWrapper delay={0.4} duration={0.4}>
-                <article className="flex flex-col items-center text-center mx-auto px-16" role="listitem" id="mobile-carousel">
+              <div className="flex flex-col items-center text-center mx-auto px-16">
+                <article
+                  className="flex flex-col items-center text-center mx-auto px-16"
+                  role="listitem"
+                  id="mobile-carousel"
+                >
                   {/* Icon */}
-                  <div className="w-16 h-16 bg-white rounded mb-8 flex items-center justify-center text-2xl" aria-hidden="true">
-                    {carouselData[currentSlide].icon}
+                  <div
+                    className="w-16 h-16 rounded mb-8 flex items-center justify-center"
+                    aria-hidden="true"
+                  >
+                    <Image
+                      src={carouselData[currentSlide].icon}
+                      alt={`${carouselData[currentSlide].title} icon`}
+                      width={64}
+                      height={64}
+                      className="w-16 h-16"
+                    />
                   </div>
 
                   {/* Title */}
@@ -233,7 +263,7 @@ export function CarouselSection() {
                     {carouselData[currentSlide].description}
                   </p>
                 </article>
-              </AnimationWrapper>
+              </div>
 
               {/* Navigation Arrow Right */}
               <button
@@ -254,7 +284,11 @@ export function CarouselSection() {
             </div>
 
             {/* Dots Navigation */}
-            <div className="flex justify-center space-x-3 relative z-50" role="tablist" aria-label="Carousel navigation dots">
+            <div
+              className="flex justify-center space-x-3 relative z-50"
+              role="tablist"
+              aria-label="Carousel navigation dots"
+            >
               {carouselData.map((_, index) => (
                 <button
                   key={index}
