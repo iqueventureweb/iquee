@@ -74,7 +74,7 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-6 md:gap-8">
             {/* Services Title */}
             <AnimationWrapper delay={0.2} duration={0.8}>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium font-['Epilogue'] uppercase text-neutral-900 leading-none">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-medium font-['Epilogue'] uppercase text-[#178181] leading-none">
                 Services
               </h2>
             </AnimationWrapper>

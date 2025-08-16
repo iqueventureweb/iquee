@@ -56,6 +56,10 @@ export const Blog: CollectionConfig = {
       },
     },
     {
+      name: "blog_image",
+      type: "text",
+    },
+    {
       name: "content",
       type: "text",
       label: "Blog Content",

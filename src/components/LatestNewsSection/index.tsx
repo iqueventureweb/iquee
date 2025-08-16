@@ -20,6 +20,37 @@ interface LatestNewsSectionProps {
   blogs?: Blog[];
 }
 
+// Function to get fallback image based on index
+function getFallbackImage(index: number): string {
+  const fallbackImages = [
+    "/blogs/up-up.webp",
+    "/blogs/Possible.webp",
+    "/blogs/motivation-ecosystem.webp",
+  ];
+  return fallbackImages[index % fallbackImages.length];
+}
+
+// Function to normalize blog image path
+function normalizeImagePath(imagePath: string | null | undefined): string {
+  if (!imagePath) return "";
+
+  // If it already has /blogs/ prefix, return as is
+  if (imagePath.startsWith("/blogs/")) {
+    return imagePath;
+  }
+
+  // If it's missing the prefix, add it
+  if (
+    imagePath.includes(".webp") ||
+    imagePath.includes(".png") ||
+    imagePath.includes(".jpg")
+  ) {
+    return `/blogs/${imagePath}`;
+  }
+
+  return imagePath;
+}
+
 export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
   // Default fallback articles
   const defaultNewsArticles: NewsArticle[] = [
@@ -29,7 +60,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
         "A Vision for a Better Startup Ecosystem: Insights from Shafi Shoukath, Founder and CEO of iQue Ventures",
       author: "Shafi Shoukath",
       date: "6 June",
-      image: "https://placehold.co/608x503",
+      image: "/blogs/up-up.webp",
       isFeatured: true,
       slug: "a-vision-for-a-better-startup-ecosystem-insights-from-shafi-shoukath-founder-and-ceo-of-ique-ventures",
     },
@@ -38,7 +69,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
       title: "iQue Ventures: Pioneering a Better Ecosystem for Entrepreneurs",
       author: "Shafi Shoukath",
       date: "6 June",
-      image: "https://placehold.co/292x241",
+      image: "/blogs/possible.webp",
       isFeatured: false,
       slug: "ique-ventures-pioneering-a-better-ecosystem-for-entrepreneurs",
     },
@@ -48,7 +79,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
         "The Startup Ecosystem in 2024: Trends, Challenges, and Opportunities",
       author: "Shafi Shoukath",
       date: "6 June",
-      image: "https://placehold.co/292x241",
+      image: "/blogs/motivation-ecosystem.webp",
       isFeatured: false,
       slug: "the-startup-ecosystem-in-2024-trends-challenges-and-opportunities",
     },
@@ -69,7 +100,8 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
                     month: "long",
                   })
                 : "No date",
-              image: "https://placehold.co/608x503", // Default image for now
+              image:
+                normalizeImagePath(blog.blog_image) || getFallbackImage(index), // Use normalized path or fallback
               isFeatured: index === 0, // First blog is featured
               slug: blog.slug || "",
             };

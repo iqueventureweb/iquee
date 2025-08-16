@@ -16,6 +16,15 @@ function getWordsCount(content: string) {
   return content.split(/\s+/).filter((w) => w.length > 0).length;
 }
 
+function getFallbackImage(index: number): string {
+  const fallbackImages = [
+    "/blogs/up-up.webp",
+    "/blogs/Possible.webp",
+    "/blogs/motivation-ecosystem.webp",
+  ];
+  return fallbackImages[index % fallbackImages.length];
+}
+
 export default function BlogsListing({
   blogs,
   internal = false,
@@ -25,7 +34,6 @@ export default function BlogsListing({
 }) {
   const items = (blogs || []).filter((b) => b?.slug);
   const [featured, ...rest] = items;
-
   return (
     <section
       className="py-16 lg:py-24 bg-neutral-100"
@@ -100,7 +108,7 @@ export default function BlogsListing({
                   <div className="grid md:grid-cols-5 gap-0">
                     <div className="md:col-span-2 h-48 md:h-full relative bg-neutral-100">
                       <Image
-                        src="https://placehold.co/960x720"
+                        src={featured.blog_image || "/blogs/up-up.webp"}
                         alt={`Featured image for ${featured.title}`}
                         fill
                         className="object-cover"
@@ -223,7 +231,7 @@ export default function BlogsListing({
                   >
                     <div className="h-44 bg-neutral-100 relative">
                       <Image
-                        src="https://placehold.co/640x360"
+                        src={b.blog_image || getFallbackImage(index)}
                         alt={`Featured image for ${b.title}`}
                         fill
                         className="object-cover"

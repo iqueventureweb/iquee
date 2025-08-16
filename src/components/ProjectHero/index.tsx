@@ -1,7 +1,7 @@
 "use client";
 
 import { Project, Service } from "@/payload-types";
-import { ArrowLeft, Calendar } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AnimationWrapper } from "../AnimationWrapper";
 
@@ -15,21 +15,28 @@ export function ProjectHero({ project, service }: ProjectHeroProps) {
 
   return (
     <section
-      className="relative min-h-[80vh] bg-cover bg-center bg-no-repeat overflow-hidden"
+      className="relative min-h-[50vh] sm:min-h-[80vh] bg-cover bg-center bg-no-repeat overflow-hidden flex items-end"
       style={{ backgroundImage: "url(/images/resourse-bg.png)" }}
       aria-labelledby="project-title"
     >
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
+      <div className="relative z-10 px-4 sm:px-6 lg:px-[100px] pb-8">
         {/* Navigation */}
         <AnimationWrapper delay={0.2} duration={0.6}>
-          <nav className="mb-12" role="navigation" aria-label="Project navigation">
+          <nav
+            className="mb-12"
+            role="navigation"
+            aria-label="Project navigation"
+          >
             <button
               onClick={() => router.back()}
               className="inline-flex items-center gap-2 text-white/90 hover:text-white transition-colors group"
               aria-label={`Go back to ${service.title} service`}
             >
-              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
+              <ArrowLeft
+                className="w-4 h-4 group-hover:-translate-x-1 transition-transform"
+                aria-hidden="true"
+              />
               <span className="text-sm font-medium font-['DM_Sans']">
                 Back to {service.title}
               </span>
@@ -38,12 +45,12 @@ export function ProjectHero({ project, service }: ProjectHeroProps) {
         </AnimationWrapper>
 
         {/* Main Content */}
-        <div className="max-w-5xl">
+        <div className="max-w-3xl">
           {/* Project Title */}
           <AnimationWrapper delay={0.4} duration={0.8}>
-            <h1 
+            <h1
               id="project-title"
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium font-['Epilogue'] text-white leading-none mb-12 tracking-tighter"
+              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal font-['Epilogue'] leading-none mb-12 tracking-tighter bg-gradient-to-r from-[#46ecd5] to-[#2EFFB5] bg-clip-text text-transparent uppercase"
             >
               {project.title}
             </h1>
@@ -52,7 +59,7 @@ export function ProjectHero({ project, service }: ProjectHeroProps) {
           {/* Project Description */}
           {project.description && (
             <AnimationWrapper delay={0.6} duration={0.8}>
-              <p 
+              <p
                 className="text-xl lg:text-2xl text-white/90 leading-relaxed font-['DM_Sans'] mb-12 max-w-4xl"
                 role="contentinfo"
                 aria-label="Project description"
@@ -61,22 +68,6 @@ export function ProjectHero({ project, service }: ProjectHeroProps) {
               </p>
             </AnimationWrapper>
           )}
-
-          {/* Project Meta */}
-          <AnimationWrapper delay={0.8} duration={0.6}>
-            <div 
-              className="flex items-center gap-6 text-white/80"
-              role="contentinfo"
-              aria-label="Project metadata"
-            >
-              <div className="flex items-center gap-2">
-                <Calendar className="w-5 h-5" aria-hidden="true" />
-                <span className="text-sm font-['DM_Sans']">
-                  Completed Project
-                </span>
-              </div>
-            </div>
-          </AnimationWrapper>
         </div>
       </div>
     </section>
