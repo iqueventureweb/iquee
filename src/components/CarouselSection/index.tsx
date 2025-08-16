@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export function CarouselSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -53,10 +53,10 @@ export function CarouselSection() {
   };
 
   // Auto-advance carousel every 3 seconds
-  useEffect(() => {
-    startAutoAdvance();
-    return () => stopAutoAdvance();
-  }, []);
+  // useEffect(() => {
+  //   startAutoAdvance();
+  //   return () => stopAutoAdvance();
+  // }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % carouselData.length);
@@ -235,7 +235,7 @@ export function CarouselSection() {
               {/* Single Carousel Item */}
               <div className="flex flex-col items-center text-center mx-auto px-16">
                 <article
-                  className="flex flex-col items-center text-center mx-auto px-16"
+                  className="flex flex-col items-center text-center mx-auto px-5"
                   role="listitem"
                   id="mobile-carousel"
                 >
