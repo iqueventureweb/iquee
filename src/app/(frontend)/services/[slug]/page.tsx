@@ -89,7 +89,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                 </h3>
                 <p className="text-neutral-600 font-['DM_Sans'] text-lg mb-8 max-w-2xl mx-auto">
                   Have questions about this service or want to discuss your next
-                  venture? Let's connect on WhatsApp and explore the
+                  venture? Let&apos;s connect on WhatsApp and explore the
                   possibilities together.
                 </p>
                 <WhatsAppCTAButton
