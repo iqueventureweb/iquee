@@ -11,7 +11,11 @@ interface OurStorySectionProps {
 
 export function OurStorySection({ data }: OurStorySectionProps) {
   return (
-    <section id="about" className="py-9 lg:py-24 bg-white relative" aria-labelledby="our-story-title">
+    <section
+      id="about"
+      className="py-9 lg:py-24 bg-white relative"
+      aria-labelledby="our-story-title"
+    >
       <div className="container mx-auto px-4">
         {/* Desktop Layout */}
         <div className="hidden lg:block">
@@ -21,13 +25,13 @@ export function OurStorySection({ data }: OurStorySectionProps) {
               {/* Left Content */}
               <div className="col-span-6">
                 <div className="space-y-6">
-                  <AnimationWrapper delay={0.1} duration={0.5}>
+                  <AnimationWrapper delay={0.1} duration={0.8}>
                     <span className="text-neutral-500 text-sm font-medium font-['DM_Sans'] uppercase leading-none tracking-wide">
                       Our Story
                     </span>
                   </AnimationWrapper>
-                  <AnimationWrapper delay={0.2} duration={0.5}>
-                    <h2 
+                  <AnimationWrapper delay={0.2} duration={0.8}>
+                    <h2
                       id="our-story-title"
                       className="text-6xl font-medium font-['DM_Sans'] leading-[61.99px] text-black"
                     >
@@ -39,7 +43,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
 
               {/* Right Content */}
               <div className="col-span-6 flex justify-end items-start pt-8">
-                <AnimationWrapper delay={0.3} duration={0.5}>
+                <AnimationWrapper delay={0.3} duration={0.8}>
                   <div className="flex items-center space-x-4">
                     {/* Decorative element */}
                     <Image
@@ -56,7 +60,10 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                       <span className="text-black text-base font-medium font-['DM_Sans'] leading-none">
                         Learn more about us
                       </span>
-                      <ArrowRight className="w-4 h-4 text-black" aria-hidden="true" />
+                      <ArrowRight
+                        className="w-4 h-4 text-black"
+                        aria-hidden="true"
+                      />
                     </div>
                   </div>
                 </AnimationWrapper>
@@ -64,7 +71,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
             </div>
 
             {/* Description */}
-            <AnimationWrapper delay={0.4} duration={0.5}>
+            <AnimationWrapper delay={0.4} duration={0.8}>
               <div className="mb-16">
                 <p className="text-xl font-light font-['DM_Sans'] leading-[1.2] text-black max-w-5xl mx-auto">
                   {data?.description ||
@@ -77,7 +84,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
             <div className="flex flex-col md:flex-row gap-8 justify-between relative">
               {/* Left Image */}
               <div className="w-full md:w-1/2">
-                <AnimationWrapper delay={0.5} duration={0.5}>
+                <AnimationWrapper delay={0.5} duration={0.8}>
                   <div className="relative">
                     <Image
                       src="/our-story.png"
@@ -94,7 +101,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
               {/* Right Content */}
               <div className="col-span-6 space-y-7 max-w-[400px] md:max-w-[35%]">
                 {/* Our Mission */}
-                <AnimationWrapper delay={0.6} duration={0.5}>
+                <AnimationWrapper delay={0.6} duration={0.8}>
                   <article className="space-y-4">
                     <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                       {data?.contents?.[0]?.title || "Our Mission"}
@@ -107,7 +114,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                 </AnimationWrapper>
 
                 {/* Our Vision */}
-                <AnimationWrapper delay={0.7} duration={0.5}>
+                <AnimationWrapper delay={0.7} duration={0.8}>
                   <article className="space-y-2 md:space-y-4">
                     <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                       {data?.contents?.[1]?.title || "Our Vision"}
@@ -119,7 +126,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                   </article>
                 </AnimationWrapper>
               </div>
-              <AnimationWrapper delay={0.8} duration={0.5}>
+              <AnimationWrapper delay={0.8} duration={0.8}>
                 <Image
                   src="/images/wave-decoration.svg"
                   alt="Decorative wave pattern"
@@ -137,12 +144,12 @@ export function OurStorySection({ data }: OurStorySectionProps) {
         <div className="lg:hidden space-y-6 md:space-y-12">
           {/* Header */}
           <header className="space-y-6">
-            <AnimationWrapper delay={0.1} duration={0.5}>
+            <AnimationWrapper delay={0.1} duration={0.8}>
               <span className="text-neutral-500 text-sm font-medium font-['DM_Sans'] uppercase leading-none tracking-wide">
                 Our Story
               </span>
             </AnimationWrapper>
-            <AnimationWrapper delay={0.2} duration={0.5}>
+            <AnimationWrapper delay={0.2} duration={0.8}>
               <h2 className="text-3xl font-medium font-['DM_Sans'] leading-loose text-black">
                 {data?.title || "Better way to create."}
               </h2>
@@ -150,7 +157,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
           </header>
 
           {/* Description */}
-          <AnimationWrapper delay={0.3} duration={0.5}>
+          <AnimationWrapper delay={0.3} duration={0.8}>
             <p className="text-xl font-light font-['DM_Sans'] leading-normal text-black">
               {data?.description ||
                 "IQue Ventures is dedicated to building a dynamic and sustainable startup ecosystem that fosters innovation, entrepreneurship, and growth. We focus on empowering entrepreneurs, supporting startups, cultivating investors, and bridging the gap between startups and government or private organizations. By creating impactful projects and programs, we enable startups to drive positive change and create solutions that benefit society."}
@@ -158,7 +165,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
           </AnimationWrapper>
 
           {/* Learn more link */}
-          <AnimationWrapper delay={0.4} duration={0.5}>
+          <AnimationWrapper delay={0.4} duration={0.8}>
             <div className="flex items-center space-x-2 border-b-2 border-black pb-2 w-fit">
               <span className="text-black text-base font-medium font-['DM_Sans'] leading-none">
                 Learn more about us
@@ -168,7 +175,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
           </AnimationWrapper>
 
           {/* Image */}
-          <AnimationWrapper delay={0.5} duration={0.5}>
+          <AnimationWrapper delay={0.5} duration={0.8}>
             <div className="!mt-8">
               <Image
                 src="/our-story.png"
@@ -184,7 +191,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
           {/* Mission and Vision */}
           <div className="space-y-12">
             {/* Our Mission */}
-            <AnimationWrapper delay={0.6} duration={0.5}>
+            <AnimationWrapper delay={0.6} duration={0.8}>
               <article className="space-y-4 mt-12">
                 <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                   {data?.contents?.[0]?.title || "Our Mission"}
@@ -197,7 +204,7 @@ export function OurStorySection({ data }: OurStorySectionProps) {
             </AnimationWrapper>
 
             {/* Our Vision */}
-            <AnimationWrapper delay={0.7} duration={0.5}>
+            <AnimationWrapper delay={0.7} duration={0.8}>
               <article className="space-y-4">
                 <h3 className="text-xl font-medium font-['DM_Sans'] leading-normal text-black">
                   {data?.contents?.[1]?.title || "Our Vision"}

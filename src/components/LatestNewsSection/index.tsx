@@ -166,7 +166,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
   );
 
   return (
-    <section className="py-16 lg:py-24 bg-neutral-100">
+    <section className="py-16 lg:py-24 bg-neutral-100" id="blog">
       <div className="container mx-auto px-4 relative">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 lg:mb-16">

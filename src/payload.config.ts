@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 
 import { defaultLexical } from "@/fields/defaultLexical";
 import { Blog } from "./collections/Blogs";
+import { Comments } from "./collections/Comments";
 import { ContactUs } from "./collections/ContactUs";
 import { HomePage } from "./collections/HomePage";
 import { Media } from "./collections/Media";
@@ -71,6 +72,7 @@ export default buildConfig({
     Blog,
     Newsletter,
     ContactUs,
+    Comments,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   plugins: [

@@ -1,9 +1,14 @@
+import { CommentForm } from "@/components/Blogs/CommentForm";
 import BlogsListing from "@/components/Blogs/Listing";
 import { EditorContent } from "@/components/EditorContent";
 import { getBlogs } from "@/lib/fetchMethods";
 import { processEditorContent } from "@/lib/globalMethods";
 import { getPayloadClient } from "@/lib/payload";
-import { generateBreadcrumbs, generateEnhancedMeta, generateStructuredData } from "@/utilities/seoUtils";
+import {
+  generateBreadcrumbs,
+  generateEnhancedMeta,
+  generateStructuredData,
+} from "@/utilities/seoUtils";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -48,7 +53,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { blogs } = await params;
   const blog = await getBlogBySlug(blogs);
-  
+
   if (!blog) {
     return {
       title: "Blog Not Found",
@@ -58,7 +63,9 @@ export async function generateMetadata({
 
   return generateEnhancedMeta({
     title: blog.title,
-    description: blog.content ? blog.content.substring(0, 160) + "..." : `Read: ${blog.title}`,
+    description: blog.content
+      ? blog.content.substring(0, 160) + "..."
+      : `Read: ${blog.title}`,
     url: `/blogs/${blog.slug}`,
     type: "article",
     publishedTime: blog.createdAt,
@@ -77,7 +84,7 @@ export default async function BlogDetailPage({
   const { blogs } = await params;
   const blog = await getBlogBySlug(blogs);
   const similarBlogs = await getBlogs(3);
-  
+
   if (!blog) {
     notFound();
   }
@@ -97,7 +104,9 @@ export default async function BlogDetailPage({
     type: "article",
     data: {
       title: blog.title,
-      description: blog.content ? blog.content.substring(0, 160) + "..." : `Read: ${blog.title}`,
+      description: blog.content
+        ? blog.content.substring(0, 160) + "..."
+        : `Read: ${blog.title}`,
       author: blog.author || "iQue Team",
       publishedTime: blog.createdAt,
       modifiedTime: blog.updatedAt,
@@ -112,7 +121,11 @@ export default async function BlogDetailPage({
   ]);
 
   return (
-    <article className="py-12 lg:py-20 lg:pt-40 bg-white" itemScope itemType="https://schema.org/Article">
+    <article
+      className="py-12 lg:py-20 lg:pt-40 bg-white"
+      itemScope
+      itemType="https://schema.org/Article"
+    >
       {/* Structured Data */}
       <script
         type="application/ld+json"
@@ -126,7 +139,7 @@ export default async function BlogDetailPage({
           __html: JSON.stringify(breadcrumbData),
         }}
       />
-      
+
       <div className="container px-4 max-w-6xl">
         <nav aria-label="Breadcrumb" className="mb-6">
           <Link
@@ -138,19 +151,29 @@ export default async function BlogDetailPage({
         </nav>
 
         <header className="mb-8">
-          <h1 className="text-3xl lg:text-5xl font-medium font-['DM_Sans'] leading-tight text-neutral-900" itemProp="headline">
+          <h1
+            className="text-3xl lg:text-5xl font-medium font-['DM_Sans'] leading-tight text-neutral-900"
+            itemProp="headline"
+          >
             {blog.title}
           </h1>
 
           <div className="mt-4 flex gap-2">
             <div className="px-3 rounded-[20px] border border-neutral-900">
-              <span className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900" itemProp="author">
+              <span
+                className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900"
+                itemProp="author"
+              >
                 {blog.author || "Unknown"}
               </span>
             </div>
             {date ? (
               <div className="px-3 rounded-[20px] border border-neutral-900">
-                <time className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900" dateTime={blog.createdAt} itemProp="datePublished">
+                <time
+                  className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900"
+                  dateTime={blog.createdAt}
+                  itemProp="datePublished"
+                >
                   {date}
                 </time>
               </div>
@@ -167,7 +190,10 @@ export default async function BlogDetailPage({
           <EditorContent content={blog.content || ""} />
         </div>
       </div>
-      
+
+      {/* Comment Form */}
+      <CommentForm blogId={blog.id} />
+
       <div className="mt-4">
         <BlogsListing blogs={similarBlogs} internal={true} />
       </div>

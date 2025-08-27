@@ -75,6 +75,7 @@ export interface Config {
     blogs: Blog;
     newsletter: Newsletter;
     'contact-us': ContactUs;
+    comments: Comment;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -93,6 +94,7 @@ export interface Config {
     blogs: BlogsSelect<false> | BlogsSelect<true>;
     newsletter: NewsletterSelect<false> | NewsletterSelect<true>;
     'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
+    comments: CommentsSelect<false> | CommentsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -382,6 +384,20 @@ export interface ContactUs {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments".
+ */
+export interface Comment {
+  id: string;
+  authorName: string;
+  authorEmail: string;
+  comment: string;
+  blog: string | Blog;
+  status?: ('pending' | 'approved' | 'rejected') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -418,6 +434,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'contact-us';
         value: string | ContactUs;
+      } | null)
+    | ({
+        relationTo: 'comments';
+        value: string | Comment;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -699,6 +719,19 @@ export interface ContactUsSelect<T extends boolean = true> {
   userAgent?: T;
   responded?: T;
   responseNotes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments_select".
+ */
+export interface CommentsSelect<T extends boolean = true> {
+  authorName?: T;
+  authorEmail?: T;
+  comment?: T;
+  blog?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }
