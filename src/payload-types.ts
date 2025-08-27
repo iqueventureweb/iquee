@@ -233,6 +233,14 @@ export interface Project {
         id?: string | null;
       }[]
     | null;
+  testimonials?:
+    | {
+        quote: string;
+        author: string;
+        role: string;
+        id?: string | null;
+      }[]
+    | null;
   faq?:
     | {
         question: string;
@@ -552,6 +560,14 @@ export interface ProjectsSelect<T extends boolean = true> {
     | {
         title?: T;
         content?: T;
+        id?: T;
+      };
+  testimonials?:
+    | T
+    | {
+        quote?: T;
+        author?: T;
+        role?: T;
         id?: T;
       };
   faq?:

@@ -56,6 +56,31 @@ export const Products: CollectionConfig = {
       ],
     },
     {
+      name: "testimonials",
+      label: "Testimonials",
+      type: "array",
+      fields: [
+        {
+          name: "quote",
+          type: "textarea",
+          required: true,
+          label: "Testimonial Quote",
+        },
+        {
+          name: "author",
+          type: "text",
+          required: true,
+          label: "Author Name",
+        },
+        {
+          name: "role",
+          type: "text",
+          required: true,
+          label: "Title/Company",
+        },
+      ],
+    },
+    {
       name: "faq",
       label: "Frequently Asked Questions",
       type: "array",
