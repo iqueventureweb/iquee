@@ -95,7 +95,7 @@ export default function Header() {
 
           {/* Career */}
           <Link
-            href="/#career"
+            href="/career"
             className="flex items-center justify-center px-2 opacity-80 hover:opacity-100 transition-opacity"
             role="menuitem"
           >
@@ -201,7 +201,7 @@ export default function Header() {
                 </Link>
 
                 <Link
-                  href="/#career"
+                  href="/career"
                   onClick={handleLinkClick}
                   className="text-cyan-700 text-lg font-medium font-['DM_Sans'] hover:text-blue-700 transition-colors"
                   role="menuitem"

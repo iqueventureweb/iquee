@@ -121,3 +121,23 @@ export const getProjectsByService = unstable_cache(
   ["projects-by-service"],
   { tags: ["projects", "services"], revalidate: 3600 }
 );
+
+export async function getCareers() {
+  const payload = await getPayloadClient();
+  const result = await payload.find({
+    collection: "careers",
+    where: { status: { equals: "active" } },
+    sort: "-createdAt",
+  });
+  return result.docs || [];
+}
+
+export async function getCareerBySlug(slug: string) {
+  const payload = await getPayloadClient();
+  const result = await payload.find({
+    collection: "careers",
+    where: { slug: { equals: slug } },
+    limit: 1,
+  });
+  return result.docs?.[0] || null;
+}

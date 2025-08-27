@@ -95,36 +95,34 @@ export const Media: CollectionConfig = {
   ],
 
   upload: {
-    adminThumbnail: ({ doc }) => {
-      if (!doc?.url) return "";
-      // Use the CDN URL for previews, not the storage URL
-      const url = `${process.env.NEXT_PUBLIC_BUNNY_CDN}${doc.url}`;
-      return url;
-    },
-    displayPreview: true,
+    staticDir: "media",
     imageSizes: [
       {
         name: "thumbnail",
-        width: 100,
-        height: 100,
-        crop: "center",
+        width: 400,
+        height: 300,
+        position: "centre",
       },
       {
-        name: "medium",
-        width: 400,
-        height: 400,
-        crop: "center",
+        name: "card",
+        width: 768,
+        height: 1024,
+        position: "centre",
+      },
+      {
+        name: "tablet",
+        width: 1024,
+        height: undefined,
+        position: "centre",
       },
     ],
-    pasteURL: {
-      allowList: [
-        {
-          hostname: "*.bunny.net",
-          pathname: process.env.NEXT_PUBLIC_BUNNY_CDN,
-        },
-      ],
-    },
-    mimeTypes: ["image/*"],
+    adminThumbnail: "thumbnail",
+    mimeTypes: [
+      "image/*",
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ],
     disableLocalStorage: true,
     crop: true,
     focalPoint: true,
@@ -156,6 +154,13 @@ export const Media: CollectionConfig = {
         const uploadPath = `media/${fileName}`;
 
         try {
+          // Check if environment variable exists
+          if (!process.env.NEXT_PUBLIC_BUNNY_CDN_STORAGE_URL) {
+            throw new Error(
+              "BUNNY_CDN_STORAGE_URL environment variable is not set"
+            );
+          }
+
           // Upload to BunnyCDN
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_BUNNY_CDN_STORAGE_URL}/${uploadPath}`,

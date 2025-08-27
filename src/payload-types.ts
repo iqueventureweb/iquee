@@ -76,6 +76,8 @@ export interface Config {
     newsletter: Newsletter;
     'contact-us': ContactUs;
     comments: Comment;
+    careers: Career;
+    'career-applications': CareerApplication;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -95,6 +97,8 @@ export interface Config {
     newsletter: NewsletterSelect<false> | NewsletterSelect<true>;
     'contact-us': ContactUsSelect<false> | ContactUsSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
+    careers: CareersSelect<false> | CareersSelect<true>;
+    'career-applications': CareerApplicationsSelect<false> | CareerApplicationsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -161,7 +165,15 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    medium?: {
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -398,6 +410,86 @@ export interface Comment {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "careers".
+ */
+export interface Career {
+  id: string;
+  title: string;
+  /**
+   * URL-friendly version of the job title
+   */
+  slug: string;
+  department: 'engineering' | 'design' | 'marketing' | 'sales' | 'operations' | 'finance' | 'hr' | 'other';
+  location: string;
+  type: 'full-time' | 'part-time' | 'contract' | 'internship';
+  /**
+   * e.g., '2-5 years', 'Entry level', 'Senior level'
+   */
+  experience: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  requirements?:
+    | {
+        requirement: string;
+        id?: string | null;
+      }[]
+    | null;
+  benefits?:
+    | {
+        benefit: string;
+        id?: string | null;
+      }[]
+    | null;
+  status: 'active' | 'closed' | 'draft';
+  applicationDeadline?: string | null;
+  /**
+   * How many people are you hiring for this role?
+   */
+  positions: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "career-applications".
+ */
+export interface CareerApplication {
+  id: string;
+  applicantName: string;
+  applicantEmail: string;
+  applicantPhone: string;
+  position: string | Career;
+  /**
+   * Upload PDF, DOC, or image files
+   */
+  resume: string | Media;
+  /**
+   * Any additional information the applicant wants to share
+   */
+  coverLetter?: string | null;
+  status: 'pending' | 'reviewing' | 'shortlisted' | 'interview' | 'rejected' | 'hired';
+  /**
+   * Internal notes about the application
+   */
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -438,6 +530,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'comments';
         value: string | Comment;
+      } | null)
+    | ({
+        relationTo: 'careers';
+        value: string | Career;
+      } | null)
+    | ({
+        relationTo: 'career-applications';
+        value: string | CareerApplication;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -514,7 +614,17 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        medium?:
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        tablet?:
           | T
           | {
               url?: T;
@@ -732,6 +842,52 @@ export interface CommentsSelect<T extends boolean = true> {
   comment?: T;
   blog?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "careers_select".
+ */
+export interface CareersSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  department?: T;
+  location?: T;
+  type?: T;
+  experience?: T;
+  description?: T;
+  requirements?:
+    | T
+    | {
+        requirement?: T;
+        id?: T;
+      };
+  benefits?:
+    | T
+    | {
+        benefit?: T;
+        id?: T;
+      };
+  status?: T;
+  applicationDeadline?: T;
+  positions?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "career-applications_select".
+ */
+export interface CareerApplicationsSelect<T extends boolean = true> {
+  applicantName?: T;
+  applicantEmail?: T;
+  applicantPhone?: T;
+  position?: T;
+  resume?: T;
+  coverLetter?: T;
+  status?: T;
+  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }
