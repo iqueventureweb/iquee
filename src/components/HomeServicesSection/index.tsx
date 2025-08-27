@@ -117,16 +117,16 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
               }}
             >
               <AnimationWrapper>
-                <div className="rounded-[40px] sm:rounded-[60px] md:rounded-[80px] lg:rounded-[120px] xl:rounded-[200px] border border-neutral-900 p-4 py-1 md:p-8 lg:p-12 xl:px-16 lg:py-3 min-h-16 sm:min-h-40 md:min-h-48 lg:min-h-56 flex items-center justify-between gap-4 sm:gap-6 md:gap-8 relative tracking-tighter transition-all duration-500 ease-in-out hover:border-[#178181] hover:bg-gradient-to-r hover:from-[#178181]/5 hover:to-transparent hover:shadow-[0_20px_40px_rgba(23,129,129,0.15)]">
+                <div className="rounded-[40px] sm:rounded-[60px] md:rounded-[80px] lg:rounded-[120px] xl:rounded-[200px] border border-[#178181] p-4 py-1 md:p-8 lg:p-12 xl:px-16 lg:py-3 min-h-16 sm:min-h-40 md:min-h-48 lg:min-h-56 flex items-center justify-between gap-4 sm:gap-6 md:gap-8 relative tracking-tighter transition-all duration-500 ease-in-out hover:border-neutral-900 hover:bg-gradient-to-r hover:from-[#178181]/5 hover:to-transparent hover:shadow-[0_20px_40px_rgba(23,129,129,0.15)] group">
                   {/* Content */}
                   <div className="flex gap-1 sm:gap-4 md:gap-3 w-full">
                     {/* Number */}
-                    <span className="text-[10.40px] sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium font-['Epilogue'] text-neutral-900 mt-3 sm:mt-4 md:mt-6 lg:mt-10 xl:mt-14 absolute left-4 lg:left-6 xl:left-10 top-[20%] transition-all duration-500 ease-in-out hover:text-[#178181]">
+                    <span className="text-[10.40px] sm:text-base md:text-lg lg:text-xl xl:text-2xl font-medium font-['Epilogue'] text-[#178181] mt-3 sm:mt-4 md:mt-6 lg:mt-10 xl:mt-14 absolute left-4 lg:left-6 xl:left-10 top-[20%] transition-all duration-500 ease-in-out group-hover:text-neutral-900">
                       0{index + 1}
                     </span>
 
                     {/* Title */}
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-normal ml-4 sm:ml-14 font-['Epilogue'] text-neutral-900 leading-[1.1] sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] transition-all duration-500 ease-in-out hover:text-[#178181]">
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-normal ml-4 sm:ml-14 font-['Epilogue'] text-[#178181] leading-[1.1] sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] transition-all duration-500 ease-in-out group-hover:text-neutral-900">
                       {service.title}
                     </h3>
                   </div>
