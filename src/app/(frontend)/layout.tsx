@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { FooterSection } from "@/components/FooterSection";
 import Header from "@/components/header";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { getServerSideURL } from "@/utilities/getURL";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
 import { generateStructuredData, siteConfig } from "@/utilities/seoUtils";
@@ -65,13 +66,27 @@ export default async function RootLayout({
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#1e40af" />
         <meta name="msapplication-TileColor" content="#1e40af" />
-        
+
         {/* Structured Data */}
         <script
           type="application/ld+json"
@@ -92,6 +107,7 @@ export default async function RootLayout({
           {children}
         </main>
         <FooterSection />
+        <WhatsAppButton />
       </body>
     </html>
   );
@@ -104,7 +120,15 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["startup ecosystem", "entrepreneurship", "mentorship", "collaboration", "innovation", "bangalore", "india"],
+  keywords: [
+    "startup ecosystem",
+    "entrepreneurship",
+    "mentorship",
+    "collaboration",
+    "innovation",
+    "bangalore",
+    "india",
+  ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
   publisher: siteConfig.name,
