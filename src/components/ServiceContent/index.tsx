@@ -1,7 +1,9 @@
 "use client";
 
+import { WHATSAPP } from "@/lib/constants";
 import { Service } from "@/payload-types";
 import { AnimationWrapper } from "../AnimationWrapper";
+import { WhatsAppCTAButton } from "../ui/WhatsAppCTAButton";
 
 interface ServiceContentProps {
   service: Service;
@@ -20,7 +22,7 @@ export function ServiceContent({ service }: ServiceContentProps) {
         <div className="max-w-4xl mx-auto">
           <header className="text-center mb-16">
             <AnimationWrapper delay={0.2} duration={0.5}>
-              <h2 
+              <h2
                 id="service-details-title"
                 className="text-3xl lg:text-5xl font-medium font-['Epilogue'] text-neutral-900 mb-6"
               >
@@ -28,12 +30,19 @@ export function ServiceContent({ service }: ServiceContentProps) {
               </h2>
             </AnimationWrapper>
             <AnimationWrapper delay={0.3} duration={0.5}>
-              <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 mx-auto rounded-full" aria-hidden="true" />
+              <div
+                className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 mx-auto rounded-full"
+                aria-hidden="true"
+              />
             </AnimationWrapper>
           </header>
 
           {blocks.length > 0 ? (
-            <div className="space-y-12" role="region" aria-label="Service information blocks">
+            <div
+              className="space-y-12"
+              role="region"
+              aria-label="Service information blocks"
+            >
               {blocks.map((block, index) => (
                 <AnimationWrapper
                   key={block?.id || index}
@@ -57,6 +66,19 @@ export function ServiceContent({ service }: ServiceContentProps) {
                       />
                     )}
                   </article>
+
+                  {/* CTA Button after first block */}
+                  {index === 0 && (
+                    <AnimationWrapper delay={0.8} duration={0.6}>
+                      <div className="text-center mt-12">
+                        <WhatsAppCTAButton
+                          message={WHATSAPP.messages.generalInquiry}
+                          variant="primary"
+                          size="lg"
+                        />
+                      </div>
+                    </AnimationWrapper>
+                  )}
                 </AnimationWrapper>
               ))}
             </div>

@@ -1,7 +1,9 @@
 "use client";
 
+import { WHATSAPP } from "@/lib/constants";
 import { Project } from "@/payload-types";
 import { AnimationWrapper } from "../AnimationWrapper";
+import { WhatsAppCTAButton } from "../ui/WhatsAppCTAButton";
 import { FAQAccordion } from "./FAQ";
 import { ProjectTestimonials } from "./Testimonials";
 
@@ -72,6 +74,15 @@ export function ProjectContent({ project }: ProjectContentProps) {
                         />
                       )}
                     </article>
+                    {index === 0 && (
+                      <div className="text-center mt-12">
+                        <WhatsAppCTAButton
+                          message={WHATSAPP.messages.projectInquiry}
+                          variant="primary"
+                          size="lg"
+                        />
+                      </div>
+                    )}
                   </AnimationWrapper>
                 ))}
               </div>
@@ -94,6 +105,29 @@ export function ProjectContent({ project }: ProjectContentProps) {
                 </h3>
                 <FAQAccordion faq={project.faq} />
               </div>
+            </AnimationWrapper>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Button after FAQ */}
+      <section className="py-16 bg-gradient-to-r from-cyan-50 to-cyan-100">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <AnimationWrapper delay={1.0} duration={0.6}>
+              <h3 className="text-2xl lg:text-3xl font-bold font-['Epilogue'] text-neutral-900 mb-6">
+                Ready to Get Started?
+              </h3>
+              <p className="text-neutral-600 font-['DM_Sans'] text-lg mb-8 max-w-2xl mx-auto">
+                Have questions about this project or want to discuss your next
+                venture? Let's connect on WhatsApp and explore the possibilities
+                together.
+              </p>
+              <WhatsAppCTAButton
+                message={WHATSAPP.messages.projectInquiry}
+                variant="primary"
+                size="lg"
+              />
             </AnimationWrapper>
           </div>
         </div>

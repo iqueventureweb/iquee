@@ -2,6 +2,16 @@ export const LOCK_DOCUMENT_DURATION = 5 * 60 * 1000; // 5 minutes in millisecond
 
 export const CACHE_REVALIDATE_TIME = 60 * 60 * 24 * 30; // 1 year in seconds
 
+export const WHATSAPP = {
+  phoneNumber: "+919843044489",
+  messages: {
+    projectInquiry:
+      "Hello! I would like to know more about this project and your services.",
+    generalInquiry:
+      "Hello! I would like to know more about your products and services.",
+  },
+};
+
 export const EditorConstants = {
   setOptions: {
     buttonList: [

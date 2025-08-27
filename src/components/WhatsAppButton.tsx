@@ -1,5 +1,6 @@
 "use client";
 
+import { WHATSAPP } from "@/lib/constants";
 import Image from "next/image";
 
 interface WhatsAppButtonProps {
@@ -8,8 +9,8 @@ interface WhatsAppButtonProps {
 }
 
 export default function WhatsAppButton({
-  phoneNumber = "+919843044489", // Default number, replace with actual
-  message = "Hello! I would like to know more about your products and services.",
+  phoneNumber = WHATSAPP.phoneNumber,
+  message = WHATSAPP.messages.generalInquiry,
 }: WhatsAppButtonProps) {
   const handleWhatsAppClick = () => {
     const encodedMessage = encodeURIComponent(message);

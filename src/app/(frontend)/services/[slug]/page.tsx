@@ -1,6 +1,8 @@
 import { ProjectsGrid } from "@/components/ProjectsGrid";
 import { ServiceContent } from "@/components/ServiceContent";
 import { ServiceHero } from "@/components/ServiceHero";
+import { WhatsAppCTAButton } from "@/components/ui/WhatsAppCTAButton";
+import { WHATSAPP } from "@/lib/constants";
 import {
   getProjectsByService,
   getServiceBySlug,
@@ -75,6 +77,29 @@ export default async function ServicePage({ params }: ServicePageProps) {
         {/* Projects Grid */}
         {projects.length > 0 && (
           <ProjectsGrid projects={projects} serviceSlug={service.slug} />
+        )}
+
+        {/* CTA Button after Projects Grid */}
+        {projects.length > 0 && (
+          <section className="py-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto text-center">
+                <h3 className="text-2xl lg:text-3xl font-bold font-['Epilogue'] text-neutral-900 mb-6">
+                  Ready to Get Started?
+                </h3>
+                <p className="text-neutral-600 font-['DM_Sans'] text-lg mb-8 max-w-2xl mx-auto">
+                  Have questions about this service or want to discuss your next
+                  venture? Let's connect on WhatsApp and explore the
+                  possibilities together.
+                </p>
+                <WhatsAppCTAButton
+                  message={WHATSAPP.messages.generalInquiry}
+                  variant="primary"
+                  size="lg"
+                />
+              </div>
+            </div>
+          </section>
         )}
       </div>
     );
