@@ -2,6 +2,7 @@
 
 import { WHATSAPP } from "@/lib/constants";
 import { Service } from "@/payload-types";
+import Image from "next/image";
 import { AnimationWrapper } from "../AnimationWrapper";
 import { WhatsAppCTAButton } from "../ui/WhatsAppCTAButton";
 
@@ -19,7 +20,7 @@ export function ServiceContent({ service }: ServiceContentProps) {
       aria-labelledby="service-details-title"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <header className="text-center mb-16">
             <AnimationWrapper delay={0.2} duration={0.5}>
               <h2
@@ -39,7 +40,7 @@ export function ServiceContent({ service }: ServiceContentProps) {
 
           {blocks.length > 0 ? (
             <div
-              className="space-y-12"
+              className="space-y-16"
               role="region"
               aria-label="Service information blocks"
             >
@@ -50,21 +51,48 @@ export function ServiceContent({ service }: ServiceContentProps) {
                   duration={0.5}
                 >
                   <article className="bg-white rounded-3xl p-8 lg:p-12 border border-neutral-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-blue-200/80">
-                    {block?.title && (
-                      <h3 className="text-2xl lg:text-3xl font-medium font-['Epilogue'] text-neutral-900 mb-6">
-                        {block.title}
-                      </h3>
-                    )}
+                    <div
+                      className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-12 ${
+                        index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
+                      }`}
+                    >
+                      {/* Image Section */}
+                      {block?.image_url && (
+                        <div className="w-full lg:w-1/2 flex-shrink-0">
+                          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+                            <Image
+                              src={
+                                process.env.NEXT_PUBLIC_BUNNY_CDN +
+                                block.image_url
+                              }
+                              alt={block?.title || "Service image"}
+                              fill
+                              className="object-cover"
+                              sizes="(max-width: 1024px) 100vw, 50vw"
+                            />
+                          </div>
+                        </div>
+                      )}
 
-                    {block?.content && (
-                      <div
-                        className="prose prose-lg prose-neutral max-w-none font-['DM_Sans'] text-neutral-700 leading-relaxed"
-                        dangerouslySetInnerHTML={{
-                          __html: block.content || "",
-                        }}
-                        itemProp="description"
-                      />
-                    )}
+                      {/* Content Section */}
+                      <div className="w-full lg:w-1/2 space-y-6">
+                        {block?.title && (
+                          <h3 className="text-2xl lg:text-3xl font-medium font-['Epilogue'] text-neutral-900">
+                            {block.title}
+                          </h3>
+                        )}
+
+                        {block?.content && (
+                          <div
+                            className="prose prose-lg prose-neutral max-w-none font-['DM_Sans'] text-neutral-700 leading-relaxed"
+                            dangerouslySetInnerHTML={{
+                              __html: block.content || "",
+                            }}
+                            itemProp="description"
+                          />
+                        )}
+                      </div>
+                    </div>
                   </article>
 
                   {/* CTA Button after first block */}

@@ -1,3 +1,4 @@
+import globalUpload from "@/components/Globals/GlobalUpload";
 import { revalidateTag } from "next/cache";
 import { CollectionConfig } from "payload";
 
@@ -45,10 +46,10 @@ export const HomePage: CollectionConfig = {
       label: "Trusted Companies",
       type: "array",
       fields: [
-        {
-          name: "src",
-          type: "text",
-        },
+        globalUpload({
+          field_name: "src",
+          label: "Image URL",
+        }),
         {
           name: "width",
           type: "number",
@@ -94,10 +95,10 @@ export const HomePage: CollectionConfig = {
       label: "Featured Services",
       type: "array",
       fields: [
-        {
-          name: "icon",
-          type: "text",
-        },
+        globalUpload({
+          field_name: "image_url",
+          label: "Image URL",
+        }),
         {
           name: "title",
           type: "text",
@@ -148,11 +149,10 @@ export const HomePage: CollectionConfig = {
           name: "quote",
           type: "text",
         },
-        {
-          name: "image_url",
+        globalUpload({
+          field_name: "image_url",
           label: "Image URL",
-          type: "text",
-        },
+        }),
         {
           name: "social_links",
           label: "Social Links",

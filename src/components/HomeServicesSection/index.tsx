@@ -57,7 +57,7 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
             description:
               service.blocks?.[0]?.content || service.blocks?.[0]?.title || "",
             icon: "🚀", // Default icon for services from collection
-            image: `${process.env.NEXT_PUBLIC_SERVER_URL}/services/${service.slug}.svg`, // Default image
+            image: `${process.env.NEXT_PUBLIC_BUNNY_CDN}${service.thumbnail}`, // Default image
           }))
           .reverse()
       : // Fallback: Default services
@@ -126,7 +126,7 @@ export function HomeServicesSection({ services }: HomeServicesSectionProps) {
                     </span>
 
                     {/* Title */}
-                    <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-normal ml-4 sm:ml-14 font-['Epilogue'] text-[#178181] leading-[1.1] sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] transition-all duration-500 ease-in-out group-hover:text-neutral-900">
+                    <h3 className="text-2xl cursor-pointer sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl font-normal ml-4 sm:ml-14 font-['Epilogue'] text-[#178181] leading-[1.1] sm:leading-tight md:leading-tight lg:leading-[60px] xl:leading-[90px] transition-all duration-500 ease-in-out group-hover:text-neutral-900 select-none">
                       {service.title}
                     </h3>
                   </div>

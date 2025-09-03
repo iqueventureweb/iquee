@@ -165,15 +165,7 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    card?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    tablet?: {
+    medium?: {
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -216,9 +208,11 @@ export interface Service {
   id: string;
   title: string;
   slug: string;
+  thumbnail?: string | null;
   blocks?:
     | {
         title?: string | null;
+        image_url?: string | null;
         content?: string | null;
         id?: string | null;
       }[]
@@ -240,8 +234,10 @@ export interface Project {
   title: string;
   slug: string;
   description?: string | null;
+  image_url?: string | null;
   blocks?:
     | {
+        image_url?: string | null;
         title: string;
         content?: string | null;
         id?: string | null;
@@ -304,7 +300,7 @@ export interface HomePage {
   };
   featured_services?:
     | {
-        icon?: string | null;
+        image_url?: string | null;
         title?: string | null;
         description?: string | null;
         id?: string | null;
@@ -614,17 +610,7 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        card?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        tablet?:
+        medium?:
           | T
           | {
               url?: T;
@@ -666,10 +652,12 @@ export interface UsersSelect<T extends boolean = true> {
 export interface ServicesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  thumbnail?: T;
   blocks?:
     | T
     | {
         title?: T;
+        image_url?: T;
         content?: T;
         id?: T;
       };
@@ -685,9 +673,11 @@ export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   description?: T;
+  image_url?: T;
   blocks?:
     | T
     | {
+        image_url?: T;
         title?: T;
         content?: T;
         id?: T;
@@ -753,7 +743,7 @@ export interface HomePageSelect<T extends boolean = true> {
   featured_services?:
     | T
     | {
-        icon?: T;
+        image_url?: T;
         title?: T;
         description?: T;
         id?: T;

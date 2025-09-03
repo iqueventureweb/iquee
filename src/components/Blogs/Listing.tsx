@@ -16,15 +16,6 @@ function getWordsCount(content: string) {
   return content.split(/\s+/).filter((w) => w.length > 0).length;
 }
 
-function getFallbackImage(index: number): string {
-  const fallbackImages = [
-    "/blogs/up-up.webp",
-    "/blogs/Possible.webp",
-    "/blogs/motivation-ecosystem.webp",
-  ];
-  return fallbackImages[index % fallbackImages.length];
-}
-
 export default function BlogsListing({
   blogs,
   internal = false,
@@ -108,7 +99,7 @@ export default function BlogsListing({
                   <div className="grid md:grid-cols-5 gap-0">
                     <div className="md:col-span-2 h-48 md:h-full relative bg-neutral-100">
                       <Image
-                        src={featured.blog_image || "/blogs/up-up.webp"}
+                        src={`${process.env.NEXT_PUBLIC_BUNNY_CDN}${featured.blog_image}`}
                         alt={`Featured image for ${featured.title}`}
                         fill
                         className="object-cover"
@@ -231,7 +222,7 @@ export default function BlogsListing({
                   >
                     <div className="h-44 bg-neutral-100 relative">
                       <Image
-                        src={b.blog_image || getFallbackImage(index)}
+                        src={`${process.env.NEXT_PUBLIC_BUNNY_CDN}${b.blog_image}`}
                         alt={`Featured image for ${b.title}`}
                         fill
                         className="object-cover"

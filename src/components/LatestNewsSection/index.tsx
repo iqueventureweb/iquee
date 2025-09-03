@@ -100,8 +100,7 @@ export function LatestNewsSection({ blogs }: LatestNewsSectionProps) {
                     month: "long",
                   })
                 : "No date",
-              image:
-                normalizeImagePath(blog.blog_image) || getFallbackImage(index), // Use normalized path or fallback
+              image: `${process.env.NEXT_PUBLIC_BUNNY_CDN}${blog.blog_image}`,
               isFeatured: index === 0, // First blog is featured
               slug: blog.slug || "",
             };

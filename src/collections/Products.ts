@@ -1,3 +1,4 @@
+import globalUpload from "@/components/Globals/GlobalUpload";
 import { revalidateTag } from "next/cache";
 import type { CollectionConfig } from "payload";
 
@@ -28,11 +29,21 @@ export const Products: CollectionConfig = {
       name: "description",
       type: "text",
     },
+    globalUpload({
+      field_name: "image_url",
+      label: "Image URL",
+      description: "Image URL",
+    }),
     {
       name: "blocks",
       label: "Blocks",
       type: "array",
       fields: [
+        globalUpload({
+          field_name: "image_url",
+          label: "Image URL",
+          description: "Image URL",
+        }),
         {
           name: "title",
           type: "text",

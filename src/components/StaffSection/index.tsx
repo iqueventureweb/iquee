@@ -218,7 +218,7 @@ export function StaffSection({ data }: StaffSectionProps) {
     <div className={`flex-shrink-0 z-[5] ${className}`}>
       <div className="w-64 sm:w-72 lg:w-64 xl:w-72">
         <Image
-          src={member.image}
+          src={process.env.NEXT_PUBLIC_BUNNY_CDN + member.image}
           alt={member.name}
           width={400}
           height={600}

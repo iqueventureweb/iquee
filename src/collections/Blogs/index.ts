@@ -1,3 +1,4 @@
+import globalUpload from "@/components/Globals/GlobalUpload";
 import { slugField } from "@/fields/slug";
 import { revalidateTag } from "next/cache";
 import type { CollectionConfig, Field } from "payload";
@@ -55,10 +56,11 @@ export const Blog: CollectionConfig = {
         width: "50%",
       },
     },
-    {
-      name: "blog_image",
-      type: "text",
-    },
+    globalUpload({
+      field_name: "blog_image",
+      label: "Blog Image",
+      description: "Blog Image",
+    }),
     {
       name: "content",
       type: "text",

@@ -1,3 +1,4 @@
+import globalUpload from "@/components/Globals/GlobalUpload";
 import { revalidateTag } from "next/cache";
 import type { CollectionConfig } from "payload";
 
@@ -24,6 +25,12 @@ export const Services: CollectionConfig = {
       type: "text",
       required: true,
     },
+    globalUpload({
+      field_name: "thumbnail",
+      label: "Thumbnail",
+      description:
+        "Thumbnail will be used for the service section in home page",
+    }),
     {
       name: "blocks",
       label: "Blocks",
@@ -33,6 +40,11 @@ export const Services: CollectionConfig = {
           name: "title",
           type: "text",
         },
+        globalUpload({
+          field_name: "image_url",
+          label: "Image URL",
+          description: "Image URL",
+        }),
         {
           name: "content",
           type: "text",

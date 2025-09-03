@@ -1,3 +1,4 @@
+import { default as default_25e06ffc1325e395d9df62ca51dcd204 } from 'src/components/Globals/CustomUpload'
 import { default as default_7563626dc85c3bcf05efb5d78a95b3ef } from 'src/collections/Blogs/CustomContentEditor/index'
 import { SlugComponent as SlugComponent_92cc057d0a2abb4f6cf0307edf59f986 } from '@/fields/slug/SlugComponent'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -12,6 +13,7 @@ import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/component
 import { default as default_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/BeforeLogin'
 
 export const importMap = {
+  "src/components/Globals/CustomUpload#default": default_25e06ffc1325e395d9df62ca51dcd204,
   "src/collections/Blogs/CustomContentEditor/index#default": default_7563626dc85c3bcf05efb5d78a95b3ef,
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_92cc057d0a2abb4f6cf0307edf59f986,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
