@@ -1,24 +1,24 @@
 import { CareerHero } from "@/components/Career/CareerHero";
 import { CareerListings } from "@/components/Career/CareerListings";
+import { SEO_CONFIG } from "@/lib/constants";
 import { getCareers } from "@/lib/fetchMethods";
 import { generateEnhancedMeta } from "@/utilities/seoUtils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = generateEnhancedMeta({
-  title: "Career Opportunities at iQue",
-  description:
-    "Join our dynamic team and explore exciting career opportunities in technology, innovation, and entrepreneurship.",
+  title: SEO_CONFIG.PAGES.CAREER.TITLE,
+  description: SEO_CONFIG.PAGES.CAREER.DESCRIPTION,
   url: "/career",
   type: "website",
   section: "Career",
-  tags: ["careers", "jobs", "employment", "work", "opportunities"],
+  tags: SEO_CONFIG.KEYWORDS.CAREER,
 });
 
 export default async function CareerPage() {
   const careers = await getCareers();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <CareerHero />
       <CareerListings careers={careers} />
     </div>

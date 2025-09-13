@@ -1,16 +1,15 @@
+import { SEO_CONFIG } from "@/lib/constants";
 import type { Metadata } from "next";
-import { getServerSideURL } from "./getURL";
 
 // Enhanced SEO configuration
 export const siteConfig = {
-  name: "iQue",
-  description:
-    "Let's create a better startup ecosystem through collaboration, mentorship, and resources.",
-  url: getServerSideURL(),
-  ogImage: "/website-template-OG.webp",
+  name: SEO_CONFIG.COMPANY_NAME,
+  description: SEO_CONFIG.DEFAULT_DESCRIPTION,
+  url: SEO_CONFIG.BASE_URL,
+  ogImage: "/ique-logo.webp",
   links: {
-    twitter: "https://twitter.com/ique",
-    linkedin: "https://linkedin.com/company/ique",
+    twitter: SEO_CONFIG.SOCIAL_LINKS.TWITTER,
+    linkedin: SEO_CONFIG.SOCIAL_LINKS.LINKEDIN,
   },
 };
 
@@ -40,22 +39,22 @@ export const generateEnhancedMeta = (args: {
     tags,
   } = args;
 
-  const fullTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.name;
-  const fullDescription = description || siteConfig.description;
+  const fullTitle = title
+    ? `${title} | ${SEO_CONFIG.COMPANY_NAME}`
+    : SEO_CONFIG.DEFAULT_TITLE;
+  const fullDescription = description || SEO_CONFIG.DEFAULT_DESCRIPTION;
   const fullImage = image
-    ? `${siteConfig.url}${image}`
-    : `${siteConfig.url}${siteConfig.ogImage}`;
-  const fullUrl = url ? `${siteConfig.url}${url}` : siteConfig.url;
+    ? `${SEO_CONFIG.BASE_URL}${image}`
+    : `${SEO_CONFIG.BASE_URL}/ique-logo.webp`;
+  const fullUrl = url ? `${SEO_CONFIG.BASE_URL}${url}` : SEO_CONFIG.BASE_URL;
 
   return {
     title: fullTitle,
     description: fullDescription,
-    keywords:
-      tags?.join(", ") ||
-      "startup ecosystem, entrepreneurship, mentorship, collaboration, innovation",
-    authors: author ? [{ name: author }] : undefined,
-    creator: siteConfig.name,
-    publisher: siteConfig.name,
+    keywords: tags?.join(", ") || SEO_CONFIG.KEYWORDS.HOME.join(", "),
+    authors: author ? [{ name: author }] : [{ name: SEO_CONFIG.COMPANY_NAME }],
+    creator: SEO_CONFIG.COMPANY_NAME,
+    publisher: SEO_CONFIG.COMPANY_NAME,
     robots: {
       index: true,
       follow: true,
@@ -68,7 +67,7 @@ export const generateEnhancedMeta = (args: {
       },
     },
     openGraph: {
-      siteName: siteConfig.name,
+      siteName: SEO_CONFIG.COMPANY_NAME,
       title: fullTitle,
       description: fullDescription,
       url: fullUrl,
@@ -83,7 +82,7 @@ export const generateEnhancedMeta = (args: {
       locale: "en_US",
       publishedTime,
       modifiedTime,
-      authors: author ? [author] : undefined,
+      authors: author ? [author] : [SEO_CONFIG.COMPANY_NAME],
       section,
       tags,
     },
@@ -92,8 +91,8 @@ export const generateEnhancedMeta = (args: {
       title: fullTitle,
       description: fullDescription,
       images: [fullImage],
-      creator: "@ique",
-      site: "@ique",
+      creator: "@iqueventures",
+      site: "@iqueventures",
     },
     alternates: {
       canonical: fullUrl,
@@ -119,21 +118,45 @@ export const generateStructuredData = (args: {
       return {
         "@context": "https://schema.org",
         "@type": "Organization",
-        name: siteConfig.name,
-        description: siteConfig.description,
-        url: siteConfig.url,
-        logo: `${siteConfig.url}/ique-logo.svg`,
-        sameAs: [siteConfig.links.twitter, siteConfig.links.linkedin],
+        name: SEO_CONFIG.COMPANY_NAME,
+        description: SEO_CONFIG.DEFAULT_DESCRIPTION,
+        url: SEO_CONFIG.BASE_URL,
+        logo: `${SEO_CONFIG.BASE_URL}/ique-logo.webp`,
+        sameAs: [
+          SEO_CONFIG.SOCIAL_LINKS.TWITTER,
+          SEO_CONFIG.SOCIAL_LINKS.LINKEDIN,
+          SEO_CONFIG.SOCIAL_LINKS.FACEBOOK,
+        ],
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "customer service",
+          telephone: SEO_CONFIG.CONTACT.PHONE,
+          email: SEO_CONFIG.CONTACT.EMAIL,
           areaServed: "IN",
           availableLanguage: "English",
         },
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: "Bangalore",
-          addressCountry: "IN",
+        address: [
+          {
+            "@type": "PostalAddress",
+            addressLocality: SEO_CONFIG.CONTACT.ADDRESS.REGISTERED.CITY,
+            addressRegion: SEO_CONFIG.CONTACT.ADDRESS.REGISTERED.STATE,
+            addressCountry: SEO_CONFIG.CONTACT.ADDRESS.REGISTERED.COUNTRY,
+            streetAddress: SEO_CONFIG.CONTACT.ADDRESS.REGISTERED.OFFICE,
+          },
+          {
+            "@type": "PostalAddress",
+            addressLocality: SEO_CONFIG.CONTACT.ADDRESS.CORPORATE.CITY,
+            addressRegion: SEO_CONFIG.CONTACT.ADDRESS.CORPORATE.STATE,
+            addressCountry: SEO_CONFIG.CONTACT.ADDRESS.CORPORATE.COUNTRY,
+            streetAddress: SEO_CONFIG.CONTACT.ADDRESS.CORPORATE.OFFICE,
+          },
+        ],
+        foundingDate: "2020",
+        numberOfEmployees: "10-50",
+        industry: "Business Services",
+        serviceArea: {
+          "@type": "Country",
+          name: "India",
         },
       };
 
@@ -141,13 +164,19 @@ export const generateStructuredData = (args: {
       return {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        name: siteConfig.name,
-        description: siteConfig.description,
-        url: siteConfig.url,
+        name: SEO_CONFIG.COMPANY_NAME,
+        description: SEO_CONFIG.DEFAULT_DESCRIPTION,
+        url: SEO_CONFIG.BASE_URL,
         potentialAction: {
           "@type": "SearchAction",
-          target: `${siteConfig.url}/search?q={search_term_string}`,
+          target: `${SEO_CONFIG.BASE_URL}/search?q={search_term_string}`,
           "query-input": "required name=search_term_string",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: SEO_CONFIG.COMPANY_NAME,
+          url: SEO_CONFIG.BASE_URL,
+          logo: `${SEO_CONFIG.BASE_URL}/ique-logo.webp`,
         },
       };
 
@@ -158,26 +187,28 @@ export const generateStructuredData = (args: {
         headline: data.title,
         description: data.description,
         image: data.image
-          ? `${siteConfig.url}${data.image}`
-          : `${siteConfig.url}${siteConfig.ogImage}`,
+          ? `${SEO_CONFIG.BASE_URL}${data.image}`
+          : `${SEO_CONFIG.BASE_URL}/ique-logo.webp`,
         author: {
           "@type": "Person",
           name: data.author || "iQue Team",
         },
         publisher: {
           "@type": "Organization",
-          name: siteConfig.name,
+          name: SEO_CONFIG.COMPANY_NAME,
           logo: {
             "@type": "ImageObject",
-            url: `${siteConfig.url}/ique-logo.svg`,
+            url: `${SEO_CONFIG.BASE_URL}/ique-logo.webp`,
           },
         },
         datePublished: data.publishedTime,
         dateModified: data.modifiedTime,
         mainEntityOfPage: {
           "@type": "WebPage",
-          "@id": `${siteConfig.url}/blogs/${data.slug}`,
+          "@id": `${SEO_CONFIG.BASE_URL}/blogs/${data.slug}`,
         },
+        articleSection: "Business",
+        keywords: SEO_CONFIG.KEYWORDS.BLOG.join(", "),
       };
 
     case "service":
@@ -188,13 +219,20 @@ export const generateStructuredData = (args: {
         description: data.description,
         provider: {
           "@type": "Organization",
-          name: siteConfig.name,
+          name: SEO_CONFIG.COMPANY_NAME,
+          url: SEO_CONFIG.BASE_URL,
         },
         areaServed: {
           "@type": "Country",
           name: "India",
         },
         serviceType: data.category || "Business Service",
+        category: "Business Services",
+        offers: {
+          "@type": "Offer",
+          availability: "https://schema.org/InStock",
+          priceCurrency: "INR",
+        },
       };
 
     case "breadcrumb":
@@ -205,7 +243,7 @@ export const generateStructuredData = (args: {
           "@type": "ListItem",
           position: index + 1,
           name: item.name,
-          item: item.url,
+          item: `${SEO_CONFIG.BASE_URL}${item.url}`,
         })),
       };
 
@@ -221,5 +259,18 @@ export const generateBreadcrumbs = (
   return generateStructuredData({
     type: "breadcrumb",
     data: { items },
+  });
+};
+
+// Generate page-specific metadata
+export const generatePageMeta = (pageType: keyof typeof SEO_CONFIG.PAGES) => {
+  const pageData = SEO_CONFIG.PAGES[pageType];
+  return generateEnhancedMeta({
+    title: pageData.TITLE,
+    description: pageData.DESCRIPTION,
+    url: `/${pageType.toLowerCase()}`,
+    type: "website",
+    section: pageType,
+    tags: pageData.KEYWORDS.split(", "),
   });
 };

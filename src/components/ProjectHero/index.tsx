@@ -15,7 +15,7 @@ export function ProjectHero({ project, service }: ProjectHeroProps) {
 
   return (
     <section
-      className="relative min-h-[50vh] sm:min-h-[80vh] bg-cover bg-center bg-no-repeat overflow-hidden flex items-end"
+      className="relative min-h-[50vh] sm:min-h-[80vh] bg-cover bg-center bg-no-repeat overflow-hidden flex items-end pt-20 sm:pt-24 lg:pt-32"
       style={{ backgroundImage: "url(/images/resourse-bg.png)" }}
       aria-labelledby="project-title"
     >
@@ -50,7 +50,7 @@ export function ProjectHero({ project, service }: ProjectHeroProps) {
           <AnimationWrapper delay={0.4} duration={0.8}>
             <h1
               id="project-title"
-              className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal font-['Epilogue'] leading-none mb-12 tracking-tighter bg-gradient-to-r from-[#46ecd5] to-[#2EFFB5] bg-clip-text text-transparent uppercase"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal font-['Epilogue'] leading-tight mb-12 tracking-tighter bg-gradient-to-r from-[#46ecd5] to-[#2EFFB5] bg-clip-text text-transparent uppercase"
             >
               {project.title}
             </h1>

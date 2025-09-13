@@ -2,7 +2,7 @@ import { ProjectsGrid } from "@/components/ProjectsGrid";
 import { ServiceContent } from "@/components/ServiceContent";
 import { ServiceHero } from "@/components/ServiceHero";
 import { WhatsAppCTAButton } from "@/components/ui/WhatsAppCTAButton";
-import { WHATSAPP } from "@/lib/constants";
+import { SEO_CONFIG, WHATSAPP } from "@/lib/constants";
 import {
   getProjectsByService,
   getServiceBySlug,
@@ -150,15 +150,11 @@ export async function generateMetadata({
       title: service.title,
       description:
         service.blocks?.[0]?.content ||
-        `Learn more about ${service.title} services at iQue.`,
+        `Learn more about ${service.title} services at ${SEO_CONFIG.COMPANY_NAME}.`,
       url: `/services/${service.slug}`,
       type: "service",
       section: "Services",
-      tags: [
-        "startup services",
-        "business services",
-        service.title.toLowerCase(),
-      ],
+      tags: [...SEO_CONFIG.KEYWORDS.SERVICES, service.title.toLowerCase()],
     });
   } catch (error) {
     return {

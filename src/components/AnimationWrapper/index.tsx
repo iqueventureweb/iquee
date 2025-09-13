@@ -15,11 +15,13 @@ interface AnimationWrapperProps {
 export function AnimationWrapper({
   children,
   className = "",
-  delay = 0,
-  duration = 0.6,
+  // delay = 0,
+  // duration = 0.6,
   direction = "up",
   distance = 50,
 }: AnimationWrapperProps) {
+  const duration = 0.8;
+  const delay = 0.2;
   const getInitialPosition = () => {
     switch (direction) {
       case "up":

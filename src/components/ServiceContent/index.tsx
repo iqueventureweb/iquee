@@ -50,16 +50,24 @@ export function ServiceContent({ service }: ServiceContentProps) {
                   delay={0.4 + index * 0.1}
                   duration={0.5}
                 >
-                  <article className="bg-white rounded-3xl p-8 lg:p-12 border border-neutral-200/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-blue-200/80">
-                    <div
-                      className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-12 ${
-                        index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
-                      }`}
-                    >
-                      {/* Image Section */}
-                      {block?.image_url && (
-                        <div className="w-full lg:w-1/2 flex-shrink-0">
-                          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+                  <div className="group">
+                    {block?.image_url ? (
+                      // Layout with image - seamless card design
+                      <div
+                        className={`flex flex-col lg:flex-row overflow-hidden rounded-2xl lg:rounded-3xl shadow-sm hover:shadow-lg transition-all duration-500 ${
+                          index % 2 === 0 ? "" : "lg:flex-row-reverse"
+                        }`}
+                      >
+                        {/* Image Section */}
+                        <div className="lg:w-1/2">
+                          <div
+                            className={`relative h-64 sm:h-80 lg:h-full lg:min-h-[500px] overflow-hidden ${
+                              // Correct border radius logic
+                              index % 2 === 0
+                                ? "rounded-t-2xl lg:rounded-l-3xl lg:rounded-tr-none lg:rounded-br-none lg:rounded-b-none" // Left side - only left corners rounded
+                                : "rounded-t-2xl lg:rounded-r-3xl lg:rounded-tl-none lg:rounded-bl-none lg:rounded-b-3xl" // Right side - only right corners rounded
+                            }`}
+                          >
                             <Image
                               src={
                                 process.env.NEXT_PUBLIC_BUNNY_CDN +
@@ -67,38 +75,72 @@ export function ServiceContent({ service }: ServiceContentProps) {
                               }
                               alt={block?.title || "Service image"}
                               fill
-                              className="object-cover"
+                              className="object-cover transition-transform duration-700 group-hover:scale-105"
                               sizes="(max-width: 1024px) 100vw, 50vw"
+                              priority={index === 0}
                             />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
                           </div>
                         </div>
-                      )}
 
-                      {/* Content Section */}
-                      <div className="w-full lg:w-1/2 space-y-6">
-                        {block?.title && (
-                          <h3 className="text-2xl lg:text-3xl font-medium font-['Epilogue'] text-neutral-900">
-                            {block.title}
-                          </h3>
-                        )}
+                        {/* Content Section */}
+                        <div
+                          className={`lg:w-1/2 p-6 sm:p-8 lg:p-12 flex flex-col justify-center bg-white ${
+                            // Correct border radius for content section
+                            index % 2 === 0
+                              ? "rounded-b-2xl lg:rounded-r-3xl lg:rounded-tl-none lg:rounded-bl-none lg:rounded-b-3xl" // Right side - only right corners rounded
+                              : "rounded-b-2xl lg:rounded-l-3xl lg:rounded-tr-none lg:rounded-br-none lg:rounded-b-none" // Left side - only left corners rounded
+                          }`}
+                        >
+                          <div className="space-y-4 sm:space-y-6">
+                            {block?.title && (
+                              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-medium font-['Epilogue'] text-neutral-900">
+                                {block.title}
+                              </h3>
+                            )}
 
-                        {block?.content && (
-                          <div
-                            className="prose prose-lg prose-neutral max-w-none font-['DM_Sans'] text-neutral-700 leading-relaxed"
-                            dangerouslySetInnerHTML={{
-                              __html: block.content || "",
-                            }}
-                            itemProp="description"
-                          />
-                        )}
+                            {block?.content && (
+                              <div
+                                className="prose prose-lg prose-neutral max-w-none font-['DM_Sans'] text-neutral-700 leading-relaxed"
+                                dangerouslySetInnerHTML={{
+                                  __html: block.content || "",
+                                }}
+                                itemProp="description"
+                              />
+                            )}
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </article>
+                    ) : (
+                      // Layout without image - centered content with full border radius
+                      <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-2xl lg:rounded-3xl shadow-sm hover:shadow-lg transition-all duration-500 p-6 sm:p-8 lg:p-12">
+                          <div className="space-y-4 sm:space-y-6 text-center">
+                            {block?.title && (
+                              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-medium font-['Epilogue'] text-neutral-900">
+                                {block.title}
+                              </h3>
+                            )}
+
+                            {block?.content && (
+                              <div
+                                className="prose prose-lg prose-neutral max-w-none font-['DM_Sans'] text-neutral-700 leading-relaxed mx-auto"
+                                dangerouslySetInnerHTML={{
+                                  __html: block.content || "",
+                                }}
+                                itemProp="description"
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
                   {/* CTA Button after first block */}
                   {index === 0 && (
                     <AnimationWrapper delay={0.8} duration={0.6}>
-                      <div className="text-center mt-12">
+                      <div className="text-center mt-8">
                         <WhatsAppCTAButton
                           message={WHATSAPP.messages.generalInquiry}
                           variant="primary"

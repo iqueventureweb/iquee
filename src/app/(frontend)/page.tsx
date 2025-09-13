@@ -9,6 +9,7 @@ import { OurStorySection } from "@/components/OurStorySection";
 import { StaffSection } from "@/components/StaffSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { TrustSection } from "@/components/TrustSection";
+import { SEO_CONFIG } from "@/lib/constants";
 import { getBlogs, getHomePage, getServices } from "@/lib/fetchMethods";
 import {
   generateEnhancedMeta,
@@ -27,47 +28,45 @@ export default async function HomePage() {
   const homepageData = generateStructuredData({
     type: "website",
     data: {
-      title: "iQue - Let's create a better startup Ecosystem",
-      description:
-        "Join us in building a better and more efficient startup ecosystem! By fostering collaboration, providing mentorship, and offering resources, we're empowering startups to grow and thrive.",
-      url: "https://ique.com",
-      siteName: "iQue Ventures",
+      title: SEO_CONFIG.PAGES.HOME.TITLE,
+      description: SEO_CONFIG.PAGES.HOME.DESCRIPTION,
+      url: SEO_CONFIG.BASE_URL,
+      siteName: SEO_CONFIG.COMPANY_NAME,
       inLanguage: "en-US",
       author: {
         "@type": "Organization",
-        name: "iQue Ventures",
-        url: "https://ique.com",
-        logo: "https://ique.com/ique-logo.svg",
+        name: SEO_CONFIG.COMPANY_NAME,
+        url: SEO_CONFIG.BASE_URL,
+        logo: `${SEO_CONFIG.BASE_URL}/ique-logo.webp`,
       },
       publisher: {
         "@type": "Organization",
-        name: "iQue Ventures",
-        url: "https://ique.com",
-        logo: "https://ique.com/ique-logo.svg",
+        name: SEO_CONFIG.COMPANY_NAME,
+        url: SEO_CONFIG.BASE_URL,
+        logo: `${SEO_CONFIG.BASE_URL}/ique-logo.webp`,
       },
       mainEntity: {
         "@type": "Organization",
-        name: "iQue Ventures",
-        description:
-          "Empowering startups through comprehensive support, mentorship, and ecosystem building",
-        url: "https://ique.com",
-        logo: "https://ique.com/ique-logo.svg",
+        name: SEO_CONFIG.COMPANY_NAME,
+        description: SEO_CONFIG.DEFAULT_DESCRIPTION,
+        url: SEO_CONFIG.BASE_URL,
+        logo: `${SEO_CONFIG.BASE_URL}/ique-logo.webp`,
         address: {
           "@type": "PostalAddress",
-          addressLocality: "Kerala",
-          addressRegion: "Kerala",
-          addressCountry: "IN",
+          addressLocality: SEO_CONFIG.CONTACT.ADDRESS.REGISTERED.CITY,
+          addressRegion: SEO_CONFIG.CONTACT.ADDRESS.REGISTERED.STATE,
+          addressCountry: SEO_CONFIG.CONTACT.ADDRESS.REGISTERED.COUNTRY,
         },
         contactPoint: {
           "@type": "ContactPoint",
-          telephone: "+91-9020103335",
-          email: "info@ique.com",
+          telephone: SEO_CONFIG.CONTACT.PHONE,
+          email: SEO_CONFIG.CONTACT.EMAIL,
           contactType: "customer service",
         },
         sameAs: [
-          "https://linkedin.com/company/ique-ventures",
-          "https://twitter.com/iqueventures",
-          "https://facebook.com/iqueventures",
+          SEO_CONFIG.SOCIAL_LINKS.LINKEDIN,
+          SEO_CONFIG.SOCIAL_LINKS.TWITTER,
+          SEO_CONFIG.SOCIAL_LINKS.FACEBOOK,
         ],
       },
     },
@@ -76,31 +75,7 @@ export default async function HomePage() {
   // Generate organization structured data
   const organizationData = generateStructuredData({
     type: "organization",
-    data: {
-      name: "iQue Ventures",
-      url: "https://ique.com",
-      logo: "https://ique.com/ique-logo.svg",
-      description:
-        "Empowering startups through comprehensive support, mentorship, and ecosystem building",
-      foundingDate: "2020",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Kerala",
-        addressRegion: "Kerala",
-        addressCountry: "IN",
-      },
-      contactPoint: {
-        "@type": "ContactPoint",
-        telephone: "+91-9020103335",
-        email: "info@ique.com",
-        contactType: "customer service",
-      },
-      sameAs: [
-        "https://linkedin.com/company/ique-ventures",
-        "https://twitter.com/iqueventures",
-        "https://facebook.com/iqueventures",
-      ],
-    },
+    data: {},
   });
 
   return (
@@ -140,11 +115,11 @@ export default async function HomePage() {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return generateEnhancedMeta({
-    title: "Let's create a better startup Ecosystem",
-    description:
-      "Join us in building a better and more efficient startup ecosystem! By fostering collaboration, providing mentorship, and offering resources, we're empowering startups to grow and thrive.",
+    title: SEO_CONFIG.PAGES.HOME.TITLE,
+    description: SEO_CONFIG.PAGES.HOME.DESCRIPTION,
     url: "/",
     type: "website",
-    author: "iQue Ventures",
+    author: SEO_CONFIG.COMPANY_NAME,
+    tags: SEO_CONFIG.KEYWORDS.HOME,
   });
 };

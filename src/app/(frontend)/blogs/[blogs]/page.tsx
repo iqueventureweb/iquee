@@ -1,6 +1,7 @@
 import { CommentForm } from "@/components/Blogs/CommentForm";
 import BlogsListing from "@/components/Blogs/Listing";
 import { EditorContent } from "@/components/EditorContent";
+import { SEO_CONFIG } from "@/lib/constants";
 import { getBlogs } from "@/lib/fetchMethods";
 import { processEditorContent } from "@/lib/globalMethods";
 import { getPayloadClient } from "@/lib/payload";
@@ -22,28 +23,31 @@ function getWordsCount(content: string) {
 }
 
 export const dynamic = "force-static";
+export const revalidate = 3600;
 
 async function getBlogBySlug(slug: string) {
   const payload = await getPayloadClient();
   const result = await payload.find({
     collection: "blogs",
-    where: { slug: { equals: slug } },
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
     limit: 1,
   });
-  return result.docs?.[0] || null;
+
+  return result.docs[0] || null;
 }
 
 export async function generateStaticParams() {
   const payload = await getPayloadClient();
-  const result = await payload.find({
+  const blogs = await payload.find({
     collection: "blogs",
     limit: 1000,
-    sort: "-createdAt",
-    select: { slug: true },
   });
-  return (result.docs || [])
-    .filter((d) => d.slug)
-    .map((d) => ({ blogs: d.slug }));
+
+  return blogs.docs.map((d) => ({ blogs: d.slug }));
 }
 
 export async function generateMetadata({
@@ -72,7 +76,7 @@ export async function generateMetadata({
     modifiedTime: blog.updatedAt,
     author: blog.author || "iQue Team",
     section: "Blog",
-    tags: ["startup ecosystem", "entrepreneurship", "innovation", "blog"],
+    tags: SEO_CONFIG.KEYWORDS.BLOG,
   });
 }
 
@@ -116,7 +120,7 @@ export default async function BlogDetailPage({
 
   const breadcrumbData = generateBreadcrumbs([
     { name: "Home", url: "/" },
-    { name: "Blog", url: "/#blog" },
+    { name: "Blog", url: "/blogs" },
     { name: blog.title, url: `/blogs/${blog.slug}` },
   ]);
 
@@ -159,43 +163,43 @@ export default async function BlogDetailPage({
           </h1>
 
           <div className="mt-4 flex gap-2">
-            <div className="px-3 rounded-[20px] border border-neutral-900">
-              <span
-                className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900"
-                itemProp="author"
-              >
-                {blog.author || "Unknown"}
-              </span>
-            </div>
-            {date ? (
-              <div className="px-3 rounded-[20px] border border-neutral-900">
-                <time
-                  className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900"
-                  dateTime={blog.createdAt}
-                  itemProp="datePublished"
-                >
-                  {date}
-                </time>
-              </div>
-            ) : null}
-            <div className="px-3 rounded-[20px] border border-neutral-900">
-              <span className="text-xs font-['Epilogue'] uppercase tracking-wide text-neutral-900">
-                {minutes} min read
-              </span>
-            </div>
+            <span className="text-sm text-neutral-600" itemProp="author">
+              {blog.author || "iQue Team"}
+            </span>
+            <span className="text-sm text-neutral-400">•</span>
+            <time
+              className="text-sm text-neutral-600"
+              dateTime={blog.createdAt}
+              itemProp="datePublished"
+            >
+              {date}
+            </time>
+            <span className="text-sm text-neutral-400">•</span>
+            <span className="text-sm text-neutral-600">{minutes} min read</span>
           </div>
         </header>
 
-        <div itemProp="articleBody">
-          <EditorContent content={blog.content || ""} />
+        <div className="prose prose-lg max-w-none" itemProp="articleBody">
+          <EditorContent content={processed} />
         </div>
-      </div>
 
-      {/* Comment Form */}
-      <CommentForm blogId={blog.id} />
+        {/* Similar Articles */}
+        {similarBlogs.length > 0 && (
+          <section className="mt-16 pt-8 border-t border-neutral-200">
+            <h2 className="text-2xl font-bold font-['Epilogue'] text-neutral-900 mb-6">
+              Related Articles
+            </h2>
+            <BlogsListing blogs={similarBlogs} internal />
+          </section>
+        )}
 
-      <div className="mt-4">
-        <BlogsListing blogs={similarBlogs} internal={true} />
+        {/* Comment Form */}
+        <section className="mt-16 pt-8 border-t border-neutral-200">
+          <h2 className="text-2xl font-bold font-['Epilogue'] text-neutral-900 mb-6">
+            Leave a Comment
+          </h2>
+          <CommentForm blogId={blog.id} />
+        </section>
       </div>
     </article>
   );

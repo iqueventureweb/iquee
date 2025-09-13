@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { FooterSection } from "@/components/FooterSection";
 import Header from "@/components/header";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { getServerSideURL } from "@/utilities/getURL";
+import { SEO_CONFIG } from "@/lib/constants";
 import { mergeOpenGraph } from "@/utilities/mergeOpenGraph";
-import { generateStructuredData, siteConfig } from "@/utilities/seoUtils";
+import { generateStructuredData } from "@/utilities/seoUtils";
 import { cn } from "@/utilities/ui";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -114,24 +114,16 @@ export default async function RootLayout({
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getServerSideURL()),
+  metadataBase: new URL(SEO_CONFIG.BASE_URL),
   title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
+    default: SEO_CONFIG.COMPANY_NAME,
+    template: `%s | ${SEO_CONFIG.COMPANY_NAME}`,
   },
-  description: siteConfig.description,
-  keywords: [
-    "startup ecosystem",
-    "entrepreneurship",
-    "mentorship",
-    "collaboration",
-    "innovation",
-    "bangalore",
-    "india",
-  ],
-  authors: [{ name: siteConfig.name }],
-  creator: siteConfig.name,
-  publisher: siteConfig.name,
+  description: SEO_CONFIG.DEFAULT_DESCRIPTION,
+  keywords: SEO_CONFIG.KEYWORDS.HOME,
+  authors: [{ name: SEO_CONFIG.COMPANY_NAME }],
+  creator: SEO_CONFIG.COMPANY_NAME,
+  publisher: SEO_CONFIG.COMPANY_NAME,
   formatDetection: {
     email: false,
     address: false,
@@ -149,20 +141,20 @@ export const metadata: Metadata = {
     },
   },
   openGraph: mergeOpenGraph({
-    title: siteConfig.name,
-    description: siteConfig.description,
+    title: SEO_CONFIG.COMPANY_NAME,
+    description: SEO_CONFIG.DEFAULT_DESCRIPTION,
     url: "/",
-    siteName: siteConfig.name,
+    siteName: SEO_CONFIG.COMPANY_NAME,
     locale: "en_US",
     type: "website",
   }),
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: [`${getServerSideURL()}${siteConfig.ogImage}`],
-    creator: "@ique",
-    site: "@ique",
+    title: SEO_CONFIG.COMPANY_NAME,
+    description: SEO_CONFIG.DEFAULT_DESCRIPTION,
+    images: [`${SEO_CONFIG.BASE_URL}/ique-logo.webp`],
+    creator: "@iqueventures",
+    site: "@iqueventures",
   },
   alternates: {
     canonical: "/",
