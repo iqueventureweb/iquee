@@ -1,6 +1,7 @@
 "use client";
 
 import { HomePage } from "@/payload-types";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   AnimationWrapper,
@@ -85,6 +86,8 @@ function CountUpNumber({ end, delay = 0 }: { end: string; delay?: number }) {
 }
 
 export function AchievementsSection({ data }: AchievementsSectionProps) {
+  const router = useRouter();
+
   // Fallback data if CMS data is not available
   const defaultAchievements = [
     {
@@ -147,6 +150,9 @@ export function AchievementsSection({ data }: AchievementsSectionProps) {
               <button
                 className="bg-white/95 hover:bg-white transition-colors duration-200 rounded px-8 py-4 group"
                 aria-label="Request pricing information for our services"
+                onClick={() => {
+                  router.push("#contact");
+                }}
               >
                 <span className="text-black text-xs font-bold font-['DM_Sans'] uppercase tracking-wide">
                   Request Price

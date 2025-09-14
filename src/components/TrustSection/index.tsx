@@ -3,8 +3,21 @@
 import Image from "next/image";
 import { AnimationWrapper } from "../AnimationWrapper";
 
-export function TrustSection() {
-  const logos = [
+interface TrustedCompany {
+  src?: string | null;
+  width?: number | null;
+  height?: number | null;
+  id?: string | null;
+}
+
+interface TrustSectionProps {
+  data?: TrustedCompany[];
+}
+
+export function TrustSection({ data }: TrustSectionProps) {
+  console.log("data", data);
+  // Fallback logos if no data is provided
+  const fallbackLogos = [
     {
       src: "/company/emt.svg",
       alt: "EMT - Trusted partner company logo",
@@ -49,13 +62,39 @@ export function TrustSection() {
     },
   ];
 
+  // Update the logos mapping to include id for all items
+  const logos =
+    data && data.length > 0
+      ? data.map((company, index) => ({
+          src: company.src
+            ? `${process.env.NEXT_PUBLIC_BUNNY_CDN}${company.src}`
+            : fallbackLogos[index % fallbackLogos.length]?.src,
+          alt: `Trusted partner company logo ${index + 1}`,
+          width: company.width || 75,
+          height: company.height || 27,
+          company: `Company ${index + 1}`,
+          id: company.id || `fallback-${index}`,
+        }))
+      : fallbackLogos.map((logo, index) => ({
+          ...logo,
+          id: `fallback-${index}`,
+        }));
+
+  // Don't render if no logos available
+  if (!logos || logos.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="pt-16 pb-8 md:py-16 bg-white" aria-labelledby="trust-title">
+    <section
+      className="pt-16 pb-8 md:py-16 bg-white"
+      aria-labelledby="trust-title"
+    >
       <div className="container mx-auto px-4">
         {/* Section Title */}
         <header className="text-center mb-12">
           <AnimationWrapper delay={0.2} duration={0.4}>
-            <h2 
+            <h2
               id="trust-title"
               className="text-lg font-medium font-['DM_Sans'] leading-snug text-black"
             >
@@ -65,10 +104,14 @@ export function TrustSection() {
         </header>
 
         {/* Desktop Layout - Hidden on mobile */}
-        <div className="hidden md:flex justify-center items-center gap-8 lg:gap-12 xl:gap-16" role="list" aria-label="Trusted company logos">
+        <div
+          className="hidden md:flex justify-center items-center gap-8 lg:gap-12 xl:gap-16"
+          role="list"
+          aria-label="Trusted company logos"
+        >
           {logos.map((logo, index) => (
             <AnimationWrapper
-              key={index}
+              key={logo.id || index}
               delay={0.4 + index * 0.1}
               duration={0.4}
             >
@@ -80,6 +123,11 @@ export function TrustSection() {
                   height={logo.height}
                   className="opacity-70 hover:opacity-100 transition-opacity duration-300"
                   loading="lazy"
+                  onError={(e) => {
+                    // Fallback to a default company logo if image fails to load
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/company/emt.svg";
+                  }}
                 />
               </div>
             </AnimationWrapper>
@@ -89,10 +137,14 @@ export function TrustSection() {
         {/* Mobile Layout - Grid layout for smaller screens */}
         <div className="md:hidden max-w-sm mx-auto">
           {/* First row: 2 logos */}
-          <div className="flex justify-center gap-8 mb-8" role="list" aria-label="Trusted company logos row 1">
+          <div
+            className="flex justify-center gap-8 mb-8"
+            role="list"
+            aria-label="Trusted company logos row 1"
+          >
             {logos.slice(0, 2).map((logo, index) => (
               <AnimationWrapper
-                key={index}
+                key={logo.id || index}
                 delay={0.4 + index * 0.1}
                 duration={0.4}
               >
@@ -104,6 +156,10 @@ export function TrustSection() {
                     height={logo.height}
                     className="opacity-70"
                     loading="lazy"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/company/emt.svg";
+                    }}
                   />
                 </div>
               </AnimationWrapper>
@@ -111,10 +167,14 @@ export function TrustSection() {
           </div>
 
           {/* Second row: 2 logos */}
-          <div className="flex justify-center gap-8 mb-8" role="list" aria-label="Trusted company logos row 2">
+          <div
+            className="flex justify-center gap-8 mb-8"
+            role="list"
+            aria-label="Trusted company logos row 2"
+          >
             {logos.slice(2, 4).map((logo, index) => (
               <AnimationWrapper
-                key={index + 2}
+                key={logo.id || index + 2}
                 delay={0.6 + index * 0.1}
                 duration={0.4}
               >
@@ -126,27 +186,45 @@ export function TrustSection() {
                     height={logo.height}
                     className="opacity-70"
                     loading="lazy"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/company/emt.svg";
+                    }}
                   />
                 </div>
               </AnimationWrapper>
             ))}
           </div>
 
-          {/* Third row: 1 centered logo (if exists) */}
+          {/* Third row: remaining logos */}
           {logos.length > 4 && (
-            <div className="flex justify-center" role="list" aria-label="Trusted company logos row 3">
-              <AnimationWrapper delay={0.8} duration={0.4}>
-                <div role="listitem">
-                  <Image
-                    src={logos[4].src}
-                    alt={logos[4].alt}
-                    width={logos[4].width}
-                    height={logos[4].height}
-                    className="opacity-70"
-                    loading="lazy"
-                  />
-                </div>
-              </AnimationWrapper>
+            <div
+              className="flex justify-center gap-8"
+              role="list"
+              aria-label="Trusted company logos row 3"
+            >
+              {logos.slice(4).map((logo, index) => (
+                <AnimationWrapper
+                  key={logo.id || index + 4}
+                  delay={0.8 + index * 0.1}
+                  duration={0.4}
+                >
+                  <div role="listitem">
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      width={logo.width}
+                      height={logo.height}
+                      className="opacity-70"
+                      loading="lazy"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "/company/emt.svg";
+                      }}
+                    />
+                  </div>
+                </AnimationWrapper>
+              ))}
             </div>
           )}
         </div>

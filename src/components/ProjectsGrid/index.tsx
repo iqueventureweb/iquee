@@ -2,6 +2,7 @@
 
 import { Project } from "@/payload-types";
 import { Calendar } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { AnimationWrapper } from "../AnimationWrapper";
 
@@ -41,16 +42,44 @@ export function ProjectsGrid({ projects, serviceSlug }: ProjectsGridProps) {
             <div
               onClick={() => handleProjectClick(project.slug)}
               key={project.id + index}
-              className="group cursor-pointer overflow-hidden rounded-xl border bg-white shadow-sm hover:shadow-md transition-shadow"
+              className="group cursor-pointer overflow-hidden rounded-xl border bg-white shadow-sm hover:shadow-md transition-all duration-300 flex flex-col h-full"
             >
               <AnimationWrapper
                 key={project.id + index}
                 delay={0.4 + index * 0.1}
                 duration={0.5}
-                className="h-full"
+                className="h-full flex flex-col"
               >
+                {/* Project Image - Always show image area for consistency */}
+                <div className="relative h-48 overflow-hidden bg-gradient-to-br from-neutral-100 to-neutral-200">
+                  {project.image_url ? (
+                    <>
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_BUNNY_CDN}${project.image_url}`}
+                        alt={project.title || "Project image"}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                    </>
+                  ) : (
+                    <div className="flex items-center justify-center h-full">
+                      <div className="text-center">
+                        <div className="w-16 h-16 bg-neutral-300 rounded-full mx-auto mb-3 flex items-center justify-center">
+                          <span className="text-2xl text-neutral-600">📁</span>
+                        </div>
+                        <p className="text-sm text-neutral-500 font-medium">
+                          Project Image
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 {/* Project Content */}
-                <div className="p-6 flex flex-col justify-between h-full">
+                <div className="p-6 flex flex-col flex-grow">
+                  {/* Tags */}
                   <div className="flex flex-wrap items-center gap-2 mb-4">
                     <span className="px-3 py-1 rounded-[20px] border border-neutral-900 text-xs uppercase tracking-wide">
                       Project
@@ -68,26 +97,28 @@ export function ProjectsGrid({ projects, serviceSlug }: ProjectsGridProps) {
                   {/* Project Description */}
                   {project.description && (
                     <div
-                      className="text-sm text-neutral-600 line-clamp-3 mb-4"
+                      className="text-sm text-neutral-600 line-clamp-3 mb-4 flex-grow"
                       dangerouslySetInnerHTML={{ __html: project.description }}
                     />
                   )}
 
                   {/* Project Content Preview */}
-                  {project.blocks && project.blocks.length > 0 && (
-                    <div
-                      className="text-sm text-neutral-600 line-clamp-2 mb-4"
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          project.blocks[0]?.content ||
-                          project.blocks[0]?.title ||
-                          "",
-                      }}
-                    />
-                  )}
+                  {project.blocks &&
+                    project.blocks.length > 0 &&
+                    !project.description && (
+                      <div
+                        className="text-sm text-neutral-600 line-clamp-2 mb-4 flex-grow"
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            project.blocks[0]?.content ||
+                            project.blocks[0]?.title ||
+                            "",
+                        }}
+                      />
+                    )}
 
                   {/* Project Meta */}
-                  <div className="flex items-center justify-between pt-4 border-t border-neutral-200">
+                  <div className="flex items-center justify-between pt-4 border-t border-neutral-200 mt-auto">
                     <div className="flex items-center gap-2 text-sm text-neutral-700">
                       <Calendar className="w-4 h-4" />
                       <span>Recent Project</span>

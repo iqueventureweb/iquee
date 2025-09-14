@@ -1,9 +1,19 @@
 "use client";
+import { WHATSAPP } from "@/lib/constants";
+import { useRouter } from "next/navigation";
 import { AnimationWrapper } from "../AnimationWrapper";
 import { Button } from "../ui/button";
 import Animated3d from "./Animated3d";
 
 export function HeroSection() {
+  const router = useRouter();
+
+  const handleGetInTouchClick = () => {
+    const encodedMessage = encodeURIComponent(WHATSAPP.messages.generalInquiry);
+    const whatsappUrl = `https://wa.me/${WHATSAPP.phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <section
       className="min-h-[70vh] md:min-h-screen relative pt-20"
@@ -45,14 +55,18 @@ export function HeroSection() {
               <div className="flex gap-4 justify-center mb-16 pointer-events-auto">
                 <Button
                   variant="outline"
-                  className="border-[#41DEB2] text-xs w-40 h-12 text-[#41DEB2] hover:bg-[#41DEB2]/10 font-bold uppercase tracking-wide font-['DM_Sans']"
+                  className="border-[#41DEB2] text-xs w-40 h-12 text-[#41DEB2] hover:bg-[#41DEB2]/10 font-bold uppercase tracking-wide font-['DM_Sans'] hover:text-cyan-700"
                   aria-label="Learn more about iQue services"
+                  onClick={() => {
+                    router.push("#about");
+                  }}
                 >
                   Learn More
                 </Button>
                 <Button
                   className="bg-[#41DEB2] text-xs w-40 h-12 text-white hover:bg-[#41DEB2]/80 font-bold uppercase tracking-wide font-['DM_Sans']"
-                  aria-label="Get in touch with iQue team"
+                  aria-label="Get in touch with iQue team on WhatsApp"
+                  onClick={handleGetInTouchClick}
                 >
                   Get In Touch
                 </Button>

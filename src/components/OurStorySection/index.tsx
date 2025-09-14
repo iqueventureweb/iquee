@@ -3,6 +3,7 @@
 import { HomePage } from "@/payload-types";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { AnimationWrapper } from "../AnimationWrapper";
 
 interface OurStorySectionProps {
@@ -10,6 +11,12 @@ interface OurStorySectionProps {
 }
 
 export function OurStorySection({ data }: OurStorySectionProps) {
+  const router = useRouter();
+
+  const handleLearnMoreClick = () => {
+    router.push("#contact");
+  };
+
   return (
     <section
       id="about"
@@ -56,15 +63,19 @@ export function OurStorySection({ data }: OurStorySectionProps) {
                     />
 
                     {/* Learn more link */}
-                    <div className="flex items-center space-x-2 border-b-2 border-black pb-2 z-10">
-                      <span className="text-black text-base font-medium font-['DM_Sans'] leading-none">
+                    <button
+                      onClick={handleLearnMoreClick}
+                      className="flex items-center space-x-2 border-b-2 border-black pb-2 z-10 hover:border-cyan-600 hover:text-cyan-600 transition-all duration-300 cursor-pointer group"
+                      aria-label="Learn more about us and contact us"
+                    >
+                      <span className="text-black text-base font-medium font-['DM_Sans'] leading-none group-hover:text-cyan-600 transition-colors duration-300">
                         Learn more about us
                       </span>
                       <ArrowRight
-                        className="w-4 h-4 text-black"
+                        className="w-4 h-4 text-black group-hover:text-cyan-600 group-hover:translate-x-1 transition-all duration-300"
                         aria-hidden="true"
                       />
-                    </div>
+                    </button>
                   </div>
                 </AnimationWrapper>
               </div>
@@ -166,12 +177,19 @@ export function OurStorySection({ data }: OurStorySectionProps) {
 
           {/* Learn more link */}
           <AnimationWrapper delay={0.4} duration={0.8}>
-            <div className="flex items-center space-x-2 border-b-2 border-black pb-2 w-fit">
-              <span className="text-black text-base font-medium font-['DM_Sans'] leading-none">
+            <button
+              onClick={handleLearnMoreClick}
+              className="flex items-center space-x-2 border-b-2 border-black pb-2 w-fit hover:border-cyan-600 hover:text-cyan-600 transition-all duration-300 cursor-pointer group"
+              aria-label="Learn more about us and contact us"
+            >
+              <span className="text-black text-base font-medium font-['DM_Sans'] leading-none group-hover:text-cyan-600 transition-colors duration-300">
                 Learn more about us
               </span>
-              <ArrowRight className="w-4 h-4 text-black" aria-hidden="true" />
-            </div>
+              <ArrowRight
+                className="w-4 h-4 text-black group-hover:text-cyan-600 group-hover:translate-x-1 transition-all duration-300"
+                aria-hidden="true"
+              />
+            </button>
           </AnimationWrapper>
 
           {/* Image */}
