@@ -3,7 +3,7 @@
 import { HomePage } from "@/payload-types";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimationWrapper } from "../AnimationWrapper";
 
 interface TestimonialsSectionProps {
@@ -12,6 +12,8 @@ interface TestimonialsSectionProps {
 
 export function TestimonialsSection({ data }: TestimonialsSectionProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Fallback data if CMS data is not available
   const defaultTestimonials = [
@@ -60,17 +62,88 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
         }))
       : defaultTestimonials;
 
+  // Create extended array for infinite loop (duplicate items)
+  const extendedTestimonials = [
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+  ];
+
+  // Start auto-advance carousel
+  const startAutoAdvance = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => {
+      setCurrentSlide((prev) => {
+        const nextSlide = prev + 1;
+        // When we reach the end of the extended data, seamlessly continue from the beginning
+        if (nextSlide >= extendedTestimonials.length) {
+          return 0;
+        }
+        return nextSlide;
+      });
+    }, 4000); // 4 seconds for testimonials
+  };
+
+  // Stop auto-advance carousel
+  const stopAutoAdvance = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
+
+  // Auto-advance carousel every 4 seconds
+  useEffect(() => {
+    startAutoAdvance();
+    return () => stopAutoAdvance();
+  }, []);
+
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % testimonials.length);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+
+    setCurrentSlide((prev) => {
+      const nextSlide = prev + 1;
+      // When we reach the end, seamlessly continue from the beginning
+      if (nextSlide >= extendedTestimonials.length) {
+        return 0;
+      }
+      return nextSlide;
+    });
+
+    stopAutoAdvance();
+    startAutoAdvance();
+    setTimeout(() => setIsTransitioning(false), 500);
   };
 
   const prevSlide = () => {
-    setCurrentSlide(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    );
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+
+    setCurrentSlide((prev) => {
+      const prevSlide = prev - 1;
+      // When we go back from the beginning, go to the end
+      if (prevSlide < 0) {
+        return extendedTestimonials.length - 1;
+      }
+      return prevSlide;
+    });
+
+    stopAutoAdvance();
+    startAutoAdvance();
+    setTimeout(() => setIsTransitioning(false), 500);
   };
 
-  const currentTestimonial = testimonials[currentSlide];
+  const goToSlide = (index: number) => {
+    if (isTransitioning || index === currentSlide % testimonials.length) return;
+    setIsTransitioning(true);
+    setCurrentSlide(testimonials.length + index);
+    stopAutoAdvance();
+    startAutoAdvance();
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
 
   return (
     <section
@@ -125,63 +198,103 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
                   </span>
                 </div>
 
-                {/* Quote Text */}
-                <div className="ml-[50px] mb-4">
-                  <p className="text-2xl font-normal h-[129px] overflow-y-auto font-['DM_Sans'] leading-9 text-black">
-                    {currentTestimonial.quote}
-                  </p>
+                {/* Sliding Content Container */}
+                <div className="overflow-hidden">
+                  <div
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{
+                      transform: `translateX(-${currentSlide * 100}%)`,
+                    }}
+                    role="list"
+                    aria-label="Testimonials carousel"
+                    id="testimonials-carousel"
+                  >
+                    {extendedTestimonials.map((testimonial, index) => (
+                      <div
+                        key={`${testimonial.author}-${index}`}
+                        className="flex-shrink-0 w-full"
+                      >
+                        {/* Quote Text */}
+                        <div className="ml-[50px] mb-4">
+                          <p className="text-2xl font-normal h-[129px] overflow-y-auto font-['DM_Sans'] leading-9 text-black scrollbar-hide">
+                            {testimonial.quote}
+                          </p>
+                        </div>
+
+                        {/* Divider */}
+                        <div
+                          className="ml-[50px] w-20 h-px bg-black mb-4"
+                          aria-hidden="true"
+                        ></div>
+
+                        {/* Author Info */}
+                        <footer className="ml-[50px] flex items-center">
+                          <div>
+                            <cite className="text-lg font-normal font-['DM_Sans'] leading-relaxed text-black not-italic">
+                              {testimonial.author}
+                            </cite>
+                            <p className="text-base font-normal font-['DM_Sans'] leading-snug text-neutral-500">
+                              {testimonial.role}
+                            </p>
+                          </div>
+                        </footer>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Divider */}
+                {/* Navigation Arrows - Fixed */}
                 <div
-                  className="ml-[50px] w-20 h-px bg-black mb-4"
-                  aria-hidden="true"
-                ></div>
-
-                <div className="flex items-center justify-between">
-                  {/* Author Info */}
-                  <footer className="ml-[50px] flex items-center">
-                    <div>
-                      <cite className="text-lg font-normal font-['DM_Sans'] leading-relaxed text-black not-italic">
-                        {currentTestimonial.author}
-                      </cite>
-                      <p className="text-base font-normal font-['DM_Sans'] leading-snug text-neutral-500">
-                        {currentTestimonial.role}
-                      </p>
-                    </div>
-                  </footer>
-                  {/* Navigation Arrows */}
-                  <div
-                    className="flex justify-center space-x-4 items-center h-full"
-                    role="navigation"
-                    aria-label="Testimonial navigation"
+                  className="absolute bottom-0 right-0 flex space-x-4"
+                  role="navigation"
+                  aria-label="Testimonial navigation"
+                >
+                  <button
+                    onClick={prevSlide}
+                    disabled={isTransitioning}
+                    className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label="Previous testimonial"
+                    aria-controls="testimonials-carousel"
                   >
-                    <button
-                      onClick={prevSlide}
-                      className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
-                      aria-label="Previous testimonial"
-                      aria-controls="testimonials-carousel"
-                    >
-                      <ArrowLeft
-                        className="w-4 h-4 text-black"
-                        aria-hidden="true"
-                      />
-                    </button>
-                    <button
-                      onClick={nextSlide}
-                      className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
-                      aria-label="Next testimonial"
-                      aria-controls="testimonials-carousel"
-                    >
-                      <ArrowRight
-                        className="w-4 h-4 text-black"
-                        aria-hidden="true"
-                      />
-                    </button>
-                  </div>
+                    <ArrowLeft
+                      className="w-4 h-4 text-black"
+                      aria-hidden="true"
+                    />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    disabled={isTransitioning}
+                    className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+                    aria-label="Next testimonial"
+                    aria-controls="testimonials-carousel"
+                  >
+                    <ArrowRight
+                      className="w-4 h-4 text-black"
+                      aria-hidden="true"
+                    />
+                  </button>
                 </div>
               </blockquote>
             </AnimationWrapper>
+
+            {/* Dots Navigation - Fixed */}
+            <div className="flex justify-center space-x-3 mt-8">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  disabled={isTransitioning}
+                  className={`w-2 h-2 rounded-full border border-black transition-all duration-300 ${
+                    index === currentSlide % testimonials.length
+                      ? "bg-black scale-125"
+                      : "bg-transparent hover:bg-black/20"
+                  } ${isTransitioning ? "opacity-50 cursor-not-allowed" : ""}`}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                  aria-selected={index === currentSlide % testimonials.length}
+                  role="tab"
+                />
+              ))}
+            </div>
           </div>
         </div>
 
@@ -201,7 +314,7 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
             <blockquote className="bg-transparent p-4 sm:p-6 relative min-h-[300px] md:min-h-[400px]">
               {/* Quote Icon */}
               <div
-                className="w-8 h-8 bg-white rounded-2xl absolute -left-2 top-4 flex items-center justify-center"
+                className="w-8 h-8 bg-white rounded-2xl absolute -left-2 top-4 flex items-center justify-center z-20"
                 aria-hidden="true"
               >
                 <span className="text-4xl h-[15px] font-serif text-black leading-none">
@@ -209,58 +322,103 @@ export function TestimonialsSection({ data }: TestimonialsSectionProps) {
                 </span>
               </div>
 
-              {/* Quote Text */}
-              <div className="ml-5 mb-8">
-                <p className="text-lg font-normal font-['DM_Sans'] leading-relaxed text-black h-[150px] overflow-y-auto">
-                  {currentTestimonial.quote}
-                </p>
+              {/* Sliding Content Container - Completely restructured */}
+              <div className="relative">
+                <div className="overflow-hidden">
+                  <div
+                    className="flex transition-transform duration-500 ease-in-out"
+                    style={{
+                      transform: `translateX(-${currentSlide * 100}%)`,
+                    }}
+                    id="mobile-testimonials-carousel"
+                  >
+                    {extendedTestimonials.map((testimonial, index) => (
+                      <div
+                        key={`${testimonial.author}-${index}`}
+                        className="flex-shrink-0 w-full"
+                      >
+                        {/* Quote Text */}
+                        <div className="ml-5 mb-8">
+                          <p className="text-lg font-normal font-['DM_Sans'] leading-relaxed text-black h-[150px] overflow-y-auto scrollbar-hide">
+                            {testimonial.quote}
+                          </p>
+                        </div>
+
+                        {/* Divider */}
+                        <div
+                          className="ml-5 w-20 h-px bg-black mb-6"
+                          aria-hidden="true"
+                        ></div>
+
+                        {/* Author Info */}
+                        <footer className="ml-5 flex items-center">
+                          <div>
+                            <cite className="text-lg font-medium truncate max-w-32 font-['DM_Sans'] leading-relaxed text-black not-italic">
+                              {testimonial.author}
+                            </cite>
+                            <p className="text-base font-normal font-['DM_Sans'] leading-snug text-neutral-500">
+                              {testimonial.role}
+                            </p>
+                          </div>
+                        </footer>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
-              {/* Divider */}
+              {/* Navigation Arrows - Fixed */}
               <div
-                className="ml-5 w-20 h-px bg-black mb-6"
-                aria-hidden="true"
-              ></div>
-
-              {/* Author Info */}
-              <footer className="ml-5 flex items-center">
-                <div>
-                  <cite className="text-lg font-medium truncate max-w-32 font-['DM_Sans'] leading-relaxed text-black not-italic">
-                    {currentTestimonial.author}
-                  </cite>
-                  <p className="text-base font-normal font-['DM_Sans'] leading-snug text-neutral-500">
-                    {currentTestimonial.role}
-                  </p>
-                </div>
-              </footer>
+                className="absolute bottom-0 right-0 flex space-x-4 z-20"
+                role="navigation"
+                aria-label="Testimonial navigation"
+              >
+                <button
+                  onClick={prevSlide}
+                  disabled={isTransitioning}
+                  className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Previous testimonial"
+                  aria-controls="mobile-testimonials-carousel"
+                >
+                  <ArrowLeft
+                    className="w-6 h-6 text-black"
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  onClick={nextSlide}
+                  disabled={isTransitioning}
+                  className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Next testimonial"
+                  aria-controls="mobile-testimonials-carousel"
+                >
+                  <ArrowRight
+                    className="w-6 h-6 text-black"
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
             </blockquote>
           </AnimationWrapper>
 
-          {/* Navigation Arrows */}
-          <AnimationWrapper delay={0.6} duration={0.4}>
-            <div
-              className="flex justify-end ml-auto space-x-4 mt-8"
-              role="navigation"
-              aria-label="Testimonial navigation"
-            >
+          {/* Dots Navigation - Fixed */}
+          <div className="flex justify-center space-x-3 mt-6">
+            {testimonials.map((_, index) => (
               <button
-                onClick={prevSlide}
-                className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
-                aria-label="Previous testimonial"
-                aria-controls="testimonials-carousel"
-              >
-                <ArrowLeft className="w-6 h-6 text-black" aria-hidden="true" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="w-12 h-12 bg-white rounded-3xl shadow-[0px_3px_5px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_5px_10px_0px_rgba(0,0,0,0.05)] flex items-center justify-center hover:shadow-md transition-shadow"
-                aria-label="Next testimonial"
-                aria-controls="testimonials-carousel"
-              >
-                <ArrowRight className="w-6 h-6 text-black" aria-hidden="true" />
-              </button>
-            </div>
-          </AnimationWrapper>
+                key={index}
+                onClick={() => goToSlide(index)}
+                disabled={isTransitioning}
+                className={`w-3 h-3 rounded-full border border-black transition-all duration-300 cursor-pointer ${
+                  index === currentSlide % testimonials.length
+                    ? "bg-black scale-125"
+                    : "bg-transparent hover:bg-black/20"
+                } ${isTransitioning ? "opacity-50 cursor-not-allowed" : ""}`}
+                aria-label={`Go to testimonial ${index + 1}`}
+                aria-selected={index === currentSlide % testimonials.length}
+                role="tab"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -15,7 +15,6 @@ interface TrustSectionProps {
 }
 
 export function TrustSection({ data }: TrustSectionProps) {
-  console.log("data", data);
   // Fallback logos if no data is provided
   const fallbackLogos = [
     {

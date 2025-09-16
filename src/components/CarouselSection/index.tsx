@@ -1,38 +1,66 @@
 "use client";
 
+import { HomePage } from "@/payload-types";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export function CarouselSection() {
+interface CarouselSectionProps {
+  data?: HomePage["featured_services"];
+}
+
+export function CarouselSection({ data }: CarouselSectionProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const carouselData = [
-    {
-      icon: "/carousal/simplicity.svg",
-      title: "Simplicity",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque congue rhoncus enim, in pharetra lacus.",
-    },
-    {
-      icon: "/carousal/accountability.svg",
-      title: "Accountability",
-      description:
-        "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-    },
-    {
-      icon: "/carousal/high-loyalty.svg",
-      title: "High Loyalty",
-      description:
-        "Mauris a libero et diam sodales semper. Aenean elit leo, hendrerit nec dolor id, rutrum finibus velit.",
-    },
-    {
-      icon: "/carousal/accountability.svg",
-      title: "Innovation",
-      description:
-        "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
-    },
-  ];
+  // Use data from props if available, otherwise fallback to hardcoded data
+  const carouselData =
+    data && data.length > 0
+      ? data.map((item, index) => {
+          // Define fallback images based on index
+          const fallbackImages = [
+            "/carousal/simplicity.svg",
+            "/carousal/accountability.svg",
+            "/carousal/high-loyalty.svg",
+            "/carousal/accountability.svg", // Innovation uses accountability icon
+          ];
+
+          return {
+            icon:
+              item.image_url || fallbackImages[index % fallbackImages.length],
+            title: item.title || "Default Title",
+            description: item.description || "Default description",
+          };
+        })
+      : [
+          {
+            icon: "/carousal/simplicity.svg",
+            title: "Simplicity",
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque congue rhoncus enim, in pharetra lacus.",
+          },
+          {
+            icon: "/carousal/accountability.svg",
+            title: "Accountability",
+            description:
+              "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+          },
+          {
+            icon: "/carousal/high-loyalty.svg",
+            title: "High Loyalty",
+            description:
+              "Mauris a libero et diam sodales semper. Aenean elit leo, hendrerit nec dolor id, rutrum finibus velit.",
+          },
+          {
+            icon: "/carousal/accountability.svg",
+            title: "Innovation",
+            description:
+              "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+          },
+        ];
+
+  // Create extended array for infinite loop (duplicate items)
+  const extendedData = [...carouselData, ...carouselData, ...carouselData];
 
   // Start auto-advance carousel
   const startAutoAdvance = () => {
@@ -40,7 +68,11 @@ export function CarouselSection() {
       clearInterval(intervalRef.current);
     }
     intervalRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % carouselData.length);
+      setCurrentSlide((prev) => {
+        const nextSlide = prev + 1;
+        // Instead of jumping to 0, let it continue and handle seamless transition
+        return nextSlide;
+      });
     }, 3000);
   };
 
@@ -52,30 +84,66 @@ export function CarouselSection() {
     }
   };
 
+  // Handle seamless loop transition
+  useEffect(() => {
+    // When we reach the end of the second set of data, seamlessly reset to the beginning of the first set
+    if (currentSlide >= carouselData.length * 2) {
+      const timer = setTimeout(() => {
+        setCurrentSlide(carouselData.length);
+      }, 500); // Wait for transition to complete
+      return () => clearTimeout(timer);
+    }
+  }, [currentSlide, carouselData.length]);
+
   // Auto-advance carousel every 3 seconds
-  // useEffect(() => {
-  //   startAutoAdvance();
-  //   return () => stopAutoAdvance();
-  // }, []);
+  useEffect(() => {
+    startAutoAdvance();
+    return () => stopAutoAdvance();
+  }, []);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % carouselData.length);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+
+    setCurrentSlide((prev) => {
+      const nextSlide = prev + 1;
+      // When we reach the end, seamlessly continue from the beginning
+      if (nextSlide >= extendedData.length) {
+        return 0;
+      }
+      return nextSlide;
+    });
+
     stopAutoAdvance();
     startAutoAdvance();
+    setTimeout(() => setIsTransitioning(false), 500);
   };
 
   const prevSlide = () => {
-    setCurrentSlide(
-      (prev) => (prev - 1 + carouselData.length) % carouselData.length
-    );
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+
+    setCurrentSlide((prev) => {
+      const prevSlide = prev - 1;
+      // When we go back from the beginning, go to the end
+      if (prevSlide < 0) {
+        return extendedData.length - 1;
+      }
+      return prevSlide;
+    });
+
     stopAutoAdvance();
     startAutoAdvance();
+    setTimeout(() => setIsTransitioning(false), 500);
   };
 
   const goToSlide = (index: number) => {
-    setCurrentSlide(index);
+    if (isTransitioning || index === currentSlide % carouselData.length) return;
+    setIsTransitioning(true);
+    setCurrentSlide(carouselData.length + index);
     stopAutoAdvance();
     startAutoAdvance();
+    setTimeout(() => setIsTransitioning(false), 500);
   };
 
   return (
@@ -109,7 +177,8 @@ export function CarouselSection() {
               {/* Navigation Arrow Left */}
               <button
                 onClick={prevSlide}
-                className="text-white w-7 h-14 hover:text-gray-300 transition-colors"
+                disabled={isTransitioning}
+                className="text-white w-7 h-14 hover:text-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Previous slide"
                 aria-controls="carousel-content"
               >
@@ -123,23 +192,28 @@ export function CarouselSection() {
                 />
               </button>
 
-              {/* Carousel Items */}
-              <div
-                className="flex space-x-8 lg:space-x-16"
-                role="list"
-                aria-label="Carousel content"
-                id="carousel-content"
-              >
-                {[0, 1, 2].map((offset) => {
-                  const index = (currentSlide + offset) % carouselData.length;
-                  const item = carouselData[index];
-                  return (
+              {/* Carousel Container with Sliding Effect */}
+              <div className="overflow-hidden w-[800px] lg:w-[1000px]">
+                <div
+                  className={`flex transition-transform duration-500 ease-in-out ${
+                    currentSlide >= carouselData.length * 2
+                      ? "transition-none"
+                      : ""
+                  }`}
+                  style={{
+                    transform: `translateX(-${currentSlide * (100 / 3)}%)`,
+                  }}
+                  role="list"
+                  aria-label="Carousel content"
+                  id="carousel-content"
+                >
+                  {extendedData.map((item, index) => (
                     <div
-                      key={`${currentSlide}-${offset}`}
-                      className="flex flex-col items-center text-center max-w-xs"
+                      key={`${item.title}-${index}`}
+                      className="flex-shrink-0 w-1/3 px-4 lg:px-8"
                     >
                       <article
-                        className="flex flex-col items-center text-center max-w-xs"
+                        className="flex flex-col items-center text-center max-w-xs mx-auto"
                         role="listitem"
                       >
                         {/* Icon */}
@@ -167,14 +241,15 @@ export function CarouselSection() {
                         </p>
                       </article>
                     </div>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
 
               {/* Navigation Arrow Right */}
               <button
                 onClick={nextSlide}
-                className="text-white hover:text-gray-300 w-7 h-14 transition-colors"
+                disabled={isTransitioning}
+                className="text-white hover:text-gray-300 w-7 h-14 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Next slide"
                 aria-controls="carousel-content"
               >
@@ -199,13 +274,14 @@ export function CarouselSection() {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full border border-white transition-colors ${
-                    index === currentSlide
-                      ? "bg-white shadow-[1px_1px_0px_0px_rgba(0,0,0,0.10)]"
-                      : "bg-white/0"
-                  }`}
+                  disabled={isTransitioning}
+                  className={`w-2 h-2 rounded-full border border-white transition-all duration-300 ${
+                    index === currentSlide % carouselData.length
+                      ? "bg-white shadow-[1px_1px_0px_0px_rgba(0,0,0,0.10)] scale-125"
+                      : "bg-white/0 hover:bg-white/20"
+                  } ${isTransitioning ? "opacity-50 cursor-not-allowed" : ""}`}
                   aria-label={`Go to slide ${index + 1}`}
-                  aria-selected={index === currentSlide}
+                  aria-selected={index === currentSlide % carouselData.length}
                   role="tab"
                 />
               ))}
@@ -218,7 +294,8 @@ export function CarouselSection() {
               {/* Navigation Arrow Left */}
               <button
                 onClick={prevSlide}
-                className="text-white hover:text-gray-300 transition-colors absolute left-4 top-1/2 transform -translate-y-1/2 z-50"
+                disabled={isTransitioning}
+                className="text-white hover:text-gray-300 transition-colors absolute left-4 top-1/2 transform -translate-y-1/2 z-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Previous slide"
                 aria-controls="mobile-carousel"
               >
@@ -232,43 +309,62 @@ export function CarouselSection() {
                 />
               </button>
 
-              {/* Single Carousel Item */}
-              <div className="flex flex-col items-center text-center mx-auto px-16">
-                <article
-                  className="flex flex-col items-center text-center mx-auto px-5"
-                  role="listitem"
+              {/* Mobile Carousel Container with Sliding Effect */}
+              <div className="overflow-hidden w-full max-w-sm mx-auto">
+                <div
+                  className={`flex transition-transform duration-500 ease-in-out ${
+                    currentSlide >= carouselData.length * 2
+                      ? "transition-none"
+                      : ""
+                  }`}
+                  style={{
+                    transform: `translateX(-${currentSlide * 100}%)`,
+                  }}
                   id="mobile-carousel"
                 >
-                  {/* Icon */}
-                  <div
-                    className="w-16 h-16 rounded mb-8 flex items-center justify-center"
-                    aria-hidden="true"
-                  >
-                    <Image
-                      src={carouselData[currentSlide].icon}
-                      alt={`${carouselData[currentSlide].title} icon`}
-                      width={64}
-                      height={64}
-                      className="w-16 h-16"
-                    />
-                  </div>
+                  {extendedData.map((item, index) => (
+                    <div
+                      key={`${item.title}-${index}`}
+                      className="flex-shrink-0 w-full px-5"
+                    >
+                      <article
+                        className="flex flex-col items-center text-center"
+                        role="listitem"
+                      >
+                        {/* Icon */}
+                        <div
+                          className="w-16 h-16 rounded mb-8 flex items-center justify-center"
+                          aria-hidden="true"
+                        >
+                          <Image
+                            src={item.icon}
+                            alt={`${item.title} icon`}
+                            width={64}
+                            height={64}
+                            className="w-16 h-16"
+                          />
+                        </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl font-normal font-['DM_Sans'] leading-loose text-white mb-4">
-                    {carouselData[currentSlide].title}
-                  </h3>
+                        {/* Title */}
+                        <h3 className="text-xl font-normal font-['DM_Sans'] leading-loose text-white mb-4">
+                          {item.title}
+                        </h3>
 
-                  {/* Description */}
-                  <p className="text-base font-normal font-['DM_Sans'] leading-relaxed text-white opacity-75 max-w-72">
-                    {carouselData[currentSlide].description}
-                  </p>
-                </article>
+                        {/* Description */}
+                        <p className="text-base font-normal font-['DM_Sans'] leading-relaxed text-white opacity-75 max-w-72">
+                          {item.description}
+                        </p>
+                      </article>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Navigation Arrow Right */}
               <button
                 onClick={nextSlide}
-                className="text-white hover:text-gray-300 transition-colors absolute right-4 top-1/2 transform -translate-y-1/2 z-50"
+                disabled={isTransitioning}
+                className="text-white hover:text-gray-300 transition-colors absolute right-4 top-1/2 transform -translate-y-1/2 z-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Next slide"
                 aria-controls="mobile-carousel"
               >
@@ -293,13 +389,14 @@ export function CarouselSection() {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-3 h-3 rounded-full border border-white transition-colors cursor-pointer ${
-                    index === currentSlide
-                      ? "bg-white shadow-[1px_1px_0px_0px_rgba(0,0,0,0.10)]"
+                  disabled={isTransitioning}
+                  className={`w-3 h-3 rounded-full border border-white transition-all duration-300 cursor-pointer ${
+                    index === currentSlide % carouselData.length
+                      ? "bg-white shadow-[1px_1px_0px_0px_rgba(0,0,0,0.10)] scale-125"
                       : "bg-white/0 hover:bg-white/20"
-                  }`}
+                  } ${isTransitioning ? "opacity-50 cursor-not-allowed" : ""}`}
                   aria-label={`Go to slide ${index + 1}`}
-                  aria-selected={index === currentSlide}
+                  aria-selected={index === currentSlide % carouselData.length}
                   role="tab"
                 />
               ))}

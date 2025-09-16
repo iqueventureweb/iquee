@@ -22,22 +22,10 @@ export function ProjectContent({ project }: ProjectContentProps) {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <AnimationWrapper delay={0.1} duration={0.8}>
-              <span className="text-neutral-500 text-sm font-medium font-['DM_Sans'] uppercase tracking-wide mb-4 block">
+              <span className="text-neutral-500 text-xl md:text-3xl font-medium font-['DM_Sans'] uppercase tracking-wide mb-4 block">
                 Project Overview
               </span>
             </AnimationWrapper>
-            <AnimationWrapper delay={0.2} duration={0.8}>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-medium font-['DM_Sans'] leading-tight text-black mb-6">
-                {project.title || "Project Details"}
-              </h1>
-            </AnimationWrapper>
-            {project.description && (
-              <AnimationWrapper delay={0.3} duration={0.8}>
-                <p className="text-lg sm:text-xl font-light font-['DM_Sans'] text-neutral-600 leading-relaxed max-w-3xl mx-auto">
-                  {project.description}
-                </p>
-              </AnimationWrapper>
-            )}
           </div>
         </div>
       </section>

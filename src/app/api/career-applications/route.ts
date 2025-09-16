@@ -13,10 +13,6 @@ export async function POST(request: NextRequest) {
     const position = formData.get("position") as string;
     const resume = formData.get("resume") as File;
 
-    console.log("Resume file:", resume); // Add this debug line
-    console.log("Resume type:", resume?.type);
-    console.log("Resume size:", resume?.size);
-
     // Basic validation
     if (
       !applicantName ||

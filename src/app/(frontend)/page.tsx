@@ -102,7 +102,7 @@ export default async function HomePage() {
         <AchievementsSection data={homePageData?.achievement} />
         <TrustSection data={homePageData?.trusted_companies || undefined} />
         <OurStorySection data={homePageData?.our_story} />
-        <CarouselSection />
+        <CarouselSection data={homePageData?.featured_services} />
         <TestimonialsSection data={homePageData?.testimonials} />
         <StaffSection data={homePageData?.staff} />
         <LatestNewsSection blogs={blogs} />
